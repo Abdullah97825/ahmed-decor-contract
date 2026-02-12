@@ -10,7 +10,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
     if (!dateStr) return "—";
     try {
       const d = new Date(dateStr);
-      return d.toLocaleDateString("ar-IQ", {
+      return d.toLocaleDateString("ar-IQ-u-nu-latn", {
         year: "numeric",
         month: "long",
         day: "numeric",
