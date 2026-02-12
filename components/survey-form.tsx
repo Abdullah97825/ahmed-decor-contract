@@ -129,48 +129,58 @@ function PrintableSurvey() {
       </PrintSection>
 
       {/* Kitchen Dimensions */}
-      <PrintSection title="قياسات المطبخ" icon="ruler">
-        <BlankTable
-          headers={["#", "الجدار / القسم", "الطول (سم)", "الارتفاع (سم)", "ملاحظات"]}
-          rows={4}
-          colWidths={["8%", "28%", "18%", "18%", "28%"]}
-        />
+      <PrintSection title="قياسات المطبخ" icon="ruler" allowBreak>
+        <div style={{ breakInside: "avoid" }}>
+          <BlankTable
+            headers={["#", "الجدار / القسم", "الطول (سم)", "الارتفاع (سم)", "ملاحظات"]}
+            rows={4}
+            colWidths={["8%", "28%", "18%", "18%", "28%"]}
+          />
+        </div>
 
         {/* Stove */}
-        <SubSectionHeader icon="flame" title="الطباخ" />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-          <BlankField label="سنتر الطباخ" />
-          <BlankField label="قياس الطباخ (سم)" />
+        <div style={{ breakInside: "avoid" }}>
+          <SubSectionHeader icon="flame" title="الطباخ" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+            <BlankField label="سنتر الطباخ" />
+            <BlankField label="قياس الطباخ (سم)" />
+          </div>
+          <BlankNoteLines count={2} />
         </div>
-        <BlankNoteLines count={2} />
 
         {/* Sink */}
-        <SubSectionHeader icon="droplets" title="الحوض" />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-          <BlankField label="سنتر الحوض" />
-          <BlankField label="قياس الحوض (سم)" />
+        <div style={{ breakInside: "avoid" }}>
+          <SubSectionHeader icon="droplets" title="الحوض" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+            <BlankField label="سنتر الحوض" />
+            <BlankField label="قياس الحوض (سم)" />
+          </div>
+          <BlankNoteLines count={2} />
         </div>
-        <BlankNoteLines count={2} />
 
         {/* Marble */}
-        <SubSectionHeader icon="marble" title="المرمر" />
-        <BlankField label="لون المرمر" />
-        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع المرمر:</span>
-          <CheckboxOption label="كوارتز اسباني" />
-          <CheckboxOption label="كوارتز عادي" />
-          <CheckboxOption label="صناعي" />
+        <div style={{ breakInside: "avoid" }}>
+          <SubSectionHeader icon="marble" title="المرمر" />
+          <BlankField label="لون المرمر" />
+          <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع المرمر:</span>
+            <CheckboxOption label="كوارتز اسباني" />
+            <CheckboxOption label="كوارتز عادي" />
+            <CheckboxOption label="صناعي" />
+          </div>
+          <BlankNoteLines count={2} />
         </div>
-        <BlankNoteLines count={2} />
 
         {/* Material */}
-        <SubSectionHeader icon="layers" title="مادة التصنيع" />
-        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>المادة:</span>
-          <CheckboxOption label="MDF" />
-          <CheckboxOption label="Plywood" />
+        <div style={{ breakInside: "avoid" }}>
+          <SubSectionHeader icon="layers" title="مادة التصنيع" />
+          <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>المادة:</span>
+            <CheckboxOption label="MDF" />
+            <CheckboxOption label="Plywood" />
+          </div>
+          <BlankNoteLines count={2} />
         </div>
-        <BlankNoteLines count={2} />
       </PrintSection>
 
       {/* Colors */}
@@ -236,11 +246,11 @@ function PrintLogo() {
   );
 }
 
-function PrintSection({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
+function PrintSection({ title, icon, children, allowBreak }: { title: string; icon: string; children: React.ReactNode; allowBreak?: boolean }) {
   return (
     <div
       style={{
-        breakInside: "avoid",
+        breakInside: allowBreak ? "auto" : "avoid",
         border: "2px solid #3C4146",
         marginBottom: "14px",
         overflow: "hidden",

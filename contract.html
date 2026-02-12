@@ -310,19 +310,23 @@ body {
 .pv-header { text-align: center; padding-bottom: 16px; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
 .pv-title { font-size: 18pt; font-weight: 800; color: var(--charcoal); margin: 8px 0 4px; letter-spacing: 0.5px; }
 .pv-date { font-size: 10pt; color: var(--muted); }
-.pv-section { break-inside: avoid; }
-.pv-sh { font-size: 13pt; font-weight: 800; color: var(--charcoal); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; }
-.pv-sh-bar { display: inline-block; width: 4px; height: 18px; background: var(--gold); }
-.pv-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; margin-bottom: 20px; }
+.pv-section { break-inside: avoid; border: 2px solid #3C4146; margin-bottom: 14px; overflow: hidden; }
+.pv-section-bar { height: 4px; background: #F2D000; }
+.pv-section-inner { padding: 14px 18px; }
+.pv-section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(60,65,70,0.1); }
+.pv-section-icon { width: 28px; height: 28px; border: 2px solid #3C4146; background: rgba(242,208,0,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pv-section-title { font-size: 11pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: #3C4146; margin: 0; }
+.pv-icon-sm { width: 14px; height: 14px; }
+.pv-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
 .pv-field { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px dotted #D1D5DB; }
 .pv-field-label { font-weight: 700; color: var(--muted); white-space: nowrap; }
 .pv-field-value { font-weight: 500; }
-.pv-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10pt; }
+.pv-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 10pt; }
 .pv-th { background: var(--charcoal); color: #FFFDF5; font-weight: 700; padding: 8px 12px; text-align: right; font-size: 9pt; white-space: nowrap; }
 .pv-th-c { text-align: center; }
 .pv-td { padding: 7px 12px; border-bottom: 1px solid #E5E7EB; text-align: right; }
 .pv-td-c { text-align: center; }
-.pv-empty { color: #9CA3AF; font-style: italic; font-size: 10pt; margin-bottom: 20px; padding: 8px 0; border-bottom: 1px dotted #D1D5DB; }
+.pv-empty { color: #9CA3AF; font-style: italic; font-size: 10pt; padding: 8px 0; border-bottom: 1px dotted #D1D5DB; }
 .pv-note { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid #E5E7EB; font-size: 10pt; }
 .pv-note-num { font-weight: 700; color: var(--muted); min-width: 24px; }
 .pv-sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; padding-top: 24px; border-top: 2px solid var(--gold); }
@@ -705,8 +709,27 @@ function pvField(label, value) {
   return `<div class="pv-field"><span class="pv-field-label">${label}:</span> <span class="pv-field-value">${value || '—'}</span></div>`;
 }
 
-function pvSectionTitle(title) {
-  return `<div class="pv-sh"><span class="pv-sh-bar"></span>${title}</div>`;
+function pvIcon(name) {
+  const paths = {
+    user: ICONS.user,
+    ruler: ICONS.ruler,
+    flame: ICONS.flame,
+    droplets: ICONS.droplets,
+    rectH: ICONS.rectH,
+    layers: ICONS.layers,
+    palette: ICONS.palette,
+    flower: ICONS.flower,
+    doorOpen: ICONS.doorOpen,
+    stickyNote: ICONS.stickyNote,
+  };
+  return `<svg class="pv-icon-sm" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths[name]||''}</svg>`;
+}
+
+function pvCardOpen(title, iconName) {
+  return `<div class="pv-section"><div class="pv-section-bar"></div><div class="pv-section-inner"><div class="pv-section-head"><div class="pv-section-icon">${pvIcon(iconName)}</div><h2 class="pv-section-title">${title}</h2></div>`;
+}
+function pvCardClose() {
+  return `</div></div>`;
 }
 
 function pvEmpty() { return `<p class="pv-empty">لا توجد ملاحظات</p>`; }
@@ -741,16 +764,17 @@ function renderPrintView() {
   </div>`;
 
   // Customer
-  h += `<div class="pv-section">${pvSectionTitle('معلومات الزبون')}
-    <div class="pv-grid2">
+  h += pvCardOpen('معلومات الزبون', 'user');
+  h += `<div class="pv-grid2">
       ${pvField('اسم الزبون', esc(s.customer.name))}
       ${pvField('رقم الهاتف', esc(s.customer.phone))}
       ${pvField('العنوان', esc(s.customer.address))}
       ${pvField('تاريخ العقد', formatDate(s.customer.date))}
-    </div></div>`;
+    </div>`;
+  h += pvCardClose();
 
   // Dimensions
-  h += `<div class="pv-section">${pvSectionTitle('قياسات المطبخ')}`;
+  h += pvCardOpen('قياسات المطبخ', 'ruler');
   if (filledDim.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">الجدار / القسم</th><th class="pv-th">الطول (سم)</th><th class="pv-th">الارتفاع (سم)</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledDim.forEach((r, i) => {
@@ -758,37 +782,41 @@ function renderPrintView() {
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
-  h += `</div>`;
+  h += pvCardClose();
 
   // Stove
-  h += `<div class="pv-section">${pvSectionTitle('الطباخ')}
-    <div class="pv-grid2" style="margin-bottom:${filledStoveNotes.length>0?'10px':'20px'}">
+  h += pvCardOpen('الطباخ', 'flame');
+  h += `<div class="pv-grid2">
       ${pvField('سنتر الطباخ', esc(s.stove.center))}
       ${pvField('قياس الطباخ (سم)', esc(s.stove.size))}
-    </div>${pvNotes(s.stoveNotes)}</div>`;
+    </div>${pvNotes(s.stoveNotes)}`;
+  h += pvCardClose();
 
   // Sink
-  h += `<div class="pv-section">${pvSectionTitle('الحوض')}
-    <div class="pv-grid2" style="margin-bottom:${filledSinkNotes.length>0?'10px':'20px'}">
+  h += pvCardOpen('الحوض', 'droplets');
+  h += `<div class="pv-grid2">
       ${pvField('سنتر الحوض', esc(s.sink.center))}
       ${pvField('قياس الحوض (سم)', esc(s.sink.size))}
-    </div>${pvNotes(s.sinkNotes)}</div>`;
+    </div>${pvNotes(s.sinkNotes)}`;
+  h += pvCardClose();
 
   // Marble
-  h += `<div class="pv-section">${pvSectionTitle('المرمر')}
-    <div class="pv-grid2" style="margin-bottom:${filledMarbleNotes.length>0?'10px':'20px'}">
+  h += pvCardOpen('المرمر', 'rectH');
+  h += `<div class="pv-grid2">
       ${pvField('لون المرمر', esc(s.marble.color))}
       ${pvField('نوع المرمر', esc(s.marble.type))}
-    </div>${pvNotes(s.marbleNotes)}</div>`;
+    </div>${pvNotes(s.marbleNotes)}`;
+  h += pvCardClose();
 
   // Manufacturing Material
-  h += `<div class="pv-section">${pvSectionTitle('مادة التصنيع')}
-    <div style="margin-bottom:${filledMaterialNotes.length>0?'10px':'20px'}">
+  h += pvCardOpen('مادة التصنيع', 'layers');
+  h += `<div>
       ${pvField('مادة التصنيع', esc(s.material.type))}
-    </div>${pvNotes(s.materialNotes)}</div>`;
+    </div>${pvNotes(s.materialNotes)}`;
+  h += pvCardClose();
 
   // Colors
-  h += `<div class="pv-section">${pvSectionTitle('الألوان')}`;
+  h += pvCardOpen('الألوان', 'palette');
   if (filledColors.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز اللون</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledColors.forEach((r, i) => {
@@ -796,10 +824,10 @@ function renderPrintView() {
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
-  h += `</div>`;
+  h += pvCardClose();
 
   // Engravings
-  h += `<div class="pv-section">${pvSectionTitle('النقشات')}`;
+  h += pvCardOpen('النقشات', 'flower');
   if (filledEng.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز النقشة</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledEng.forEach((r, i) => {
@@ -807,34 +835,35 @@ function renderPrintView() {
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
-  h += `</div>`;
+  h += pvCardClose();
 
   // Doors
-  h += `<div class="pv-section">${pvSectionTitle('الأبواب')}`;
+  h += pvCardOpen('الأبواب', 'doorOpen');
   if (filledDoors.length > 0) {
-    h += `<div style="margin-bottom:20px">${filledDoors.map((r, i) =>
+    h += `<div style="margin-bottom:8px">${filledDoors.map((r, i) =>
       `<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #E5E7EB"><span style="font-weight:700;color:#6B7280;min-width:24px">${i+1}.</span><span>${esc(r.note)}</span></div>`
     ).join('')}</div>`;
   } else { h += pvEmpty(); }
-  h += `</div>`;
+  h += pvCardClose();
 
   // Manufacturing Notes
-  h += `<div class="pv-section">${pvSectionTitle('ملاحظات التصنيع')}`;
+  h += pvCardOpen('ملاحظات التصنيع', 'stickyNote');
   if (filledMfg.length > 0) {
-    h += `<div style="margin-bottom:20px">${filledMfg.map((r, i) =>
+    h += `<div style="margin-bottom:8px">${filledMfg.map((r, i) =>
       `<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #E5E7EB"><span style="font-weight:700;color:#6B7280;min-width:24px">${i+1}.</span><span style="white-space:pre-wrap">${esc(r.note)}</span></div>`
     ).join('')}</div>`;
   } else { h += pvEmpty(); }
-  h += `</div>`;
+  h += pvCardClose();
 
   // Legal Notes
-  h += `<div style="break-inside:avoid;margin-top:32px;padding:12px 16px;border-right:3px solid #F2D000;background:#FAFAF5;font-size:9pt;color:#4B5563;line-height:1.8">
+  h += `<div class="pv-section"><div class="pv-section-bar"></div>
+    <div style="padding:12px 16px;font-size:9pt;color:#4B5563;line-height:1.8">
     <p style="font-weight:700;margin-bottom:6px;color:#3C4146;font-size:9.5pt">ملاحظات قانونية:</p>
     <ol style="margin:0;padding-inline-start:18px">
       <li style="margin-bottom:4px">بتوقيع هذا العقد، يُقر الزبون بموافقته على التصاميم وجميع المستندات المرفقة بهذا العقد.</li>
       <li>بتوقيع هذا العقد، يتحمل الزبون المسؤولية الكاملة عن أي أضرار تلحق بالمنتجات نتيجة التخزين بعد تأخره في استلام الطلبات المُصنّعة.</li>
     </ol>
-  </div>`;
+  </div></div>`;
 
   // Signatures
   h += `<div class="pv-sigs" style="margin-top:32px">
