@@ -46,7 +46,12 @@ export interface SinkInfo {
 }
 
 export interface MarbleInfo {
+  type: string;
   color: string;
+}
+
+export interface ManufacturingMaterialInfo {
+  type: string;
 }
 
 export interface ManufacturingNote {
@@ -63,6 +68,8 @@ export interface ContractData {
   sinkNotes: NoteRow[];
   marble: MarbleInfo;
   marbleNotes: NoteRow[];
+  material: ManufacturingMaterialInfo;
+  materialNotes: NoteRow[];
   colors: ColorRow[];
   engravings: EngravingRow[];
   doors: DoorNote[];
@@ -89,8 +96,10 @@ export function createEmptyContract(): ContractData {
     stoveNotes: [{ id: generateId(), note: "" }],
     sink: { center: "", size: "" },
     sinkNotes: [{ id: generateId(), note: "" }],
-    marble: { color: "" },
+    marble: { type: "", color: "" },
     marbleNotes: [{ id: generateId(), note: "" }],
+    material: { type: "" },
+    materialNotes: [{ id: generateId(), note: "" }],
     colors: [{ id: generateId(), code: "", notes: "" }],
     engravings: [{ id: generateId(), code: "", notes: "" }],
     doors: [{ id: generateId(), note: "" }],

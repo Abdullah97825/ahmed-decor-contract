@@ -11,6 +11,7 @@ import {
   Flame,
   Droplets,
   RectangleHorizontal,
+  Layers,
   Plus,
   Trash2,
   Printer,
@@ -20,6 +21,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SectionCard } from "@/components/section-card";
 import { Logo } from "@/components/logo";
 import { PrintableContract } from "@/components/printable-contract";
@@ -50,7 +58,7 @@ export function ContractForm() {
   );
 
   // -- Generic list helpers
-  type ListKey = "dimensions" | "stoveNotes" | "sinkNotes" | "marbleNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes";
+  type ListKey = "dimensions" | "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes";
 
   function addRow<T extends { id: string }>(
     key: ListKey,
@@ -436,10 +444,31 @@ export function ContractForm() {
                     onChange={(e) =>
                       setData((prev) => ({
                         ...prev,
-                        marble: { color: e.target.value },
+                        marble: { ...prev.marble, color: e.target.value },
                       }))
                     }
                   />
+                </div>
+                <div className="mb-3">
+                  <Select
+                    dir="rtl"
+                    value={data.marble.type}
+                    onValueChange={(value) =>
+                      setData((prev) => ({
+                        ...prev,
+                        marble: { ...prev.marble, type: value },
+                      }))
+                    }
+                  >
+                    <SelectTrigger className="w-full border-input bg-white text-right">
+                      <SelectValue placeholder="نوع المرمر" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="كوارتز اسباني">كوارتز اسباني</SelectItem>
+                      <SelectItem value="كوارتز عادي">كوارتز عادي</SelectItem>
+                      <SelectItem value="صناعي">صناعي</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 {data.marbleNotes.map((row, idx) => (
                   <div key={row.id} className="flex gap-2 items-start group mb-2">
@@ -470,6 +499,70 @@ export function ContractForm() {
                   className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("marbleNotes", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
+
+                {/* -- Manufacturing Material sub-section -- */}
+                <Separator className="my-4" />
+                <div className="flex items-center gap-2 mb-3">
+                  <Layers className="w-4 h-4 text-charcoal" />
+                  <span className="text-sm font-black text-charcoal">مادة التصنيع</span>
+                </div>
+                <div className="mb-3">
+                  <Select
+                    dir="rtl"
+                    value={data.material.type}
+                    onValueChange={(value) =>
+                      setData((prev) => ({
+                        ...prev,
+                        material: { type: value },
+                      }))
+                    }
+                  >
+                    <SelectTrigger className="w-full border-input bg-white text-right">
+                      <SelectValue placeholder="اختر مادة التصنيع" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="MDF">MDF</SelectItem>
+                      <SelectItem value="Plywood">Plywood</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {data.materialNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group mb-2">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("materialNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("materialNotes", row.id)}
+                      disabled={data.materialNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("materialNotes", () => ({
                       id: generateId(),
                       note: "",
                     }))

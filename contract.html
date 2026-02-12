@@ -68,6 +68,33 @@ body {
 .input[type="number"] { -moz-appearance: textfield; }
 .input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .textarea { resize: vertical; min-height: 2.5rem; field-sizing: content; }
+.custom-select {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--charcoal);
+  background: #fff;
+  border: 1px solid var(--input-border);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
+  padding-left: 32px;
+}
+.custom-select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(242, 208, 0, 0.25);
+}
+.custom-select option { font-family: 'Cairo', sans-serif; }
 .label {
   display: block;
   font-size: 0.875rem;
@@ -298,7 +325,7 @@ body {
 .pv-empty { color: #9CA3AF; font-style: italic; font-size: 10pt; margin-bottom: 20px; padding: 8px 0; border-bottom: 1px dotted #D1D5DB; }
 .pv-note { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid #E5E7EB; font-size: 10pt; }
 .pv-note-num { font-weight: 700; color: var(--muted); min-width: 24px; }
-.pv-sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px; padding-top: 24px; border-top: 2px solid var(--gold); }
+.pv-sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; padding-top: 24px; border-top: 2px solid var(--gold); }
 .pv-sig { text-align: center; }
 .pv-sig-label { font-weight: 700; margin-bottom: 40px; color: var(--charcoal); }
 .pv-sig-line { border-bottom: 2px solid var(--charcoal); width: 80%; margin: 0 auto; }
@@ -344,6 +371,7 @@ const ICONS = {
   flame: '<path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" />',
   droplets: '<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" />',
   rectH: '<rect width="20" height="12" x="2" y="6" rx="2" />',
+  layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" /><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L20.83 12" /><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L20.83 17" />',
   plus: '<path d="M5 12h14" /><path d="M12 5v14" />',
   trash2: '<path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />',
   printer: '<path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" />',
@@ -380,8 +408,10 @@ function createEmpty() {
     stoveNotes: [{ id: gid(), note: '' }],
     sink: { center: '', size: '' },
     sinkNotes: [{ id: gid(), note: '' }],
-    marble: { color: '' },
+    marble: { type: '', color: '' },
     marbleNotes: [{ id: gid(), note: '' }],
+    material: { type: '' },
+    materialNotes: [{ id: gid(), note: '' }],
     colors: [{ id: gid(), code: '', notes: '' }],
     engravings: [{ id: gid(), code: '', notes: '' }],
     doors: [{ id: gid(), note: '' }],
@@ -481,6 +511,14 @@ function render() {
   dimContent += `<div style="margin-bottom:12px">
     <input class="input" data-key="marble.color" placeholder="لون المرمر" value="${esc(state.marble.color)}">
   </div>`;
+  dimContent += `<div style="margin-bottom:12px">
+    <select class="custom-select" dir="rtl" data-key="marble.type">
+      <option value=""${!state.marble.type?' selected':''} disabled>نوع المرمر</option>
+      <option value="كوارتز اسباني"${state.marble.type==='كوارتز اسباني'?' selected':''}>كوارتز اسباني</option>
+      <option value="كوارتز عادي"${state.marble.type==='كوارتز عادي'?' selected':''}>كوارتز عادي</option>
+      <option value="صناعي"${state.marble.type==='صناعي'?' selected':''}>صناعي</option>
+    </select>
+  </div>`;
   state.marbleNotes.forEach((row, idx) => {
     dimContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
       <input class="input" data-key="marbleNotes.${row.id}.note" placeholder="ملاحظة..." value="${esc(row.note)}" style="flex:1">
@@ -488,6 +526,24 @@ function render() {
     </div>`;
   });
   dimContent += `<button class="btn btn-add" style="margin-top:4px" data-add="marbleNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+
+  // Manufacturing Material sub-section
+  dimContent += `<hr class="separator" style="margin:16px 0">`;
+  dimContent += `<div class="subsection-header">${icon('layers','icon-sm')} <span>مادة التصنيع</span></div>`;
+  dimContent += `<div style="margin-bottom:12px">
+    <select class="custom-select" dir="rtl" data-key="material.type">
+      <option value=""${!state.material.type?' selected':''} disabled>اختر مادة التصنيع</option>
+      <option value="MDF"${state.material.type==='MDF'?' selected':''}>MDF</option>
+      <option value="Plywood"${state.material.type==='Plywood'?' selected':''}>Plywood</option>
+    </select>
+  </div>`;
+  state.materialNotes.forEach((row, idx) => {
+    dimContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <input class="input" data-key="materialNotes.${row.id}.note" placeholder="ملاحظة..." value="${esc(row.note)}" style="flex:1">
+      <button class="btn-ghost" data-remove="materialNotes.${row.id}" ${state.materialNotes.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  dimContent += `<button class="btn btn-add" style="margin-top:4px" data-add="materialNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
 
   html += card('قياسات المطبخ', 'ruler', dimContent);
 
@@ -570,6 +626,8 @@ document.addEventListener('input', function(e) {
     state.sink[parts[1]] = val;
   } else if (parts[0] === 'marble') {
     state.marble[parts[1]] = val;
+  } else if (parts[0] === 'material') {
+    state.material[parts[1]] = val;
   } else {
     // Array rows: "listName.id.field"
     const list = state[parts[0]];
@@ -579,6 +637,14 @@ document.addEventListener('input', function(e) {
     }
   }
   // Don't re-render on input to avoid losing focus — state is updated in-place
+});
+
+document.addEventListener('change', function(e) {
+  if (e.target.tagName === 'SELECT' && e.target.dataset.key) {
+    const parts = e.target.dataset.key.split('.');
+    if (parts[0] === 'marble') state.marble[parts[1]] = e.target.value;
+    else if (parts[0] === 'material') state.material[parts[1]] = e.target.value;
+  }
 });
 
 document.addEventListener('click', function(e) {
@@ -591,6 +657,7 @@ document.addEventListener('click', function(e) {
       stoveNotes: () => ({ id: gid(), note: '' }),
       sinkNotes: () => ({ id: gid(), note: '' }),
       marbleNotes: () => ({ id: gid(), note: '' }),
+      materialNotes: () => ({ id: gid(), note: '' }),
       colors: () => ({ id: gid(), code: '', notes: '' }),
       engravings: () => ({ id: gid(), code: '', notes: '' }),
       doors: () => ({ id: gid(), note: '' }),
@@ -662,6 +729,7 @@ function renderPrintView() {
   const filledStoveNotes = s.stoveNotes.filter(r => r.note);
   const filledSinkNotes = s.sinkNotes.filter(r => r.note);
   const filledMarbleNotes = s.marbleNotes.filter(r => r.note);
+  const filledMaterialNotes = s.materialNotes.filter(r => r.note);
 
   let h = `<div class="pv" dir="rtl">`;
 
@@ -708,9 +776,16 @@ function renderPrintView() {
 
   // Marble
   h += `<div class="pv-section">${pvSectionTitle('المرمر')}
-    <div style="margin-bottom:${filledMarbleNotes.length>0?'10px':'20px'}">
+    <div class="pv-grid2" style="margin-bottom:${filledMarbleNotes.length>0?'10px':'20px'}">
       ${pvField('لون المرمر', esc(s.marble.color))}
+      ${pvField('نوع المرمر', esc(s.marble.type))}
     </div>${pvNotes(s.marbleNotes)}</div>`;
+
+  // Manufacturing Material
+  h += `<div class="pv-section">${pvSectionTitle('مادة التصنيع')}
+    <div style="margin-bottom:${filledMaterialNotes.length>0?'10px':'20px'}">
+      ${pvField('مادة التصنيع', esc(s.material.type))}
+    </div>${pvNotes(s.materialNotes)}</div>`;
 
   // Colors
   h += `<div class="pv-section">${pvSectionTitle('الألوان')}`;
@@ -752,8 +827,17 @@ function renderPrintView() {
   } else { h += pvEmpty(); }
   h += `</div>`;
 
+  // Legal Notes
+  h += `<div style="break-inside:avoid;margin-top:32px;padding:12px 16px;border-right:3px solid #F2D000;background:#FAFAF5;font-size:9pt;color:#4B5563;line-height:1.8">
+    <p style="font-weight:700;margin-bottom:6px;color:#3C4146;font-size:9.5pt">ملاحظات قانونية:</p>
+    <ol style="margin:0;padding-inline-start:18px">
+      <li style="margin-bottom:4px">بتوقيع هذا العقد، يُقر الزبون بموافقته على التصاميم وجميع المستندات المرفقة بهذا العقد.</li>
+      <li>بتوقيع هذا العقد، يتحمل الزبون المسؤولية الكاملة عن أي أضرار تلحق بالمنتجات نتيجة التخزين بعد تأخره في استلام الطلبات المُصنّعة.</li>
+    </ol>
+  </div>`;
+
   // Signatures
-  h += `<div class="pv-sigs">
+  h += `<div class="pv-sigs" style="margin-top:32px">
     <div class="pv-sig"><p class="pv-sig-label">توقيع الزبون</p><div class="pv-sig-line"></div></div>
     <div class="pv-sig"><p class="pv-sig-label">توقيع المصنع</p><div class="pv-sig-line"></div></div>
   </div>`;

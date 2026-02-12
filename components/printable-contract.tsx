@@ -26,6 +26,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
   const filledStoveNotes = data.stoveNotes.filter((r) => r.note);
   const filledSinkNotes = data.sinkNotes.filter((r) => r.note);
   const filledMarbleNotes = data.marbleNotes.filter((r) => r.note);
+  const filledMaterialNotes = data.materialNotes.filter((r) => r.note);
   const filledColors = data.colors.filter((r) => r.code || r.notes);
   const filledEngravings = data.engravings.filter((r) => r.code || r.notes);
   const filledDoors = data.doors.filter((r) => r.note);
@@ -173,13 +174,32 @@ export function PrintableContract({ data }: PrintableContractProps) {
       <SectionTitle>المرمر</SectionTitle>
       <div
         style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "8px 24px",
           marginBottom: filledMarbleNotes.length > 0 ? "10px" : "20px",
         }}
       >
         <InfoField label="لون المرمر" value={data.marble.color} />
+        <InfoField label="نوع المرمر" value={data.marble.type} />
       </div>
       {filledMarbleNotes.length > 0 && (
         <NotesList notes={filledMarbleNotes} />
+      )}
+      </div>
+
+      {/* ===== MANUFACTURING MATERIAL ===== */}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>مادة التصنيع</SectionTitle>
+      <div
+        style={{
+          marginBottom: filledMaterialNotes.length > 0 ? "10px" : "20px",
+        }}
+      >
+        <InfoField label="مادة التصنيع" value={data.material.type} />
+      </div>
+      {filledMaterialNotes.length > 0 && (
+        <NotesList notes={filledMaterialNotes} />
       )}
       </div>
 
@@ -317,13 +337,33 @@ export function PrintableContract({ data }: PrintableContractProps) {
       )}
       </div>
 
+      {/* ===== LEGAL NOTES ===== */}
+      <div
+        style={{
+          breakInside: "avoid",
+          marginTop: "32px",
+          padding: "12px 16px",
+          borderRight: "3px solid #F2D000",
+          backgroundColor: "#FAFAF5",
+          fontSize: "9pt",
+          color: "#4B5563",
+          lineHeight: 1.8,
+        }}
+      >
+        <p style={{ fontWeight: 700, marginBottom: "6px", color: "#3C4146", fontSize: "9.5pt" }}>ملاحظات قانونية:</p>
+        <ol style={{ margin: 0, paddingInlineStart: "18px" }}>
+          <li style={{ marginBottom: "4px" }}>بتوقيع هذا العقد، يُقر الزبون بموافقته على التصاميم وجميع المستندات المرفقة بهذا العقد.</li>
+          <li>بتوقيع هذا العقد، يتحمل الزبون المسؤولية الكاملة عن أي أضرار تلحق بالمنتجات نتيجة التخزين بعد تأخره في استلام الطلبات المُصنّعة.</li>
+        </ol>
+      </div>
+
       {/* ===== SIGNATURES ===== */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "48px",
-          marginTop: "48px",
+          marginTop: "32px",
           paddingTop: "24px",
           borderTop: "2px solid #F2D000",
         }}
