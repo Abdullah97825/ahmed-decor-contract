@@ -23,14 +23,18 @@ export function Logo({ className, size = "md" }: LogoProps) {
   const sizeClasses = {
     sm: "text-lg tracking-wide",
     md: "text-2xl tracking-wider",
-    lg: "text-4xl tracking-widest",
+    lg: "text-4xl tracking-[0.25em]",
   };
 
   return (
-    <div dir="ltr" className={cn("font-black select-none", sizeClasses[size], className)}>
-      <span className="inline-flex">{colorizeText("AHMED")}</span>
-      <span className="mx-1.5" />
-      <span className="inline-flex">{colorizeText("DECOR")}</span>
+    <div dir="ltr" className={cn("font-black select-none flex items-center justify-center gap-3", sizeClasses[size], className)}>
+      <span className="text-gold font-black" style={{ fontSize: '0.6em' }}>[</span>
+      <span>
+        <span className="inline-flex">{colorizeText("AHMED")}</span>
+        <span className="mx-1.5" />
+        <span className="inline-flex">{colorizeText("DECOR")}</span>
+      </span>
+      <span className="text-gold font-black" style={{ fontSize: '0.6em' }}>]</span>
     </div>
   );
 }

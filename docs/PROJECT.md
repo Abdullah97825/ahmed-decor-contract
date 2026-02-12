@@ -24,8 +24,8 @@ A simple web-based tool for generating manufacturing contracts for kitchens and 
 ### 2. Kitchen Dimensions (قياسات المطبخ)
 Dynamic list of wall/section measurements:
 - الجدار/القسم (Wall/Section label)
-- الطول بالمتر (Length in meters)
-- الارتفاع بالمتر (Height in meters)
+- الطول بالسنتمتر (Length in centimeters)
+- الارتفاع بالسنتمتر (Height in centimeters)
 - ملاحظات (Notes)
 
 ### 3. Colors (الألوان)

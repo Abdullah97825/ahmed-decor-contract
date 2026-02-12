@@ -100,8 +100,8 @@ export function PrintableContract({ data }: PrintableContractProps) {
               <tr>
                 <Th>#</Th>
                 <Th>الجدار / القسم</Th>
-                <Th>الطول (م)</Th>
-                <Th>الارتفاع (م)</Th>
+                <Th>الطول (سم)</Th>
+                <Th>الارتفاع (سم)</Th>
                 <Th>ملاحظات</Th>
               </tr>
             </thead>
@@ -256,7 +256,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
           width: "4px",
           height: "18px",
           backgroundColor: "#F2D000",
-          borderRadius: "2px",
+          borderRadius: "0",
         }}
       />
       {children}

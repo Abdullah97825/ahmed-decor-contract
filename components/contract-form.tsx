@@ -10,7 +10,6 @@ import {
   Plus,
   Trash2,
   Printer,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,49 +83,31 @@ export function ContractForm() {
     <>
       {/* ====== SCREEN FORM ====== */}
       <div className="no-print min-h-screen bg-cream">
-        {/* Decorative background pattern */}
-        <div className="fixed inset-0 pointer-events-none opacity-[0.03]">
+        {/* Decorative background — blueprint dot grid */}
+        <div className="fixed inset-0 pointer-events-none opacity-[0.06]">
           <svg width="100%" height="100%">
             <defs>
               <pattern
-                id="wood-grain"
+                id="dot-grid"
                 x="0"
                 y="0"
-                width="200"
-                height="200"
+                width="24"
+                height="24"
                 patternUnits="userSpaceOnUse"
               >
-                <path
-                  d="M0 50 Q50 45 100 50 T200 50"
-                  fill="none"
-                  stroke="#8B6914"
-                  strokeWidth="1"
-                />
-                <path
-                  d="M0 100 Q50 95 100 100 T200 100"
-                  fill="none"
-                  stroke="#8B6914"
-                  strokeWidth="0.5"
-                />
-                <path
-                  d="M0 150 Q50 145 100 150 T200 150"
-                  fill="none"
-                  stroke="#8B6914"
-                  strokeWidth="1"
-                />
+                <circle cx="2" cy="2" r="1" fill="#3C4146" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#wood-grain)" />
+            <rect width="100%" height="100%" fill="url(#dot-grid)" />
           </svg>
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <Logo size="lg" className="justify-center mb-3" />
-            <div className="inline-flex items-center gap-2 bg-charcoal text-cream px-5 py-2 rounded-full text-sm font-semibold">
-              <Sparkles className="w-4 h-4 text-gold" />
-              عقد تصنيع مطبخ
+          <div className="text-center mb-10">
+            <Logo size="lg" className="justify-center mb-4" />
+            <div className="inline-block bg-charcoal text-gold px-8 py-3 border-2 border-charcoal shadow-[3px_3px_0px_#F2D000]">
+              <span className="text-sm font-black uppercase tracking-[0.2em]">عقد تصنيع مطبخ</span>
             </div>
           </div>
 
@@ -187,10 +168,10 @@ export function ContractForm() {
             >
               <div className="space-y-3">
                 {/* Column headers */}
-                <div className="hidden sm:grid grid-cols-[1fr_0.7fr_0.7fr_1fr_auto] gap-2 text-xs font-semibold text-muted-foreground px-1">
+                <div className="hidden sm:grid grid-cols-[1fr_0.7fr_0.7fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
                   <span>الجدار / القسم</span>
-                  <span>الطول (م)</span>
-                  <span>الارتفاع (م)</span>
+                  <span>الطول (سم)</span>
+                  <span>الارتفاع (سم)</span>
                   <span>ملاحظات</span>
                   <span className="w-9" />
                 </div>
@@ -217,9 +198,9 @@ export function ContractForm() {
                       }
                     />
                     <Input
-                      placeholder="الطول"
+                      placeholder="سم"
                       type="number"
-                      step="0.01"
+                      step="0.1"
                       min="0"
                       value={row.length}
                       onChange={(e) =>
@@ -234,9 +215,9 @@ export function ContractForm() {
                       className="text-left"
                     />
                     <Input
-                      placeholder="الارتفاع"
+                      placeholder="سم"
                       type="number"
-                      step="0.01"
+                      step="0.1"
                       min="0"
                       value={row.height}
                       onChange={(e) =>
@@ -265,7 +246,7 @@ export function ContractForm() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity self-center"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
                       onClick={() => removeRow("dimensions", row.id)}
                       disabled={data.dimensions.length <= 1}
                     >
@@ -277,7 +258,7 @@ export function ContractForm() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-dashed border-gold/40 text-gold-hover hover:bg-gold/5 hover:text-gold"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("dimensions", () => ({
                       id: generateId(),
@@ -300,7 +281,7 @@ export function ContractForm() {
               icon={<Palette className="w-5 h-5" />}
             >
               <div className="space-y-3">
-                <div className="hidden sm:grid grid-cols-[0.8fr_1fr_auto] gap-2 text-xs font-semibold text-muted-foreground px-1">
+                <div className="hidden sm:grid grid-cols-[0.8fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
                   <span>رمز اللون</span>
                   <span>ملاحظات (الاستخدام)</span>
                   <span className="w-9" />
@@ -342,7 +323,7 @@ export function ContractForm() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity self-center"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
                       onClick={() => removeRow("colors", row.id)}
                       disabled={data.colors.length <= 1}
                     >
@@ -354,7 +335,7 @@ export function ContractForm() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-dashed border-gold/40 text-gold-hover hover:bg-gold/5 hover:text-gold"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("colors", () => ({
                       id: generateId(),
@@ -375,7 +356,7 @@ export function ContractForm() {
               icon={<EngravingIcon className="w-5 h-5" />}
             >
               <div className="space-y-3">
-                <div className="hidden sm:grid grid-cols-[0.8fr_1fr_auto] gap-2 text-xs font-semibold text-muted-foreground px-1">
+                <div className="hidden sm:grid grid-cols-[0.8fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
                   <span>رمز النقشة</span>
                   <span>ملاحظات</span>
                   <span className="w-9" />
@@ -417,7 +398,7 @@ export function ContractForm() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity self-center"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
                       onClick={() => removeRow("engravings", row.id)}
                       disabled={data.engravings.length <= 1}
                     >
@@ -429,7 +410,7 @@ export function ContractForm() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-dashed border-gold/40 text-gold-hover hover:bg-gold/5 hover:text-gold"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("engravings", () => ({
                       id: generateId(),
@@ -479,7 +460,7 @@ export function ContractForm() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
                       onClick={() => removeRow("doors", row.id)}
                       disabled={data.doors.length <= 1}
                     >
@@ -491,7 +472,7 @@ export function ContractForm() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-dashed border-gold/40 text-gold-hover hover:bg-gold/5 hover:text-gold"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("doors", () => ({
                       id: generateId(),
@@ -506,11 +487,11 @@ export function ContractForm() {
             </SectionCard>
 
             {/* ====== PRINT BUTTON ====== */}
-            <div className="flex justify-center pt-4 pb-12">
+            <div className="flex justify-center pt-6 pb-12">
               <Button
                 size="lg"
                 onClick={handlePrint}
-                className="bg-gold hover:bg-gold-hover text-charcoal font-bold text-base px-10 py-6 rounded-xl shadow-lg shadow-gold/20 hover:shadow-gold/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                className="bg-gold border-3 border-charcoal text-charcoal font-black text-base uppercase tracking-wider px-12 py-7 shadow-[6px_6px_0px_#3C4146] hover:shadow-[2px_2px_0px_#3C4146] hover:translate-x-[4px] hover:translate-y-[4px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all duration-100"
               >
                 <Printer className="w-5 h-5" />
                 طباعة العقد
