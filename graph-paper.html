@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أحمد ديكور — ورقة رسم</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%233C4146'/><text x='16' y='22' font-size='17' font-weight='bold' text-anchor='middle' fill='%23F2D000' font-family='Arial'>DK</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --charcoal: #3C4146;
+  --gold: #F2D000;
+  --gold-hover: #D4B800;
+  --cream: #FFFDF5;
+  --muted: #6B7280;
+}
+html { font-size: 16px; }
+body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--charcoal); line-height: 1.6; }
+
+/* SCREEN */
+.screen { min-height: 100vh; position: relative; }
+.dot-bg { position: fixed; inset: 0; pointer-events: none; opacity: 0.06; background-image: radial-gradient(circle, var(--charcoal) 1px, transparent 1px); background-size: 24px 24px; }
+.container { position: relative; max-width: 42rem; margin: 0 auto; padding: 2rem 1rem; }
+.logo { display: flex; align-items: center; justify-content: center; gap: 12px; user-select: none; font-weight: 900; font-size: 2.25rem; letter-spacing: 0.25em; margin-bottom: 16px; }
+.logo__bracket { color: var(--gold); font-weight: 900; font-size: 0.6em; }
+.logo__char--gold { color: var(--gold); }
+.logo__char--charcoal { color: var(--charcoal); }
+.logo__spacer { display: inline-block; width: 0.375rem; }
+.banner { display: inline-block; background: var(--charcoal); color: var(--gold); padding: 12px 32px; border: 2px solid var(--charcoal); box-shadow: 3px 3px 0px var(--gold); font-size: 0.875rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; }
+.card { position: relative; background: #fff; border: 2px solid var(--charcoal); box-shadow: 4px 4px 0px var(--charcoal); overflow: hidden; margin-bottom: 24px; }
+.card__bar { height: 4px; background: var(--gold); }
+.card__inner { padding: 24px; }
+.card__header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid rgba(60, 65, 70, 0.1); }
+.card__icon { width: 36px; height: 36px; border: 2px solid var(--charcoal); background: rgba(242, 208, 0, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.card__title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: var(--charcoal); }
+.icon { display: inline-flex; width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+.link { color: var(--charcoal); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--gold); text-decoration-thickness: 2px; }
+.link:hover { color: var(--gold); }
+.btn-print { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 48px; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; border: 3px solid var(--charcoal); background: var(--gold); color: var(--charcoal); box-shadow: 6px 6px 0px var(--charcoal); cursor: pointer; transition: all 0.1s; }
+.btn-print:hover { background: var(--gold-hover); box-shadow: 2px 2px 0px var(--charcoal); transform: translate(4px, 4px); }
+.btn-print:active { box-shadow: none; transform: translate(6px, 6px); }
+.back-link { font-size: 0.75rem; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+.back-link:hover { color: var(--charcoal); }
+
+/* PRINT */
+@media print {
+  @page { size: A4; margin: 8mm 10mm; }
+  body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+/* Graph Page */
+.graph-page { width: 100%; height: 100vh; position: relative; page-break-after: always; display: flex; flex-direction: column; }
+.graph-page:last-child { page-break-after: auto; }
+
+.gp-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 2px solid #3C4146; flex-shrink: 0; }
+.gp-logo { font-weight: 900; font-size: 12pt; letter-spacing: 0.05em; user-select: none; }
+.gp-logo .g { color: #F2D000; }
+.gp-logo .c { color: #3C4146; }
+.gp-title { font-size: 9pt; font-weight: 700; color: #6B7280; }
+.gp-page { font-size: 9pt; font-weight: 700; color: #3C4146; }
+
+.gp-grid { flex: 1; position: relative; overflow: hidden; }
+
+.gp-footer { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; border-top: 2px solid #3C4146; flex-shrink: 0; font-size: 9pt; }
+.gp-footer-brand { font-weight: 900; letter-spacing: 0.1em; color: #3C4146; }
+.gp-footer-field { display: flex; gap: 6px; align-items: center; color: #6B7280; }
+.gp-footer-line { display: inline-block; width: 100px; border-bottom: 1.5px solid #C8C0B4; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN -->
+<div class="screen no-print">
+  <div class="dot-bg"></div>
+  <div class="container">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div id="screen-logo" class="logo" dir="ltr"></div>
+      <div class="banner">ورقة رسم</div>
+    </div>
+    <div class="card">
+      <div class="card__bar"></div>
+      <div class="card__inner">
+        <div class="card__header">
+          <div class="card__icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M2 10h20"/><path d="M12 4v16"/></svg>
+          </div>
+          <div class="card__title">عن ورقة الرسم</div>
+        </div>
+        <p class="desc">
+          ورقة مخصصة لرسم المخططات الأولية للمطبخ أثناء الزيارة الميدانية.
+          تضم شبكة مربعات دقيقة مع ترويسة تحمل العلامة التجارية.
+        </p>
+        <p class="desc">
+          يتم طباعة صفحتين — واحدة للتخطيط العام وأخرى للتفاصيل.
+          يمكنك استخدام
+          <a class="link" href="survey-form.html">استمارة الكشف الأولي</a>
+          لتدوين القياسات بجانب الرسم.
+        </p>
+      </div>
+    </div>
+    <div style="text-align:center; padding: 8px 0 32px;">
+      <button class="btn-print" onclick="window.print()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>
+        طباعة ورقة الرسم
+      </button>
+    </div>
+    <div style="text-align:center; padding-bottom:32px;">
+      <a class="back-link" href="survey-form.html">← العودة لاستمارة الكشف</a>
+      <span style="margin:0 12px; color:#C8C0B4;">|</span>
+      <a class="back-link" href="contract.html">← العودة لعقد التصنيع</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT VIEW -->
+<div class="print-only" dir="rtl" style="font-family:'Cairo',sans-serif;">
+
+  <!-- Page 1 -->
+  <div class="graph-page">
+    <div class="gp-header">
+      <div class="gp-logo" dir="ltr"><span class="c">A</span><span class="c">H</span><span class="c">M</span><span class="g">E</span><span class="c">D</span> <span class="c">D</span><span class="g">E</span><span class="c">C</span><span class="c">O</span><span class="c">R</span></div>
+      <div class="gp-title">استمارة كشف أولي — ورقة رسم</div>
+      <div class="gp-page">صفحة ١ / ٢</div>
+    </div>
+    <div class="gp-grid">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="smallGrid1" width="18" height="18" patternUnits="userSpaceOnUse">
+            <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#D1D5DB" stroke-width="0.5"/>
+          </pattern>
+          <pattern id="majorGrid1" width="90" height="90" patternUnits="userSpaceOnUse">
+            <rect width="90" height="90" fill="url(#smallGrid1)"/>
+            <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#9CA3AF" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#majorGrid1)"/>
+      </svg>
+    </div>
+    <div class="gp-footer">
+      <div class="gp-footer-brand" dir="ltr">AHMED DECOR</div>
+      <div class="gp-footer-field">الاسم: <span class="gp-footer-line"></span></div>
+      <div class="gp-footer-field">التاريخ: <span class="gp-footer-line"></span></div>
+    </div>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="graph-page">
+    <div class="gp-header">
+      <div class="gp-logo" dir="ltr"><span class="c">A</span><span class="c">H</span><span class="c">M</span><span class="g">E</span><span class="c">D</span> <span class="c">D</span><span class="g">E</span><span class="c">C</span><span class="c">O</span><span class="c">R</span></div>
+      <div class="gp-title">استمارة كشف أولي — ورقة رسم</div>
+      <div class="gp-page">صفحة ٢ / ٢</div>
+    </div>
+    <div class="gp-grid">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="smallGrid2" width="18" height="18" patternUnits="userSpaceOnUse">
+            <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#D1D5DB" stroke-width="0.5"/>
+          </pattern>
+          <pattern id="majorGrid2" width="90" height="90" patternUnits="userSpaceOnUse">
+            <rect width="90" height="90" fill="url(#smallGrid2)"/>
+            <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#9CA3AF" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#majorGrid2)"/>
+      </svg>
+    </div>
+    <div class="gp-footer">
+      <div class="gp-footer-brand" dir="ltr">AHMED DECOR</div>
+      <div class="gp-footer-field">الاسم: <span class="gp-footer-line"></span></div>
+      <div class="gp-footer-field">التاريخ: <span class="gp-footer-line"></span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function renderLogo(el) {
+  const text = "AHMED DECOR";
+  let chars = '';
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === ' ') { chars += '<span class="logo__spacer"></span>'; continue; }
+    const cls = c === 'E' ? 'logo__char--gold' : 'logo__char--charcoal';
+    chars += `<span class="${cls}">${c}</span>`;
+  }
+  el.innerHTML = `<span class="logo__bracket">[</span><span>${chars}</span><span class="logo__bracket">]</span>`;
+}
+renderLogo(document.getElementById('screen-logo'));
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أحمد ديكور — استمارة كشف أولي</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%233C4146'/><text x='16' y='22' font-size='17' font-weight='bold' text-anchor='middle' fill='%23F2D000' font-family='Arial'>DK</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --charcoal: #3C4146;
+  --gold: #F2D000;
+  --gold-hover: #D4B800;
+  --cream: #FFFDF5;
+  --muted: #6B7280;
+  --input-border: #C8C0B4;
+}
+html { font-size: 16px; }
+body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--charcoal); line-height: 1.6; }
+
+/* SCREEN */
+.screen { min-height: 100vh; position: relative; }
+.dot-bg { position: fixed; inset: 0; pointer-events: none; opacity: 0.06; background-image: radial-gradient(circle, var(--charcoal) 1px, transparent 1px); background-size: 24px 24px; }
+.container { position: relative; max-width: 42rem; margin: 0 auto; padding: 2rem 1rem; }
+.logo { display: flex; align-items: center; justify-content: center; gap: 12px; user-select: none; font-weight: 900; font-size: 2.25rem; letter-spacing: 0.25em; margin-bottom: 16px; }
+.logo__bracket { color: var(--gold); font-weight: 900; font-size: 0.6em; }
+.logo__char--gold { color: var(--gold); }
+.logo__char--charcoal { color: var(--charcoal); }
+.logo__spacer { display: inline-block; width: 0.375rem; }
+.banner { display: inline-block; background: var(--charcoal); color: var(--gold); padding: 12px 32px; border: 2px solid var(--charcoal); box-shadow: 3px 3px 0px var(--gold); font-size: 0.875rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; }
+.card { position: relative; background: #fff; border: 2px solid var(--charcoal); box-shadow: 4px 4px 0px var(--charcoal); overflow: hidden; margin-bottom: 24px; }
+.card__bar { height: 4px; background: var(--gold); }
+.card__inner { padding: 24px; }
+.card__header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid rgba(60, 65, 70, 0.1); }
+.card__icon { width: 36px; height: 36px; border: 2px solid var(--charcoal); background: rgba(242, 208, 0, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.card__title { font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: var(--charcoal); }
+.icon { display: inline-flex; width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+.link { color: var(--charcoal); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--gold); text-decoration-thickness: 2px; }
+.link:hover { color: var(--gold); }
+.btn-print { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 48px; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; border: 3px solid var(--charcoal); background: var(--gold); color: var(--charcoal); box-shadow: 6px 6px 0px var(--charcoal); cursor: pointer; transition: all 0.1s; }
+.btn-print:hover { background: var(--gold-hover); box-shadow: 2px 2px 0px var(--charcoal); transform: translate(4px, 4px); }
+.btn-print:active { box-shadow: none; transform: translate(6px, 6px); }
+.back-link { font-size: 0.75rem; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+.back-link:hover { color: var(--charcoal); }
+
+/* PRINT */
+@media print {
+  @page { size: A4; margin: 10mm 12mm; }
+  body { background: white !important; color: black !important; font-size: 11pt !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+/* Print section card style */
+.ps { break-inside: avoid; border: 2px solid #3C4146; margin-bottom: 14px; overflow: hidden; }
+.ps-bar { height: 4px; background: #F2D000; }
+.ps-inner { padding: 14px 18px; }
+.ps-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(60,65,70,0.1); }
+.ps-icon { width: 28px; height: 28px; border: 2px solid #3C4146; background: rgba(242,208,0,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ps-title { font-size: 11pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: #3C4146; margin: 0; }
+.ps-sub { display: flex; align-items: center; gap: 6px; margin-top: 12px; margin-bottom: 8px; padding-top: 10px; border-top: 1px solid rgba(60,65,70,0.12); }
+.ps-sub-title { font-size: 10pt; font-weight: 900; color: #3C4146; }
+.bf { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1.5px solid #C8C0B4; min-height: 32px; }
+.bf-label { font-weight: 700; color: #6B7280; white-space: nowrap; font-size: 10pt; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+.bt { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 10pt; }
+.bt th { background: #3C4146; color: #FFFDF5; font-weight: 700; padding: 6px 10px; text-align: right; font-size: 9pt; white-space: nowrap; }
+.bt th:first-child { text-align: center; }
+.bt td { padding: 10px 10px; border-bottom: 1.5px solid #C8C0B4; height: 32px; }
+.bt td:first-child { text-align: center; color: #6B7280; font-weight: 700; font-size: 9pt; }
+.nl { margin-bottom: 8px; }
+.nl-row { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1.5px solid #C8C0B4; min-height: 24px; align-items: center; }
+.nl-row--tall { min-height: 28px; }
+.nl-num { font-weight: 700; color: #6B7280; min-width: 20px; font-size: 9pt; }
+.cb { display: inline-flex; align-items: center; gap: 4px; font-size: 10pt; }
+.cb-box { font-size: 14pt; line-height: 1; }
+.cb-row { display: flex; gap: 24px; padding: 8px 0; margin-bottom: 4px; }
+.cb-label { font-weight: 700; color: #6B7280; font-size: 10pt; }
+.pv-logo { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.05em; user-select: none; text-align: center; margin-bottom: 8px; }
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; padding-top: 24px; border-top: 2px solid #F2D000; }
+.sig { text-align: center; }
+.sig-label { font-weight: 700; margin-bottom: 40px; color: #3C4146; }
+.sig-line { border-bottom: 2px solid #3C4146; width: 80%; margin: 0 auto; }
+.hint { font-size: 9pt; color: #6B7280; margin-bottom: 8px; }
+
+.icon-sm { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN -->
+<div class="screen no-print">
+  <div class="dot-bg"></div>
+  <div class="container">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div id="screen-logo" class="logo" dir="ltr"></div>
+      <div class="banner">استمارة كشف أولي</div>
+    </div>
+    <div class="card">
+      <div class="card__bar"></div>
+      <div class="card__inner">
+        <div class="card__header">
+          <div class="card__icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+          </div>
+          <div class="card__title">عن هذه الاستمارة</div>
+        </div>
+        <p class="desc">
+          هذه الاستمارة مخصصة لفريق العمل الميداني لجمع المعلومات الأولية من موقع الزبون.
+          تتضمن حقول فارغة لتعبئتها يدوياً أثناء الزيارة الميدانية، بالإضافة إلى خانات اختيار لنوع المرمر ومادة التصنيع.
+        </p>
+        <p class="desc">
+          اطبع هذه الاستمارة قبل التوجه للموقع. يمكنك أيضاً طباعة
+          <a class="link" href="graph-paper.html">ورقة الرسم</a>
+          لرسم المخططات الأولية.
+        </p>
+      </div>
+    </div>
+    <div style="text-align:center; padding: 8px 0 32px;">
+      <button class="btn-print" onclick="window.print()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>
+        طباعة الاستمارة
+      </button>
+    </div>
+    <div style="text-align:center; padding-bottom:32px;">
+      <a class="back-link" href="contract.html">← العودة لعقد التصنيع</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT VIEW -->
+<div id="print-view" class="print-only" dir="rtl" style="font-family:'Cairo',sans-serif; color:#1a1a1a; font-size:11pt; line-height:1.7;">
+
+  <!-- Header -->
+  <div style="text-align:center; padding-bottom:16px; border-bottom:2px solid #F2D000; margin-bottom:20px;">
+    <div id="print-logo" class="pv-logo" dir="ltr"></div>
+    <h1 style="font-size:18pt; font-weight:800; color:#3C4146; margin:8px 0 4px; letter-spacing:0.5px;">استمارة كشف أولي</h1>
+    <p style="font-size:10pt; color:#6B7280;">التاريخ: ____________________</p>
+  </div>
+
+  <!-- Customer Info -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg class="icon-sm" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h2 class="ps-title">معلومات الزبون</h2>
+      </div>
+      <div class="grid2">
+        <div class="bf"><span class="bf-label">اسم الزبون:</span></div>
+        <div class="bf"><span class="bf-label">رقم الهاتف:</span></div>
+        <div class="bf"><span class="bf-label">العنوان:</span></div>
+        <div class="bf"><span class="bf-label">تاريخ الزيارة:</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kitchen Dimensions -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div>
+        <h2 class="ps-title">قياسات المطبخ</h2>
+      </div>
+      <table class="bt">
+        <thead><tr><th style="width:8%">#</th><th style="width:28%">الجدار / القسم</th><th style="width:18%">الطول (سم)</th><th style="width:18%">الارتفاع (سم)</th><th style="width:28%">ملاحظات</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>4</td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <!-- Stove -->
+      <div class="ps-sub">
+        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg>
+        <span class="ps-sub-title">الطباخ</span>
+      </div>
+      <div class="grid2" style="margin-bottom:8px">
+        <div class="bf"><span class="bf-label">سنتر الطباخ:</span></div>
+        <div class="bf"><span class="bf-label">قياس الطباخ (سم):</span></div>
+      </div>
+      <div class="nl">
+        <div class="nl-row"><span class="nl-num">1.</span></div>
+        <div class="nl-row"><span class="nl-num">2.</span></div>
+      </div>
+
+      <!-- Sink -->
+      <div class="ps-sub">
+        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+        <span class="ps-sub-title">الحوض</span>
+      </div>
+      <div class="grid2" style="margin-bottom:8px">
+        <div class="bf"><span class="bf-label">سنتر الحوض:</span></div>
+        <div class="bf"><span class="bf-label">قياس الحوض (سم):</span></div>
+      </div>
+      <div class="nl">
+        <div class="nl-row"><span class="nl-num">1.</span></div>
+        <div class="nl-row"><span class="nl-num">2.</span></div>
+      </div>
+
+      <!-- Marble -->
+      <div class="ps-sub">
+        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
+        <span class="ps-sub-title">المرمر</span>
+      </div>
+      <div class="bf"><span class="bf-label">لون المرمر:</span></div>
+      <div class="cb-row">
+        <span class="cb-label">نوع المرمر:</span>
+        <span class="cb"><span class="cb-box">☐</span> كوارتز اسباني</span>
+        <span class="cb"><span class="cb-box">☐</span> كوارتز عادي</span>
+        <span class="cb"><span class="cb-box">☐</span> صناعي</span>
+      </div>
+      <div class="nl">
+        <div class="nl-row"><span class="nl-num">1.</span></div>
+        <div class="nl-row"><span class="nl-num">2.</span></div>
+      </div>
+
+      <!-- Material -->
+      <div class="ps-sub">
+        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z"/><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12"/><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17"/></svg>
+        <span class="ps-sub-title">مادة التصنيع</span>
+      </div>
+      <div class="cb-row">
+        <span class="cb-label">المادة:</span>
+        <span class="cb"><span class="cb-box">☐</span> MDF</span>
+        <span class="cb"><span class="cb-box">☐</span> Plywood</span>
+      </div>
+      <div class="nl">
+        <div class="nl-row"><span class="nl-num">1.</span></div>
+        <div class="nl-row"><span class="nl-num">2.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colors -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="#3C4146"/><circle cx="17.5" cy="10.5" r=".5" fill="#3C4146"/><circle cx="6.5" cy="12.5" r=".5" fill="#3C4146"/><circle cx="8.5" cy="7.5" r=".5" fill="#3C4146"/></svg></div>
+        <h2 class="ps-title">الألوان</h2>
+      </div>
+      <table class="bt">
+        <thead><tr><th style="width:8%">#</th><th style="width:42%">اللون</th><th style="width:50%">ملاحظات (الاستخدام)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td><td></td></tr>
+          <tr><td>2</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Engravings -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/></svg></div>
+        <h2 class="ps-title">النقشات</h2>
+      </div>
+      <table class="bt">
+        <thead><tr><th style="width:8%">#</th><th style="width:42%">النقشة</th><th style="width:50%">ملاحظات</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td><td></td></tr>
+          <tr><td>2</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Doors -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20H2"/><path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z"/><path d="M11 4H8a2 2 0 0 0-2 2v14"/><path d="M14 12h.01"/><path d="M22 20h-3"/></svg></div>
+        <h2 class="ps-title">الأبواب</h2>
+      </div>
+      <p class="hint">أنواع المقابض والأبواب المطلوبة (push, gola finger pull, j-pull, الخ)</p>
+      <div class="nl">
+        <div class="nl-row"><span class="nl-num">1.</span></div>
+        <div class="nl-row"><span class="nl-num">2.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General Notes -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/><path d="M15 3v5a1 1 0 0 0 1 1h5"/></svg></div>
+        <h2 class="ps-title">ملاحظات عامة</h2>
+      </div>
+      <div class="nl">
+        <div class="nl-row nl-row--tall"><span class="nl-num">1.</span></div>
+        <div class="nl-row nl-row--tall"><span class="nl-num">2.</span></div>
+        <div class="nl-row nl-row--tall"><span class="nl-num">3.</span></div>
+        <div class="nl-row nl-row--tall"><span class="nl-num">4.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signatures -->
+  <div class="sig-grid">
+    <div class="sig"><p class="sig-label">توقيع الموظف</p><div class="sig-line"></div></div>
+    <div class="sig"><p class="sig-label">توقيع الزبون</p><div class="sig-line"></div></div>
+  </div>
+
+</div>
+
+<script>
+function renderLogo(el, withBrackets) {
+  const text = "AHMED DECOR";
+  let chars = '';
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === ' ') { chars += '<span class="logo__spacer"></span>'; continue; }
+    const cls = c === 'E' ? 'logo__char--gold' : 'logo__char--charcoal';
+    chars += `<span class="${cls}">${c}</span>`;
+  }
+  if (withBrackets) {
+    el.innerHTML = `<span class="logo__bracket">[</span><span>${chars}</span><span class="logo__bracket">]</span>`;
+  } else {
+    el.innerHTML = chars;
+  }
+}
+renderLogo(document.getElementById('screen-logo'), true);
+renderLogo(document.getElementById('print-logo'), false);
+</script>
+</body>
+</html>
