@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أحمد ديكور — عقد تصنيع</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%233C4146'/><text x='16' y='22' font-size='17' font-weight='bold' text-anchor='middle' fill='%23F2D000' font-family='Arial'>DK</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --charcoal: #3C4146;
+  --gold: #F2D000;
+  --gold-hover: #D4B800;
+  --gold-light: #FDF8E8;
+  --cream: #FFFDF5;
+  --warm-gray: #F5F0E8;
+  --muted: #6B7280;
+  --input-border: #C8C0B4;
+  --border-light: #E5DDD0;
+  --destructive: #dc2626;
+}
+html { font-size: 16px; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== ICON BASE ===== */
+.icon {
+  display: inline-flex;
+  width: 20px; height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  flex-shrink: 0;
+}
+.icon-sm { width: 16px; height: 16px; }
+
+/* ===== FORM ELEMENTS ===== */
+.input, .textarea {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--charcoal);
+  background: #fff;
+  border: 1px solid var(--input-border);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input:focus, .textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(242, 208, 0, 0.25);
+}
+.input::placeholder, .textarea::placeholder { color: #9CA3AF; }
+.input[type="number"] { -moz-appearance: textfield; }
+.input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.textarea { resize: vertical; min-height: 2.5rem; field-sizing: content; }
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--charcoal);
+}
+.separator {
+  height: 1px;
+  background: var(--charcoal);
+  opacity: 0.15;
+  border: none;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.1s;
+  border: none;
+  background: none;
+  padding: 0;
+}
+.btn-add {
+  padding: 6px 16px;
+  border: 2px solid var(--charcoal);
+  background: transparent;
+  color: var(--charcoal);
+  box-shadow: 2px 2px 0px var(--gold);
+}
+.btn-add:hover {
+  background: var(--charcoal);
+  color: var(--cream);
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.btn-print {
+  padding: 14px 48px;
+  font-size: 1rem;
+  border: 3px solid var(--charcoal);
+  background: var(--gold);
+  color: var(--charcoal);
+  box-shadow: 6px 6px 0px var(--charcoal);
+}
+.btn-print:hover {
+  background: var(--gold-hover);
+  color: var(--charcoal);
+  box-shadow: 2px 2px 0px var(--charcoal);
+  transform: translate(4px, 4px);
+}
+.btn-print:active {
+  box-shadow: none;
+  transform: translate(6px, 6px);
+}
+.btn-ghost {
+  width: 36px; height: 36px;
+  border-radius: 0;
+  color: rgba(107, 114, 128, 0.4);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-ghost:hover { color: var(--destructive); background: rgba(220, 38, 38, 0.1); }
+.btn-ghost:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-ghost:disabled:hover { color: rgba(107, 114, 128, 0.4); background: transparent; }
+
+/* ===== SECTION CARD ===== */
+.section-card {
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--charcoal);
+  box-shadow: 4px 4px 0px var(--charcoal);
+  overflow: hidden;
+}
+.section-card__bar { height: 4px; background: var(--gold); }
+.section-card__inner { padding: 24px; }
+.section-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(60, 65, 70, 0.1);
+}
+.section-card__icon {
+  width: 36px; height: 36px;
+  border: 2px solid var(--charcoal);
+  background: rgba(242, 208, 0, 0.1);
+  color: var(--charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.section-card__title {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--charcoal);
+}
+
+/* ===== LAYOUT ===== */
+.screen { min-height: 100vh; position: relative; }
+.dot-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: radial-gradient(circle, var(--charcoal) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.container { position: relative; max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; }
+@media (min-width: 640px) { .container { padding: 2rem 1.5rem; } }
+.space-y > * + * { margin-top: 1.5rem; }
+
+/* ===== LOGO ===== */
+.logo { display: flex; align-items: center; justify-content: center; gap: 12px; user-select: none; }
+.logo__bracket { color: var(--gold); font-weight: 900; font-size: 0.6em; }
+.logo__text { font-weight: 900; letter-spacing: 0.25em; }
+.logo__char { display: inline; }
+.logo__char--gold { color: var(--gold); }
+.logo__char--charcoal { color: var(--charcoal); }
+.logo__spacer { display: inline-block; width: 0.375rem; }
+
+/* ===== HEADER BANNER ===== */
+.banner {
+  display: inline-block;
+  background: var(--charcoal);
+  color: var(--gold);
+  padding: 12px 32px;
+  border: 2px solid var(--charcoal);
+  box-shadow: 3px 3px 0px var(--gold);
+  font-size: 0.875rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* ===== GRID HELPERS ===== */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-dim { display: grid; grid-template-columns: 1fr 0.7fr 0.7fr 1fr auto; gap: 8px; align-items: start; }
+.grid-color { display: grid; grid-template-columns: 0.8fr 1fr auto; gap: 8px; align-items: start; }
+.grid-stove { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.grid-marble { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.note-row { display: flex; gap: 8px; align-items: start; margin-bottom: 8px; }
+.note-row__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 36px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.col-headers {
+  display: none;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 4px;
+  gap: 8px;
+}
+@media (min-width: 640px) {
+  .col-headers { display: grid; }
+  .col-headers.dim { grid-template-columns: 1fr 0.7fr 0.7fr 1fr auto; }
+  .col-headers.color { grid-template-columns: 0.8fr 1fr auto; }
+}
+.mobile-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+@media (min-width: 640px) { .mobile-label { display: none; } }
+@media (max-width: 639px) {
+  .grid-dim, .grid-color { grid-template-columns: 1fr; }
+}
+.subsection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.subsection-header span {
+  font-size: 0.875rem;
+  font-weight: 900;
+  color: var(--charcoal);
+}
+.hint { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; }
+.flex-center { display: flex; justify-content: center; padding: 24px 0 48px; }
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  @page { size: A4; margin: 12mm 15mm; }
+  body { background: white !important; color: black !important; font-size: 11pt !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+/* Print view inline classes */
+.pv { font-family: 'Cairo', sans-serif; color: #1a1a1a; font-size: 11pt; line-height: 1.7; }
+.pv-header { text-align: center; padding-bottom: 16px; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
+.pv-title { font-size: 18pt; font-weight: 800; color: var(--charcoal); margin: 8px 0 4px; letter-spacing: 0.5px; }
+.pv-date { font-size: 10pt; color: var(--muted); }
+.pv-section { break-inside: avoid; }
+.pv-sh { font-size: 13pt; font-weight: 800; color: var(--charcoal); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; }
+.pv-sh-bar { display: inline-block; width: 4px; height: 18px; background: var(--gold); }
+.pv-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; margin-bottom: 20px; }
+.pv-field { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px dotted #D1D5DB; }
+.pv-field-label { font-weight: 700; color: var(--muted); white-space: nowrap; }
+.pv-field-value { font-weight: 500; }
+.pv-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10pt; }
+.pv-th { background: var(--charcoal); color: #FFFDF5; font-weight: 700; padding: 8px 12px; text-align: right; font-size: 9pt; white-space: nowrap; }
+.pv-th-c { text-align: center; }
+.pv-td { padding: 7px 12px; border-bottom: 1px solid #E5E7EB; text-align: right; }
+.pv-td-c { text-align: center; }
+.pv-empty { color: #9CA3AF; font-style: italic; font-size: 10pt; margin-bottom: 20px; padding: 8px 0; border-bottom: 1px dotted #D1D5DB; }
+.pv-note { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid #E5E7EB; font-size: 10pt; }
+.pv-note-num { font-weight: 700; color: var(--muted); min-width: 24px; }
+.pv-sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px; padding-top: 24px; border-top: 2px solid var(--gold); }
+.pv-sig { text-align: center; }
+.pv-sig-label { font-weight: 700; margin-bottom: 40px; color: var(--charcoal); }
+.pv-sig-line { border-bottom: 2px solid var(--charcoal); width: 80%; margin: 0 auto; }
+.pv-logo { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.05em; user-select: none; text-align: center; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ====== SCREEN FORM ====== -->
+<div class="screen no-print">
+  <div class="dot-bg"></div>
+  <div class="container">
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:40px;">
+      <div id="screen-logo" class="logo" dir="ltr" style="font-size:2.25rem; margin-bottom:16px;"></div>
+      <div class="banner">عقد تصنيع</div>
+    </div>
+
+    <div id="form-root" class="space-y"></div>
+
+    <div class="flex-center">
+      <button class="btn btn-print" onclick="handlePrint()">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>
+        طباعة العقد
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PRINT VIEW ====== -->
+<div id="print-view" class="print-only">
+</div>
+
+<script>
+// ===== ICONS =====
+const ICONS = {
+  user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />',
+  ruler: '<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z" /><path d="m14.5 12.5 2-2" /><path d="m11.5 9.5 2-2" /><path d="m8.5 6.5 2-2" /><path d="m17.5 15.5 2-2" />',
+  palette: '<path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />',
+  flower: '<circle cx="12" cy="12" r="3" /><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5" /><path d="M12 7.5V9" /><path d="M7.5 12H9" /><path d="M16.5 12H15" /><path d="M12 16.5V15" /><path d="m8 8 1.88 1.88" /><path d="M14.12 9.88 16 8" /><path d="m8 16 1.88-1.88" /><path d="M14.12 14.12 16 16" />',
+  doorOpen: '<path d="M11 20H2" /><path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z" /><path d="M11 4H8a2 2 0 0 0-2 2v14" /><path d="M14 12h.01" /><path d="M22 20h-3" />',
+  stickyNote: '<path d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z" /><path d="M15 3v5a1 1 0 0 0 1 1h5" />',
+  flame: '<path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" />',
+  droplets: '<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" />',
+  rectH: '<rect width="20" height="12" x="2" y="6" rx="2" />',
+  plus: '<path d="M5 12h14" /><path d="M12 5v14" />',
+  trash2: '<path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />',
+  printer: '<path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" />',
+};
+function icon(name, cls) {
+  return `<svg class="icon ${cls||''}" viewBox="0 0 24 24">${ICONS[name]}</svg>`;
+}
+
+// ===== LOGO =====
+function renderLogo(el, size) {
+  const text = "AHMED DECOR";
+  let chars = '';
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === ' ') { chars += '<span class="logo__spacer"></span>'; continue; }
+    const cls = c === 'E' ? 'logo__char--gold' : 'logo__char--charcoal';
+    chars += `<span class="logo__char ${cls}">${c}</span>`;
+  }
+  if (size === 'print') {
+    el.innerHTML = chars;
+    return;
+  }
+  el.innerHTML = `<span class="logo__bracket">[</span><span class="logo__text">${chars}</span><span class="logo__bracket">]</span>`;
+}
+
+// ===== STATE =====
+function gid() { return Math.random().toString(36).substring(2, 9); }
+function createEmpty() {
+  const today = new Date().toISOString().split('T')[0];
+  return {
+    customer: { name: '', phone: '', address: '', date: today },
+    dimensions: [{ id: gid(), label: '', length: '', height: '', notes: '' }],
+    stove: { center: '', size: '' },
+    stoveNotes: [{ id: gid(), note: '' }],
+    sink: { center: '', size: '' },
+    sinkNotes: [{ id: gid(), note: '' }],
+    marble: { color: '' },
+    marbleNotes: [{ id: gid(), note: '' }],
+    colors: [{ id: gid(), code: '', notes: '' }],
+    engravings: [{ id: gid(), code: '', notes: '' }],
+    doors: [{ id: gid(), note: '' }],
+    manufacturingNotes: [{ id: gid(), note: '' }],
+  };
+}
+let state = createEmpty();
+
+// ===== SECTION CARD HELPER =====
+function card(titleText, iconName, content) {
+  return `<div class="section-card">
+    <div class="section-card__bar"></div>
+    <div class="section-card__inner">
+      <div class="section-card__header">
+        <div class="section-card__icon">${icon(iconName)}</div>
+        <div class="section-card__title">${titleText}</div>
+      </div>
+      ${content}
+    </div>
+  </div>`;
+}
+
+// ===== RENDER FORM =====
+function render() {
+  // Save focus info
+  const ae = document.activeElement;
+  let focusKey = null, focusCursor = null;
+  if (ae && ae.dataset && ae.dataset.key) {
+    focusKey = ae.dataset.key;
+    focusCursor = ae.selectionStart;
+  }
+
+  const root = document.getElementById('form-root');
+  let html = '';
+
+  // 1. Customer Info
+  html += card('معلومات الزبون', 'user', `
+    <div class="grid-2">
+      <div><label class="label">اسم الزبون</label><input class="input" data-key="customer.name" placeholder="الاسم الكامل" value="${esc(state.customer.name)}"></div>
+      <div><label class="label">رقم الهاتف</label><input class="input" data-key="customer.phone" placeholder="07XX XXX XXXX" value="${esc(state.customer.phone)}" dir="ltr" style="text-align:left"></div>
+      <div><label class="label">العنوان</label><input class="input" data-key="customer.address" placeholder="المدينة، الحي، الشارع" value="${esc(state.customer.address)}"></div>
+      <div><label class="label">تاريخ العقد</label><input class="input" type="date" data-key="customer.date" value="${esc(state.customer.date)}" dir="ltr" style="text-align:left"></div>
+    </div>
+  `);
+
+  // 2. Kitchen Dimensions (with stove/sink/marble sub-sections)
+  let dimContent = '';
+  // Column headers
+  dimContent += `<div class="col-headers dim"><span>الجدار / القسم</span><span>الطول (سم)</span><span>الارتفاع (سم)</span><span>ملاحظات</span><span style="width:36px"></span></div>`;
+  dimContent += `<hr class="separator" style="display:none">`;
+
+  state.dimensions.forEach((row, idx) => {
+    dimContent += `<div class="mobile-label">قياس ${idx+1}</div>`;
+    dimContent += `<div class="grid-dim">
+      <input class="input" data-key="dimensions.${row.id}.label" placeholder="مثال: جدار رئيسي" value="${esc(row.label)}">
+      <input class="input" data-key="dimensions.${row.id}.length" placeholder="سم" type="number" step="0.1" min="0" value="${esc(row.length)}" dir="ltr" style="text-align:left">
+      <input class="input" data-key="dimensions.${row.id}.height" placeholder="سم" type="number" step="0.1" min="0" value="${esc(row.height)}" dir="ltr" style="text-align:left">
+      <input class="input" data-key="dimensions.${row.id}.notes" placeholder="ملاحظات (اختياري)" value="${esc(row.notes)}">
+      <button class="btn-ghost" data-remove="dimensions.${row.id}" ${state.dimensions.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  dimContent += `<button class="btn btn-add" style="margin-top:8px" data-add="dimensions">${icon('plus','icon-sm')} إضافة قياس</button>`;
+
+  // Stove sub-section
+  dimContent += `<hr class="separator" style="margin:16px 0">`;
+  dimContent += `<div class="subsection-header">${icon('flame','icon-sm')} <span>الطباخ</span></div>`;
+  dimContent += `<div class="grid-stove" style="margin-bottom:12px">
+    <input class="input" data-key="stove.center" placeholder="سنتر الطباخ" value="${esc(state.stove.center)}">
+    <input class="input" data-key="stove.size" placeholder="قياس الطباخ (سم)" type="number" step="0.1" min="0" value="${esc(state.stove.size)}" dir="ltr" style="text-align:left">
+  </div>`;
+  state.stoveNotes.forEach((row, idx) => {
+    dimContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <input class="input" data-key="stoveNotes.${row.id}.note" placeholder="ملاحظة..." value="${esc(row.note)}" style="flex:1">
+      <button class="btn-ghost" data-remove="stoveNotes.${row.id}" ${state.stoveNotes.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  dimContent += `<button class="btn btn-add" style="margin-top:4px" data-add="stoveNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+
+  // Sink sub-section
+  dimContent += `<hr class="separator" style="margin:16px 0">`;
+  dimContent += `<div class="subsection-header">${icon('droplets','icon-sm')} <span>الحوض</span></div>`;
+  dimContent += `<div class="grid-stove" style="margin-bottom:12px">
+    <input class="input" data-key="sink.center" placeholder="سنتر الحوض" value="${esc(state.sink.center)}">
+    <input class="input" data-key="sink.size" placeholder="قياس الحوض (سم)" type="number" step="0.1" min="0" value="${esc(state.sink.size)}" dir="ltr" style="text-align:left">
+  </div>`;
+  state.sinkNotes.forEach((row, idx) => {
+    dimContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <input class="input" data-key="sinkNotes.${row.id}.note" placeholder="ملاحظة..." value="${esc(row.note)}" style="flex:1">
+      <button class="btn-ghost" data-remove="sinkNotes.${row.id}" ${state.sinkNotes.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  dimContent += `<button class="btn btn-add" style="margin-top:4px" data-add="sinkNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+
+  // Marble sub-section
+  dimContent += `<hr class="separator" style="margin:16px 0">`;
+  dimContent += `<div class="subsection-header">${icon('rectH','icon-sm')} <span>المرمر</span></div>`;
+  dimContent += `<div style="margin-bottom:12px">
+    <input class="input" data-key="marble.color" placeholder="لون المرمر" value="${esc(state.marble.color)}">
+  </div>`;
+  state.marbleNotes.forEach((row, idx) => {
+    dimContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <input class="input" data-key="marbleNotes.${row.id}.note" placeholder="ملاحظة..." value="${esc(row.note)}" style="flex:1">
+      <button class="btn-ghost" data-remove="marbleNotes.${row.id}" ${state.marbleNotes.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  dimContent += `<button class="btn btn-add" style="margin-top:4px" data-add="marbleNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+
+  html += card('قياسات المطبخ', 'ruler', dimContent);
+
+  // 3. Colors
+  let colorContent = `<div class="col-headers color"><span>رمز اللون</span><span>ملاحظات (الاستخدام)</span><span style="width:36px"></span></div><hr class="separator" style="display:none">`;
+  state.colors.forEach((row, idx) => {
+    colorContent += `<div class="mobile-label">لون ${idx+1}</div>`;
+    colorContent += `<div class="grid-color">
+      <input class="input" data-key="colors.${row.id}.code" placeholder="رمز اللون" value="${esc(row.code)}">
+      <input class="input" data-key="colors.${row.id}.notes" placeholder="مثال: للأبواب العلوية" value="${esc(row.notes)}">
+      <button class="btn-ghost" data-remove="colors.${row.id}" ${state.colors.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  colorContent += `<button class="btn btn-add" style="margin-top:8px" data-add="colors">${icon('plus','icon-sm')} إضافة لون</button>`;
+  html += card('الألوان', 'palette', colorContent);
+
+  // 4. Engravings
+  let engContent = `<div class="col-headers color"><span>رمز النقشة</span><span>ملاحظات</span><span style="width:36px"></span></div><hr class="separator" style="display:none">`;
+  state.engravings.forEach((row, idx) => {
+    engContent += `<div class="mobile-label">نقشة ${idx+1}</div>`;
+    engContent += `<div class="grid-color">
+      <input class="input" data-key="engravings.${row.id}.code" placeholder="رمز النقشة" value="${esc(row.code)}">
+      <input class="input" data-key="engravings.${row.id}.notes" placeholder="ملاحظات (اختياري)" value="${esc(row.notes)}">
+      <button class="btn-ghost" data-remove="engravings.${row.id}" ${state.engravings.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  engContent += `<button class="btn btn-add" style="margin-top:8px" data-add="engravings">${icon('plus','icon-sm')} إضافة نقشة</button>`;
+  html += card('النقشات', 'flower', engContent);
+
+  // 5. Doors
+  let doorContent = `<p class="hint">أضف ملاحظات حول أنواع المقابض والأبواب المطلوبة (push, gola finger pull, j-pull, الخ)</p>`;
+  state.doors.forEach((row, idx) => {
+    doorContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <textarea class="textarea" data-key="doors.${row.id}.note" placeholder="مثال: أبواب علوية - مقبض gola finger pull" style="flex:1">${esc(row.note)}</textarea>
+      <button class="btn-ghost" data-remove="doors.${row.id}" ${state.doors.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  doorContent += `<button class="btn btn-add" style="margin-top:8px" data-add="doors">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+  html += card('الأبواب', 'doorOpen', doorContent);
+
+  // 6. Manufacturing Notes
+  let mfgContent = `<p class="hint">أي تفاصيل إضافية تخص التصنيع لا تندرج تحت الأقسام الأخرى</p>`;
+  state.manufacturingNotes.forEach((row, idx) => {
+    mfgContent += `<div class="note-row"><span class="note-row__num">${idx+1}</span>
+      <textarea class="textarea" data-key="manufacturingNotes.${row.id}.note" placeholder="مثال: تركيب إضاءة LED داخلية، فتحة للشفاط بقياس 60 سم، ..." style="flex:1">${esc(row.note)}</textarea>
+      <button class="btn-ghost" data-remove="manufacturingNotes.${row.id}" ${state.manufacturingNotes.length<=1?'disabled':''}>${icon('trash2','icon-sm')}</button>
+    </div>`;
+  });
+  mfgContent += `<button class="btn btn-add" style="margin-top:8px" data-add="manufacturingNotes">${icon('plus','icon-sm')} إضافة ملاحظة</button>`;
+  html += card('ملاحظات التصنيع', 'stickyNote', mfgContent);
+
+  root.innerHTML = html;
+
+  // Restore focus
+  if (focusKey) {
+    const el = root.querySelector(`[data-key="${focusKey}"]`);
+    if (el) {
+      el.focus();
+      if (focusCursor !== null && el.setSelectionRange) {
+        try { el.setSelectionRange(focusCursor, focusCursor); } catch(e) {}
+      }
+    }
+  }
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ===== EVENT DELEGATION =====
+document.addEventListener('input', function(e) {
+  const key = e.target.dataset && e.target.dataset.key;
+  if (!key) return;
+  const val = e.target.value;
+  const parts = key.split('.');
+
+  if (parts[0] === 'customer') {
+    state.customer[parts[1]] = val;
+  } else if (parts[0] === 'stove') {
+    state.stove[parts[1]] = val;
+  } else if (parts[0] === 'sink') {
+    state.sink[parts[1]] = val;
+  } else if (parts[0] === 'marble') {
+    state.marble[parts[1]] = val;
+  } else {
+    // Array rows: "listName.id.field"
+    const list = state[parts[0]];
+    if (Array.isArray(list)) {
+      const row = list.find(r => r.id === parts[1]);
+      if (row) row[parts[2]] = val;
+    }
+  }
+  // Don't re-render on input to avoid losing focus — state is updated in-place
+});
+
+document.addEventListener('click', function(e) {
+  // Add button
+  const addBtn = e.target.closest('[data-add]');
+  if (addBtn) {
+    const listName = addBtn.dataset.add;
+    const factories = {
+      dimensions: () => ({ id: gid(), label: '', length: '', height: '', notes: '' }),
+      stoveNotes: () => ({ id: gid(), note: '' }),
+      sinkNotes: () => ({ id: gid(), note: '' }),
+      marbleNotes: () => ({ id: gid(), note: '' }),
+      colors: () => ({ id: gid(), code: '', notes: '' }),
+      engravings: () => ({ id: gid(), code: '', notes: '' }),
+      doors: () => ({ id: gid(), note: '' }),
+      manufacturingNotes: () => ({ id: gid(), note: '' }),
+    };
+    if (factories[listName]) {
+      state[listName].push(factories[listName]());
+      render();
+    }
+    return;
+  }
+
+  // Remove button
+  const removeBtn = e.target.closest('[data-remove]');
+  if (removeBtn && !removeBtn.disabled) {
+    const [listName, id] = removeBtn.dataset.remove.split('.');
+    state[listName] = state[listName].filter(r => r.id !== id);
+    render();
+    return;
+  }
+});
+
+// ===== PRINT VIEW =====
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('ar-IQ-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch(e) { return dateStr; }
+}
+
+function logoHtml() {
+  const text = 'AHMED DECOR';
+  let h = '';
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === ' ') { h += '<span style="display:inline-block;width:0.375rem"></span>'; continue; }
+    const color = c === 'E' ? '#F2D000' : '#3C4146';
+    h += `<span style="color:${color}">${c}</span>`;
+  }
+  return h;
+}
+
+function pvField(label, value) {
+  return `<div class="pv-field"><span class="pv-field-label">${label}:</span> <span class="pv-field-value">${value || '—'}</span></div>`;
+}
+
+function pvSectionTitle(title) {
+  return `<div class="pv-sh"><span class="pv-sh-bar"></span>${title}</div>`;
+}
+
+function pvEmpty() { return `<p class="pv-empty">لا توجد ملاحظات</p>`; }
+
+function pvNotes(notes) {
+  const filled = notes.filter(r => r.note);
+  if (filled.length === 0) return '';
+  return `<div style="margin-bottom:20px">${filled.map((r, i) =>
+    `<div class="pv-note"><span class="pv-note-num">${i+1}.</span><span>${esc(r.note)}</span></div>`
+  ).join('')}</div>`;
+}
+
+function renderPrintView() {
+  const s = state;
+  const filledDim = s.dimensions.filter(r => r.label || r.length || r.height);
+  const filledColors = s.colors.filter(r => r.code || r.notes);
+  const filledEng = s.engravings.filter(r => r.code || r.notes);
+  const filledDoors = s.doors.filter(r => r.note);
+  const filledMfg = s.manufacturingNotes.filter(r => r.note);
+  const filledStoveNotes = s.stoveNotes.filter(r => r.note);
+  const filledSinkNotes = s.sinkNotes.filter(r => r.note);
+  const filledMarbleNotes = s.marbleNotes.filter(r => r.note);
+
+  let h = `<div class="pv" dir="rtl">`;
+
+  // Header
+  h += `<div class="pv-header">
+    <div class="pv-logo" dir="ltr">${logoHtml()}</div>
+    <div class="pv-title">عقد تصنيع</div>
+    <div class="pv-date">التاريخ: ${formatDate(s.customer.date)}</div>
+  </div>`;
+
+  // Customer
+  h += `<div class="pv-section">${pvSectionTitle('معلومات الزبون')}
+    <div class="pv-grid2">
+      ${pvField('اسم الزبون', esc(s.customer.name))}
+      ${pvField('رقم الهاتف', esc(s.customer.phone))}
+      ${pvField('العنوان', esc(s.customer.address))}
+      ${pvField('تاريخ العقد', formatDate(s.customer.date))}
+    </div></div>`;
+
+  // Dimensions
+  h += `<div class="pv-section">${pvSectionTitle('قياسات المطبخ')}`;
+  if (filledDim.length > 0) {
+    h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">الجدار / القسم</th><th class="pv-th">الطول (سم)</th><th class="pv-th">الارتفاع (سم)</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
+    filledDim.forEach((r, i) => {
+      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.label)||'—'}</td><td class="pv-td pv-td-c">${esc(r.length)||'—'}</td><td class="pv-td pv-td-c">${esc(r.height)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+  } else { h += pvEmpty(); }
+  h += `</div>`;
+
+  // Stove
+  h += `<div class="pv-section">${pvSectionTitle('الطباخ')}
+    <div class="pv-grid2" style="margin-bottom:${filledStoveNotes.length>0?'10px':'20px'}">
+      ${pvField('سنتر الطباخ', esc(s.stove.center))}
+      ${pvField('قياس الطباخ (سم)', esc(s.stove.size))}
+    </div>${pvNotes(s.stoveNotes)}</div>`;
+
+  // Sink
+  h += `<div class="pv-section">${pvSectionTitle('الحوض')}
+    <div class="pv-grid2" style="margin-bottom:${filledSinkNotes.length>0?'10px':'20px'}">
+      ${pvField('سنتر الحوض', esc(s.sink.center))}
+      ${pvField('قياس الحوض (سم)', esc(s.sink.size))}
+    </div>${pvNotes(s.sinkNotes)}</div>`;
+
+  // Marble
+  h += `<div class="pv-section">${pvSectionTitle('المرمر')}
+    <div style="margin-bottom:${filledMarbleNotes.length>0?'10px':'20px'}">
+      ${pvField('لون المرمر', esc(s.marble.color))}
+    </div>${pvNotes(s.marbleNotes)}</div>`;
+
+  // Colors
+  h += `<div class="pv-section">${pvSectionTitle('الألوان')}`;
+  if (filledColors.length > 0) {
+    h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز اللون</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
+    filledColors.forEach((r, i) => {
+      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+  } else { h += pvEmpty(); }
+  h += `</div>`;
+
+  // Engravings
+  h += `<div class="pv-section">${pvSectionTitle('النقشات')}`;
+  if (filledEng.length > 0) {
+    h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز النقشة</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
+    filledEng.forEach((r, i) => {
+      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+  } else { h += pvEmpty(); }
+  h += `</div>`;
+
+  // Doors
+  h += `<div class="pv-section">${pvSectionTitle('الأبواب')}`;
+  if (filledDoors.length > 0) {
+    h += `<div style="margin-bottom:20px">${filledDoors.map((r, i) =>
+      `<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #E5E7EB"><span style="font-weight:700;color:#6B7280;min-width:24px">${i+1}.</span><span>${esc(r.note)}</span></div>`
+    ).join('')}</div>`;
+  } else { h += pvEmpty(); }
+  h += `</div>`;
+
+  // Manufacturing Notes
+  h += `<div class="pv-section">${pvSectionTitle('ملاحظات التصنيع')}`;
+  if (filledMfg.length > 0) {
+    h += `<div style="margin-bottom:20px">${filledMfg.map((r, i) =>
+      `<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #E5E7EB"><span style="font-weight:700;color:#6B7280;min-width:24px">${i+1}.</span><span style="white-space:pre-wrap">${esc(r.note)}</span></div>`
+    ).join('')}</div>`;
+  } else { h += pvEmpty(); }
+  h += `</div>`;
+
+  // Signatures
+  h += `<div class="pv-sigs">
+    <div class="pv-sig"><p class="pv-sig-label">توقيع الزبون</p><div class="pv-sig-line"></div></div>
+    <div class="pv-sig"><p class="pv-sig-label">توقيع المصنع</p><div class="pv-sig-line"></div></div>
+  </div>`;
+
+  h += `</div>`;
+  document.getElementById('print-view').innerHTML = h;
+}
+
+// ===== PRINT =====
+function handlePrint() {
+  renderPrintView();
+  window.print();
+}
+
+// ===== INIT =====
+renderLogo(document.getElementById('screen-logo'), 'lg');
+render();
+
+// Show column header separators on desktop
+const style = document.createElement('style');
+style.textContent = `@media(min-width:640px){.col-headers+hr{display:block!important}}`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
