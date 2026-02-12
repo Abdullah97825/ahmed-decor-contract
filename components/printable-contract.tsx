@@ -355,6 +355,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
       {/* ===== SIGNATURES ===== */}
       <div
         style={{
+          breakInside: "avoid",
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "48px",

@@ -129,58 +129,52 @@ function PrintableSurvey() {
       </PrintSection>
 
       {/* Kitchen Dimensions */}
-      <PrintSection title="قياسات المطبخ" icon="ruler" allowBreak>
-        <div style={{ breakInside: "avoid" }}>
-          <BlankTable
-            headers={["#", "الجدار / القسم", "الطول (سم)", "الارتفاع (سم)", "ملاحظات"]}
-            rows={4}
-            colWidths={["8%", "28%", "18%", "18%", "28%"]}
-          />
-        </div>
+      <PrintSection title="قياسات المطبخ" icon="ruler">
+        <BlankTable
+          headers={["#", "الجدار / القسم", "الطول (سم)", "الارتفاع (سم)", "ملاحظات"]}
+          rows={4}
+          colWidths={["8%", "28%", "18%", "18%", "28%"]}
+        />
+      </PrintSection>
 
-        {/* Stove */}
-        <div style={{ breakInside: "avoid" }}>
-          <SubSectionHeader icon="flame" title="الطباخ" />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-            <BlankField label="سنتر الطباخ" />
-            <BlankField label="قياس الطباخ (سم)" />
-          </div>
-          <BlankNoteLines count={2} />
+      {/* Stove */}
+      <PrintSection title="الطباخ" icon="flame">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+          <BlankField label="سنتر الطباخ" />
+          <BlankField label="قياس الطباخ (سم)" />
         </div>
+        <BlankNoteLines count={2} />
+      </PrintSection>
 
-        {/* Sink */}
-        <div style={{ breakInside: "avoid" }}>
-          <SubSectionHeader icon="droplets" title="الحوض" />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-            <BlankField label="سنتر الحوض" />
-            <BlankField label="قياس الحوض (سم)" />
-          </div>
-          <BlankNoteLines count={2} />
+      {/* Sink */}
+      <PrintSection title="الحوض" icon="droplets">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+          <BlankField label="سنتر الحوض" />
+          <BlankField label="قياس الحوض (سم)" />
         </div>
+        <BlankNoteLines count={2} />
+      </PrintSection>
 
-        {/* Marble */}
-        <div style={{ breakInside: "avoid" }}>
-          <SubSectionHeader icon="marble" title="المرمر" />
-          <BlankField label="لون المرمر" />
-          <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-            <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع المرمر:</span>
-            <CheckboxOption label="كوارتز اسباني" />
-            <CheckboxOption label="كوارتز عادي" />
-            <CheckboxOption label="صناعي" />
-          </div>
-          <BlankNoteLines count={2} />
+      {/* Marble */}
+      <PrintSection title="المرمر" icon="marble">
+        <BlankField label="لون المرمر" />
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع المرمر:</span>
+          <CheckboxOption label="كوارتز اسباني" />
+          <CheckboxOption label="كوارتز عادي" />
+          <CheckboxOption label="صناعي" />
         </div>
+        <BlankNoteLines count={2} />
+      </PrintSection>
 
-        {/* Material */}
-        <div style={{ breakInside: "avoid" }}>
-          <SubSectionHeader icon="layers" title="مادة التصنيع" />
-          <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-            <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>المادة:</span>
-            <CheckboxOption label="MDF" />
-            <CheckboxOption label="Plywood" />
-          </div>
-          <BlankNoteLines count={2} />
+      {/* Material */}
+      <PrintSection title="مادة التصنيع" icon="layers">
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>المادة:</span>
+          <CheckboxOption label="MDF" />
+          <CheckboxOption label="Plywood" />
         </div>
+        <BlankNoteLines count={2} />
       </PrintSection>
 
       {/* Colors */}
@@ -215,7 +209,7 @@ function PrintableSurvey() {
       </PrintSection>
 
       {/* Footer */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", marginTop: "32px", paddingTop: "24px", borderTop: "2px solid #F2D000" }}>
+      <div style={{ breakInside: "avoid", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", marginTop: "32px", paddingTop: "24px", borderTop: "2px solid #F2D000" }}>
         <div style={{ textAlign: "center" }}>
           <p style={{ fontWeight: 700, marginBottom: "40px", color: "#3C4146" }}>توقيع الموظف</p>
           <div style={{ borderBottom: "2px solid #3C4146", width: "80%", margin: "0 auto" }} />
@@ -246,11 +240,11 @@ function PrintLogo() {
   );
 }
 
-function PrintSection({ title, icon, children, allowBreak }: { title: string; icon: string; children: React.ReactNode; allowBreak?: boolean }) {
+function PrintSection({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
   return (
     <div
       style={{
-        breakInside: allowBreak ? "auto" : "avoid",
+        breakInside: "avoid",
         border: "2px solid #3C4146",
         marginBottom: "14px",
         overflow: "hidden",
@@ -296,15 +290,6 @@ function PrintIcon({ name }: { name: string }) {
     layers: <svg {...common}><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z" /><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12" /><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17" /></svg>,
   };
   return <>{icons[name] || null}</>;
-}
-
-function SubSectionHeader({ icon, title }: { icon: string; title: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "12px", marginBottom: "8px", paddingTop: "10px", borderTop: "1px solid rgba(60,65,70,0.12)" }}>
-      <PrintIcon name={icon} />
-      <span style={{ fontSize: "10pt", fontWeight: 900, color: "#3C4146" }}>{title}</span>
-    </div>
-  );
 }
 
 function BlankField({ label }: { label: string }) {

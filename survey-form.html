@@ -58,15 +58,11 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 
 /* Print section card style */
 .ps { break-inside: avoid; border: 2px solid #3C4146; margin-bottom: 14px; overflow: hidden; }
-.ps--breakable { break-inside: auto; }
-.bi-avoid { break-inside: avoid; }
 .ps-bar { height: 4px; background: #F2D000; }
 .ps-inner { padding: 14px 18px; }
 .ps-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(60,65,70,0.1); }
 .ps-icon { width: 28px; height: 28px; border: 2px solid #3C4146; background: rgba(242,208,0,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ps-title { font-size: 11pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: #3C4146; margin: 0; }
-.ps-sub { display: flex; align-items: center; gap: 6px; margin-top: 12px; margin-bottom: 8px; padding-top: 10px; border-top: 1px solid rgba(60,65,70,0.12); }
-.ps-sub-title { font-size: 10pt; font-weight: 900; color: #3C4146; }
 .bf { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1.5px solid #C8C0B4; min-height: 32px; }
 .bf-label { font-weight: 700; color: #6B7280; white-space: nowrap; font-size: 10pt; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
@@ -84,7 +80,7 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 .cb-row { display: flex; gap: 24px; padding: 8px 0; margin-bottom: 4px; }
 .cb-label { font-weight: 700; color: #6B7280; font-size: 10pt; }
 .pv-logo { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.05em; user-select: none; text-align: center; margin-bottom: 8px; }
-.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; padding-top: 24px; border-top: 2px solid #F2D000; }
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; padding-top: 24px; border-top: 2px solid #F2D000; break-inside: avoid; }
 .sig { text-align: center; }
 .sig-label { font-weight: 700; margin-bottom: 40px; color: #3C4146; }
 .sig-line { border-bottom: 2px solid #3C4146; width: 80%; margin: 0 auto; }
@@ -163,14 +159,13 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
   </div>
 
   <!-- Kitchen Dimensions -->
-  <div class="ps ps--breakable">
+  <div class="ps">
     <div class="ps-bar"></div>
     <div class="ps-inner">
       <div class="ps-head">
         <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div>
         <h2 class="ps-title">قياسات المطبخ</h2>
       </div>
-      <div class="bi-avoid">
       <table class="bt">
         <thead><tr><th style="width:8%">#</th><th style="width:28%">الجدار / القسم</th><th style="width:18%">الطول (سم)</th><th style="width:18%">الارتفاع (سم)</th><th style="width:28%">ملاحظات</th></tr></thead>
         <tbody>
@@ -180,13 +175,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
           <tr><td>4</td><td></td><td></td><td></td><td></td></tr>
         </tbody>
       </table>
-      </div>
+    </div>
+  </div>
 
-      <!-- Stove -->
-      <div class="bi-avoid">
-      <div class="ps-sub">
-        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg>
-        <span class="ps-sub-title">الطباخ</span>
+  <!-- Stove -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg></div>
+        <h2 class="ps-title">الطباخ</h2>
       </div>
       <div class="grid2" style="margin-bottom:8px">
         <div class="bf"><span class="bf-label">سنتر الطباخ:</span></div>
@@ -196,13 +194,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
         <div class="nl-row"><span class="nl-num">1.</span></div>
         <div class="nl-row"><span class="nl-num">2.</span></div>
       </div>
-      </div>
+    </div>
+  </div>
 
-      <!-- Sink -->
-      <div class="bi-avoid">
-      <div class="ps-sub">
-        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
-        <span class="ps-sub-title">الحوض</span>
+  <!-- Sink -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg></div>
+        <h2 class="ps-title">الحوض</h2>
       </div>
       <div class="grid2" style="margin-bottom:8px">
         <div class="bf"><span class="bf-label">سنتر الحوض:</span></div>
@@ -212,13 +213,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
         <div class="nl-row"><span class="nl-num">1.</span></div>
         <div class="nl-row"><span class="nl-num">2.</span></div>
       </div>
-      </div>
+    </div>
+  </div>
 
-      <!-- Marble -->
-      <div class="bi-avoid">
-      <div class="ps-sub">
-        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
-        <span class="ps-sub-title">المرمر</span>
+  <!-- Marble -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/></svg></div>
+        <h2 class="ps-title">المرمر</h2>
       </div>
       <div class="bf"><span class="bf-label">لون المرمر:</span></div>
       <div class="cb-row">
@@ -231,13 +235,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
         <div class="nl-row"><span class="nl-num">1.</span></div>
         <div class="nl-row"><span class="nl-num">2.</span></div>
       </div>
-      </div>
+    </div>
+  </div>
 
-      <!-- Material -->
-      <div class="bi-avoid">
-      <div class="ps-sub">
-        <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z"/><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12"/><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17"/></svg>
-        <span class="ps-sub-title">مادة التصنيع</span>
+  <!-- Material -->
+  <div class="ps">
+    <div class="ps-bar"></div>
+    <div class="ps-inner">
+      <div class="ps-head">
+        <div class="ps-icon"><svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="#3C4146" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z"/><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12"/><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17"/></svg></div>
+        <h2 class="ps-title">مادة التصنيع</h2>
       </div>
       <div class="cb-row">
         <span class="cb-label">المادة:</span>
@@ -247,7 +254,6 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
       <div class="nl">
         <div class="nl-row"><span class="nl-num">1.</span></div>
         <div class="nl-row"><span class="nl-num">2.</span></div>
-      </div>
       </div>
     </div>
   </div>
