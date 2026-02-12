@@ -30,12 +30,43 @@ export interface DoorNote {
   note: string;
 }
 
+export interface NoteRow {
+  id: string;
+  note: string;
+}
+
+export interface StoveInfo {
+  center: string;
+  size: string;
+}
+
+export interface SinkInfo {
+  center: string;
+  size: string;
+}
+
+export interface MarbleInfo {
+  color: string;
+}
+
+export interface ManufacturingNote {
+  id: string;
+  note: string;
+}
+
 export interface ContractData {
   customer: CustomerInfo;
   dimensions: DimensionRow[];
+  stove: StoveInfo;
+  stoveNotes: NoteRow[];
+  sink: SinkInfo;
+  sinkNotes: NoteRow[];
+  marble: MarbleInfo;
+  marbleNotes: NoteRow[];
   colors: ColorRow[];
   engravings: EngravingRow[];
   doors: DoorNote[];
+  manufacturingNotes: ManufacturingNote[];
 }
 
 export function generateId(): string {
@@ -54,8 +85,15 @@ export function createEmptyContract(): ContractData {
     dimensions: [
       { id: generateId(), label: "", length: "", height: "", notes: "" },
     ],
+    stove: { center: "", size: "" },
+    stoveNotes: [{ id: generateId(), note: "" }],
+    sink: { center: "", size: "" },
+    sinkNotes: [{ id: generateId(), note: "" }],
+    marble: { color: "" },
+    marbleNotes: [{ id: generateId(), note: "" }],
     colors: [{ id: generateId(), code: "", notes: "" }],
     engravings: [{ id: generateId(), code: "", notes: "" }],
     doors: [{ id: generateId(), note: "" }],
+    manufacturingNotes: [{ id: generateId(), note: "" }],
   };
 }

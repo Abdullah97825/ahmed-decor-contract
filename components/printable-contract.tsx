@@ -23,9 +23,15 @@ export function PrintableContract({ data }: PrintableContractProps) {
   const filledDimensions = data.dimensions.filter(
     (r) => r.label || r.length || r.height
   );
+  const filledStoveNotes = data.stoveNotes.filter((r) => r.note);
+  const filledSinkNotes = data.sinkNotes.filter((r) => r.note);
+  const filledMarbleNotes = data.marbleNotes.filter((r) => r.note);
   const filledColors = data.colors.filter((r) => r.code || r.notes);
   const filledEngravings = data.engravings.filter((r) => r.code || r.notes);
   const filledDoors = data.doors.filter((r) => r.note);
+  const filledManufacturingNotes = data.manufacturingNotes.filter(
+    (r) => r.note
+  );
 
   return (
     <div
@@ -56,7 +62,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
             letterSpacing: "0.5px",
           }}
         >
-          عقد تصنيع مطبخ
+          عقد تصنيع
         </h1>
         <p
           style={{
@@ -69,6 +75,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
       </div>
 
       {/* ===== CUSTOMER INFO ===== */}
+      <div style={{ breakInside: "avoid" }}>
       <SectionTitle>معلومات الزبون</SectionTitle>
       <div
         style={{
@@ -83,137 +90,232 @@ export function PrintableContract({ data }: PrintableContractProps) {
         <InfoField label="العنوان" value={data.customer.address} />
         <InfoField label="تاريخ العقد" value={formatDate(data.customer.date)} />
       </div>
+      </div>
 
       {/* ===== DIMENSIONS ===== */}
-      {filledDimensions.length > 0 && (
-        <>
-          <SectionTitle>قياسات المطبخ</SectionTitle>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              marginBottom: "20px",
-              fontSize: "10pt",
-            }}
-          >
-            <thead>
-              <tr>
-                <Th>#</Th>
-                <Th>الجدار / القسم</Th>
-                <Th>الطول (سم)</Th>
-                <Th>الارتفاع (سم)</Th>
-                <Th>ملاحظات</Th>
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>قياسات المطبخ</SectionTitle>
+      {filledDimensions.length > 0 ? (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginBottom: "20px",
+            fontSize: "10pt",
+          }}
+        >
+          <thead>
+            <tr>
+              <Th>#</Th>
+              <Th>الجدار / القسم</Th>
+              <Th>الطول (سم)</Th>
+              <Th>الارتفاع (سم)</Th>
+              <Th>ملاحظات</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filledDimensions.map((row, i) => (
+              <tr key={row.id}>
+                <Td align="center">{i + 1}</Td>
+                <Td>{row.label || "—"}</Td>
+                <Td align="center">{row.length || "—"}</Td>
+                <Td align="center">{row.height || "—"}</Td>
+                <Td>{row.notes || "—"}</Td>
               </tr>
-            </thead>
-            <tbody>
-              {filledDimensions.map((row, i) => (
-                <tr key={row.id}>
-                  <Td align="center">{i + 1}</Td>
-                  <Td>{row.label || "—"}</Td>
-                  <Td align="center">{row.length || "—"}</Td>
-                  <Td align="center">{row.height || "—"}</Td>
-                  <Td>{row.notes || "—"}</Td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <EmptyNotice />
       )}
+      </div>
+
+      {/* ===== STOVE ===== */}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>الطباخ</SectionTitle>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "8px 24px",
+          marginBottom: filledStoveNotes.length > 0 ? "10px" : "20px",
+        }}
+      >
+        <InfoField label="سنتر الطباخ" value={data.stove.center} />
+        <InfoField label="قياس الطباخ (سم)" value={data.stove.size} />
+      </div>
+      {filledStoveNotes.length > 0 && (
+        <NotesList notes={filledStoveNotes} />
+      )}
+      </div>
+
+      {/* ===== SINK ===== */}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>الحوض</SectionTitle>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "8px 24px",
+          marginBottom: filledSinkNotes.length > 0 ? "10px" : "20px",
+        }}
+      >
+        <InfoField label="سنتر الحوض" value={data.sink.center} />
+        <InfoField label="قياس الحوض (سم)" value={data.sink.size} />
+      </div>
+      {filledSinkNotes.length > 0 && (
+        <NotesList notes={filledSinkNotes} />
+      )}
+      </div>
+
+      {/* ===== MARBLE ===== */}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>المرمر</SectionTitle>
+      <div
+        style={{
+          marginBottom: filledMarbleNotes.length > 0 ? "10px" : "20px",
+        }}
+      >
+        <InfoField label="لون المرمر" value={data.marble.color} />
+      </div>
+      {filledMarbleNotes.length > 0 && (
+        <NotesList notes={filledMarbleNotes} />
+      )}
+      </div>
 
       {/* ===== COLORS ===== */}
-      {filledColors.length > 0 && (
-        <>
-          <SectionTitle>الألوان</SectionTitle>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              marginBottom: "20px",
-              fontSize: "10pt",
-            }}
-          >
-            <thead>
-              <tr>
-                <Th>#</Th>
-                <Th>رمز اللون</Th>
-                <Th>ملاحظات</Th>
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>الألوان</SectionTitle>
+      {filledColors.length > 0 ? (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginBottom: "20px",
+            fontSize: "10pt",
+          }}
+        >
+          <thead>
+            <tr>
+              <Th>#</Th>
+              <Th>رمز اللون</Th>
+              <Th>ملاحظات</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filledColors.map((row, i) => (
+              <tr key={row.id}>
+                <Td align="center">{i + 1}</Td>
+                <Td>{row.code || "—"}</Td>
+                <Td>{row.notes || "—"}</Td>
               </tr>
-            </thead>
-            <tbody>
-              {filledColors.map((row, i) => (
-                <tr key={row.id}>
-                  <Td align="center">{i + 1}</Td>
-                  <Td>{row.code || "—"}</Td>
-                  <Td>{row.notes || "—"}</Td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <EmptyNotice />
       )}
+      </div>
 
       {/* ===== ENGRAVINGS ===== */}
-      {filledEngravings.length > 0 && (
-        <>
-          <SectionTitle>النقشات</SectionTitle>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              marginBottom: "20px",
-              fontSize: "10pt",
-            }}
-          >
-            <thead>
-              <tr>
-                <Th>#</Th>
-                <Th>رمز النقشة</Th>
-                <Th>ملاحظات</Th>
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>النقشات</SectionTitle>
+      {filledEngravings.length > 0 ? (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginBottom: "20px",
+            fontSize: "10pt",
+          }}
+        >
+          <thead>
+            <tr>
+              <Th>#</Th>
+              <Th>رمز النقشة</Th>
+              <Th>ملاحظات</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filledEngravings.map((row, i) => (
+              <tr key={row.id}>
+                <Td align="center">{i + 1}</Td>
+                <Td>{row.code || "—"}</Td>
+                <Td>{row.notes || "—"}</Td>
               </tr>
-            </thead>
-            <tbody>
-              {filledEngravings.map((row, i) => (
-                <tr key={row.id}>
-                  <Td align="center">{i + 1}</Td>
-                  <Td>{row.code || "—"}</Td>
-                  <Td>{row.notes || "—"}</Td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <EmptyNotice />
       )}
+      </div>
 
       {/* ===== DOORS ===== */}
-      {filledDoors.length > 0 && (
-        <>
-          <SectionTitle>الأبواب</SectionTitle>
-          <div style={{ marginBottom: "20px" }}>
-            {filledDoors.map((row, i) => (
-              <div
-                key={row.id}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>الأبواب</SectionTitle>
+      {filledDoors.length > 0 ? (
+        <div style={{ marginBottom: "20px" }}>
+          {filledDoors.map((row, i) => (
+            <div
+              key={row.id}
+              style={{
+                display: "flex",
+                gap: "8px",
+                padding: "6px 0",
+                borderBottom: "1px solid #E5E7EB",
+              }}
+            >
+              <span
                 style={{
-                  display: "flex",
-                  gap: "8px",
-                  padding: "6px 0",
-                  borderBottom: "1px solid #E5E7EB",
+                  fontWeight: 700,
+                  color: "#6B7280",
+                  minWidth: "24px",
                 }}
               >
-                <span
-                  style={{
-                    fontWeight: 700,
-                    color: "#6B7280",
-                    minWidth: "24px",
-                  }}
-                >
-                  {i + 1}.
-                </span>
-                <span>{row.note}</span>
-              </div>
-            ))}
-          </div>
-        </>
+                {i + 1}.
+              </span>
+              <span>{row.note}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <EmptyNotice />
       )}
+      </div>
+
+      {/* ===== MANUFACTURING NOTES ===== */}
+      <div style={{ breakInside: "avoid" }}>
+      <SectionTitle>ملاحظات التصنيع</SectionTitle>
+      {filledManufacturingNotes.length > 0 ? (
+        <div style={{ marginBottom: "20px" }}>
+          {filledManufacturingNotes.map((row, i) => (
+            <div
+              key={row.id}
+              style={{
+                display: "flex",
+                gap: "8px",
+                padding: "6px 0",
+                borderBottom: "1px solid #E5E7EB",
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 700,
+                  color: "#6B7280",
+                  minWidth: "24px",
+                }}
+              >
+                {i + 1}.
+              </span>
+              <span style={{ whiteSpace: "pre-wrap" }}>{row.note}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <EmptyNotice />
+      )}
+      </div>
 
       {/* ===== SIGNATURES ===== */}
       <div
@@ -317,6 +419,53 @@ function Td({
     >
       {children}
     </td>
+  );
+}
+
+function EmptyNotice() {
+  return (
+    <p
+      style={{
+        color: "#9CA3AF",
+        fontStyle: "italic",
+        fontSize: "10pt",
+        marginBottom: "20px",
+        padding: "8px 0",
+        borderBottom: "1px dotted #D1D5DB",
+      }}
+    >
+      لا توجد ملاحظات
+    </p>
+  );
+}
+
+function NotesList({ notes }: { notes: { id: string; note: string }[] }) {
+  return (
+    <div style={{ marginBottom: "20px" }}>
+      {notes.map((row, i) => (
+        <div
+          key={row.id}
+          style={{
+            display: "flex",
+            gap: "8px",
+            padding: "4px 0",
+            borderBottom: "1px solid #E5E7EB",
+            fontSize: "10pt",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 700,
+              color: "#6B7280",
+              minWidth: "24px",
+            }}
+          >
+            {i + 1}.
+          </span>
+          <span>{row.note}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 

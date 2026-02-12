@@ -7,6 +7,10 @@ import {
   Palette,
   FlowerIcon as EngravingIcon,
   DoorOpen,
+  StickyNote,
+  Flame,
+  Droplets,
+  RectangleHorizontal,
   Plus,
   Trash2,
   Printer,
@@ -22,9 +26,11 @@ import { PrintableContract } from "@/components/printable-contract";
 import {
   ContractData,
   DimensionRow,
+  NoteRow,
   ColorRow,
   EngravingRow,
   DoorNote,
+  ManufacturingNote,
   createEmptyContract,
   generateId,
 } from "@/lib/types";
@@ -44,8 +50,10 @@ export function ContractForm() {
   );
 
   // -- Generic list helpers
+  type ListKey = "dimensions" | "stoveNotes" | "sinkNotes" | "marbleNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes";
+
   function addRow<T extends { id: string }>(
-    key: "dimensions" | "colors" | "engravings" | "doors",
+    key: ListKey,
     factory: () => T
   ) {
     setData((prev) => ({
@@ -54,7 +62,7 @@ export function ContractForm() {
     }));
   }
 
-  function removeRow(key: "dimensions" | "colors" | "engravings" | "doors", id: string) {
+  function removeRow(key: ListKey, id: string) {
     setData((prev) => ({
       ...prev,
       [key]: (prev[key] as unknown as { id: string }[]).filter((r) => r.id !== id),
@@ -62,7 +70,7 @@ export function ContractForm() {
   }
 
   function updateRow<T extends { id: string }>(
-    key: "dimensions" | "colors" | "engravings" | "doors",
+    key: ListKey,
     id: string,
     field: keyof T,
     value: string
@@ -107,7 +115,7 @@ export function ContractForm() {
           <div className="text-center mb-10">
             <Logo size="lg" className="justify-center mb-4" />
             <div className="inline-block bg-charcoal text-gold px-8 py-3 border-2 border-charcoal shadow-[3px_3px_0px_#F2D000]">
-              <span className="text-sm font-black uppercase tracking-[0.2em]">عقد تصنيع مطبخ</span>
+              <span className="text-sm font-black uppercase tracking-[0.2em]">عقد تصنيع</span>
             </div>
           </div>
 
@@ -271,6 +279,204 @@ export function ContractForm() {
                 >
                   <Plus className="w-4 h-4" />
                   إضافة قياس
+                </Button>
+
+                {/* -- Stove sub-section -- */}
+                <Separator className="my-4" />
+                <div className="flex items-center gap-2 mb-3">
+                  <Flame className="w-4 h-4 text-charcoal" />
+                  <span className="text-sm font-black text-charcoal">الطباخ</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                  <Input
+                    placeholder="سنتر الطباخ"
+                    value={data.stove.center}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        stove: { ...prev.stove, center: e.target.value },
+                      }))
+                    }
+                  />
+                  <Input
+                    placeholder="قياس الطباخ (سم)"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={data.stove.size}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        stove: { ...prev.stove, size: e.target.value },
+                      }))
+                    }
+                    dir="ltr"
+                    className="text-left"
+                  />
+                </div>
+                {data.stoveNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group mb-2">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("stoveNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("stoveNotes", row.id)}
+                      disabled={data.stoveNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("stoveNotes", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
+
+                {/* -- Sink sub-section -- */}
+                <Separator className="my-4" />
+                <div className="flex items-center gap-2 mb-3">
+                  <Droplets className="w-4 h-4 text-charcoal" />
+                  <span className="text-sm font-black text-charcoal">الحوض</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                  <Input
+                    placeholder="سنتر الحوض"
+                    value={data.sink.center}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        sink: { ...prev.sink, center: e.target.value },
+                      }))
+                    }
+                  />
+                  <Input
+                    placeholder="قياس الحوض (سم)"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={data.sink.size}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        sink: { ...prev.sink, size: e.target.value },
+                      }))
+                    }
+                    dir="ltr"
+                    className="text-left"
+                  />
+                </div>
+                {data.sinkNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group mb-2">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("sinkNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("sinkNotes", row.id)}
+                      disabled={data.sinkNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("sinkNotes", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
+
+                {/* -- Marble sub-section -- */}
+                <Separator className="my-4" />
+                <div className="flex items-center gap-2 mb-3">
+                  <RectangleHorizontal className="w-4 h-4 text-charcoal" />
+                  <span className="text-sm font-black text-charcoal">المرمر</span>
+                </div>
+                <div className="mb-3">
+                  <Input
+                    placeholder="لون المرمر"
+                    value={data.marble.color}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        marble: { color: e.target.value },
+                      }))
+                    }
+                  />
+                </div>
+                {data.marbleNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group mb-2">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("marbleNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("marbleNotes", row.id)}
+                      disabled={data.marbleNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("marbleNotes", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
                 </Button>
               </div>
             </SectionCard>
@@ -475,6 +681,66 @@ export function ContractForm() {
                   className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("doors", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== MANUFACTURING NOTES ====== */}
+            <SectionCard
+              title="ملاحظات التصنيع"
+              icon={<StickyNote className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <p className="text-xs text-muted-foreground">
+                  أي تفاصيل إضافية تخص التصنيع لا تندرج تحت الأقسام الأخرى
+                </p>
+
+                {data.manufacturingNotes.map((row, idx) => (
+                  <div
+                    key={row.id}
+                    className="flex gap-2 items-start group"
+                  >
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Textarea
+                      placeholder="مثال: تركيب إضاءة LED داخلية، فتحة للشفاط بقياس 60 سم، ..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<ManufacturingNote>(
+                          "manufacturingNotes",
+                          row.id,
+                          "note",
+                          e.target.value
+                        )
+                      }
+                      className="min-h-[2.5rem]"
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("manufacturingNotes", row.id)}
+                      disabled={data.manufacturingNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("manufacturingNotes", () => ({
                       id: generateId(),
                       note: "",
                     }))
