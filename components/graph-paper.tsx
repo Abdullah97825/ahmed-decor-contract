@@ -127,6 +127,8 @@ function DimensionsPage() {
         <svg
           width="100%"
           height="100%"
+          viewBox="0 0 720 810"
+          preserveAspectRatio="xMinYMin meet"
           style={{ display: "block" }}
         >
           <defs>
@@ -138,8 +140,8 @@ function DimensionsPage() {
               <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#major-grid-1)" />
-          <rect width="100%" height="100%" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
+          <rect width="720" height="810" fill="url(#major-grid-1)" />
+          <rect width="720" height="810" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
         </svg>
       </div>
 
@@ -196,7 +198,7 @@ function GraphPage({ pageNum }: { pageNum: number }) {
       <div style={{ position: "relative" }}>
         <svg
           width="100%"
-          viewBox="0 0 720 960"
+          viewBox="0 0 720 990"
           style={{ display: "block" }}
           preserveAspectRatio="xMidYMid meet"
         >
@@ -211,9 +213,9 @@ function GraphPage({ pageNum }: { pageNum: number }) {
               <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
             </pattern>
           </defs>
-          <rect width="720" height="960" fill={`url(#major-grid-${pageNum})`} />
+          <rect width="720" height="990" fill={`url(#major-grid-${pageNum})`} />
           {/* Border */}
-          <rect width="720" height="960" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
+          <rect width="720" height="990" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
         </svg>
       </div>
 
