@@ -168,6 +168,8 @@ export function ContractForm() {
                     type="date"
                     value={data.customer.date}
                     onChange={(e) => updateCustomer("date", e.target.value)}
+                    dir="rtl"
+                    className="text-right"
                   />
                 </div>
               </div>

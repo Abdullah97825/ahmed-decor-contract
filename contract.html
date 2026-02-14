@@ -470,7 +470,7 @@ function render() {
       <div><label class="label">اسم الزبون</label><input class="input" data-key="customer.name" placeholder="الاسم الكامل" value="${esc(state.customer.name)}"></div>
       <div><label class="label">رقم الهاتف</label><input class="input" data-key="customer.phone" placeholder="07XX XXX XXXX" value="${esc(state.customer.phone)}"></div>
       <div><label class="label">العنوان</label><input class="input" data-key="customer.address" placeholder="المدينة، الحي، الشارع" value="${esc(state.customer.address)}"></div>
-      <div><label class="label">تاريخ العقد</label><input class="input" type="date" data-key="customer.date" value="${esc(state.customer.date)}"></div>
+      <div><label class="label">تاريخ العقد</label><input class="input" type="date" data-key="customer.date" value="${esc(state.customer.date)}" dir="rtl" style="text-align:right"></div>
     </div>
   `);
 
@@ -946,7 +946,7 @@ function renderPrintView() {
   if (filledColors.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز اللون</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledColors.forEach((r, i) => {
-      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+      h += `<tr><td class="pv-td">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
@@ -957,7 +957,7 @@ function renderPrintView() {
   if (filledEng.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">رمز النقشة</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledEng.forEach((r, i) => {
-      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+      h += `<tr><td class="pv-td">${i+1}</td><td class="pv-td">${esc(r.code)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
@@ -1002,7 +1002,7 @@ function renderPrintView() {
   if (filledDrawers.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">عدد المجرات</th><th class="pv-th">عدد الوجوه</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledDrawers.forEach((r, i) => {
-      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td pv-td-c">${esc(r.drawerCount)||'—'}</td><td class="pv-td pv-td-c">${esc(r.faceCount)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+      h += `<tr><td class="pv-td">${i+1}</td><td class="pv-td">${esc(r.drawerCount)||'—'}</td><td class="pv-td">${esc(r.faceCount)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
@@ -1013,7 +1013,7 @@ function renderPrintView() {
   if (filledCabinets.length > 0) {
     h += `<table class="pv-table"><thead><tr><th class="pv-th">#</th><th class="pv-th">النوع</th><th class="pv-th">الموقع</th><th class="pv-th">القياس</th><th class="pv-th">ملاحظات</th></tr></thead><tbody>`;
     filledCabinets.forEach((r, i) => {
-      h += `<tr><td class="pv-td pv-td-c">${i+1}</td><td class="pv-td">${esc(r.type)||'—'}</td><td class="pv-td">${esc(r.location)||'—'}</td><td class="pv-td pv-td-c">${esc(r.size)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
+      h += `<tr><td class="pv-td">${i+1}</td><td class="pv-td">${esc(r.type)||'—'}</td><td class="pv-td">${esc(r.location)||'—'}</td><td class="pv-td">${esc(r.size)||'—'}</td><td class="pv-td">${esc(r.notes)||'—'}</td></tr>`;
     });
     h += `</tbody></table>`;
   } else { h += pvEmpty(); }
@@ -1049,8 +1049,8 @@ function renderPrintView() {
   const totalCurrLabel = s.frontPayment.currency === 'دينار' ? 'دينار عراقي' : s.frontPayment.currency === 'دولار' ? 'دولار' : '';
   h += pvField('السعر الكلي', s.totalPrice ? `${esc(s.totalPrice)} ${totalCurrLabel}` : '');
   h += pvField('المبلغ المدفوع', s.totalPaid ? `${esc(s.totalPaid)} ${totalCurrLabel}` : '');
-  if (s.totalPrice && s.totalPaid) {
-    const remaining = Number(s.totalPrice.replace(/,/g, '')) - Number(s.totalPaid.replace(/,/g, ''));
+  if (s.totalPrice && (s.totalPaid || s.frontPayment.amount)) {
+    const remaining = Number(s.totalPrice.replace(/,/g, '')) - Number((s.totalPaid || '0').replace(/,/g, '')) - Number((s.frontPayment.amount || '0').replace(/,/g, ''));
     h += pvField('المبلغ المتبقي', `${remaining.toLocaleString()} ${totalCurrLabel}`);
   }
   h += `</div>`;

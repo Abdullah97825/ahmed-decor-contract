@@ -219,7 +219,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
           <tbody>
             {filledColors.map((row, i) => (
               <tr key={row.id}>
-                <Td align="center">{i + 1}</Td>
+                <Td>{i + 1}</Td>
                 <Td>{row.code || "—"}</Td>
                 <Td>{row.notes || "—"}</Td>
               </tr>
@@ -252,7 +252,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
           <tbody>
             {filledEngravings.map((row, i) => (
               <tr key={row.id}>
-                <Td align="center">{i + 1}</Td>
+                <Td>{i + 1}</Td>
                 <Td>{row.code || "—"}</Td>
                 <Td>{row.notes || "—"}</Td>
               </tr>
@@ -359,9 +359,9 @@ export function PrintableContract({ data }: PrintableContractProps) {
           <tbody>
             {filledDrawers.map((row, i) => (
               <tr key={row.id}>
-                <Td align="center">{i + 1}</Td>
-                <Td align="center">{row.drawerCount || "—"}</Td>
-                <Td align="center">{row.faceCount || "—"}</Td>
+                <Td>{i + 1}</Td>
+                <Td>{row.drawerCount || "—"}</Td>
+                <Td>{row.faceCount || "—"}</Td>
                 <Td>{row.notes || "—"}</Td>
               </tr>
             ))}
@@ -388,10 +388,10 @@ export function PrintableContract({ data }: PrintableContractProps) {
           <tbody>
             {filledTowerCabinets.map((row, i) => (
               <tr key={row.id}>
-                <Td align="center">{i + 1}</Td>
+                <Td>{i + 1}</Td>
                 <Td>{row.type || "—"}</Td>
                 <Td>{row.location || "—"}</Td>
-                <Td align="center">{row.size || "—"}</Td>
+                <Td>{row.size || "—"}</Td>
                 <Td>{row.notes || "—"}</Td>
               </tr>
             ))}
@@ -458,8 +458,8 @@ export function PrintableContract({ data }: PrintableContractProps) {
       <div style={{ marginBottom: "20px" }}>
         <InfoField label="السعر الكلي" value={data.totalPrice ? `${data.totalPrice} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}` : ""} />
         <InfoField label="المبلغ المدفوع" value={data.totalPaid ? `${data.totalPaid} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}` : ""} />
-        {data.totalPrice && data.totalPaid && (
-          <InfoField label="المبلغ المتبقي" value={`${(Number(data.totalPrice.replace(/,/g, "")) - Number(data.totalPaid.replace(/,/g, ""))).toLocaleString()} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}`} />
+        {data.totalPrice && (data.totalPaid || data.frontPayment.amount) && (
+          <InfoField label="المبلغ المتبقي" value={`${(Number(data.totalPrice.replace(/,/g, "")) - Number((data.totalPaid || "0").replace(/,/g, "")) - Number((data.frontPayment.amount || "0").replace(/,/g, ""))).toLocaleString()} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}`} />
         )}
       </div>
       </CSection>
