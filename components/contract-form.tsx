@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { parse, format } from "date-fns";
+import { arIQ } from "@/lib/locale-ar-iq";
 import {
   User,
   Palette,
@@ -19,6 +21,7 @@ import {
   PanelTop,
   Banknote,
   Calculator,
+  CalendarIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +30,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 // Select removed — marble/material now use checkboxes
 import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SectionCard } from "@/components/section-card";
 import { Logo } from "@/components/logo";
 import { PrintableContract } from "@/components/printable-contract";
@@ -162,15 +167,43 @@ export function ContractForm() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="cust-date">تاريخ العقد</Label>
-                  <Input
-                    id="cust-date"
-                    type="date"
-                    value={data.customer.date}
-                    onChange={(e) => updateCustomer("date", e.target.value)}
-                    dir="rtl"
-                    className="text-right"
-                  />
+                  <Label>تاريخ العقد</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className="border-input bg-transparent placeholder:text-muted-foreground flex h-9 w-full items-center justify-between rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:text-sm"
+                      >
+                        {data.customer.date
+                          ? parse(data.customer.date, "yyyy-MM-dd", new Date())
+                              .toLocaleDateString("ar-IQ-u-nu-latn", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })
+                          : <span className="text-muted-foreground">اختر التاريخ</span>}
+                        <CalendarIcon className="h-4 w-4 shrink-0 opacity-50" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={
+                          data.customer.date
+                            ? parse(data.customer.date, "yyyy-MM-dd", new Date())
+                            : undefined
+                        }
+                        onSelect={(date) =>
+                          updateCustomer(
+                            "date",
+                            date ? format(date, "yyyy-MM-dd") : ""
+                          )
+                        }
+                        locale={arIQ}
+                        dir="rtl"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
             </SectionCard>
