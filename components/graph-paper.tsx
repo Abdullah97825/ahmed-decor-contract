@@ -121,7 +121,7 @@ function DimensionsPage() {
       {/* Dimensions fields area — top third */}
       <div dir="rtl" style={{ marginBottom: "4px" }}>
         {/* Stove & Sink side by side */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "10px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "6px" }}>
           {/* Stove column */}
           <div style={{ border: "2px solid #3C4146", overflow: "hidden" }}>
             <div style={{ height: "3px", background: "#F2D000" }} />
@@ -154,7 +154,7 @@ function DimensionsPage() {
         </div>
 
         {/* Notes line spanning full width */}
-        <div style={{ display: "flex", gap: "8px", padding: "6px 0", borderBottom: "1.5px solid #C8C0B4", minHeight: "28px" }}>
+        <div style={{ display: "flex", gap: "8px", padding: "4px 0", borderBottom: "1.5px solid #C8C0B4", minHeight: "24px" }}>
           <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap", fontSize: "9pt" }}>ملاحظات:</span>
         </div>
       </div>
@@ -164,9 +164,7 @@ function DimensionsPage() {
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 720 640"
           style={{ display: "block" }}
-          preserveAspectRatio="xMidYMid meet"
         >
           <defs>
             <pattern id="small-grid-1" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -177,8 +175,8 @@ function DimensionsPage() {
               <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
             </pattern>
           </defs>
-          <rect width="720" height="640" fill="url(#major-grid-1)" />
-          <rect width="720" height="640" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
+          <rect width="100%" height="100%" fill="url(#major-grid-1)" />
+          <rect width="100%" height="100%" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
         </svg>
       </div>
 
