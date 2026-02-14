@@ -38,7 +38,8 @@ export function PrintableContract({ data }: PrintableContractProps) {
     (r) => r.note
   );
   const filledFrontPaymentNotes = data.frontPaymentNotes.filter((r) => r.note);
-  const hasElectrical = data.electricalAppliances.oven || data.electricalAppliances.microwave || data.electricalAppliances.dishwasher || data.electricalAppliances.washingMachine || data.electricalAppliances.notes;
+  const filledElectricalNotes = data.electricalNotes.filter((r) => r.note);
+  const hasElectrical = data.electricalAppliances.oven || data.electricalAppliances.microwave || data.electricalAppliances.dishwasher || data.electricalAppliances.washingMachine || filledElectricalNotes.length > 0;
   const hasMarbleTypes = data.marble.types.quartzSpanish || data.marble.types.quartzNormal || data.marble.types.synthetic;
   const hasMaterialTypes = data.material.types.mdf || data.material.types.plywood;
 
@@ -319,7 +320,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
       <CSection title="كهربائيات" icon="zap">
       {hasElectrical ? (
         <div style={{ marginBottom: "20px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 24px", marginBottom: data.electricalAppliances.notes ? "10px" : "0" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 24px", marginBottom: filledElectricalNotes.length > 0 ? "10px" : "0" }}>
             {([
               [data.electricalAppliances.oven, "فرن"],
               [data.electricalAppliances.microwave, "مايكروويف"],
@@ -334,11 +335,8 @@ export function PrintableContract({ data }: PrintableContractProps) {
               </div>
             ))}
           </div>
-          {data.electricalAppliances.notes && (
-            <div style={{ padding: "6px 0", borderTop: "1px solid #E5E7EB", fontSize: "10pt", whiteSpace: "pre-wrap" }}>
-              <span style={{ fontWeight: 700, color: "#6B7280" }}>ملاحظات: </span>
-              {data.electricalAppliances.notes}
-            </div>
+          {filledElectricalNotes.length > 0 && (
+            <NotesList notes={filledElectricalNotes} />
           )}
         </div>
       ) : (
@@ -455,6 +453,17 @@ export function PrintableContract({ data }: PrintableContractProps) {
       </div>
       </CSection>
 
+      {/* ===== TOTAL PRICE ===== */}
+      <CSection title="السعر الإجمالي" icon="calculator">
+      <div style={{ marginBottom: "20px" }}>
+        <InfoField label="السعر الكلي" value={data.totalPrice ? `${data.totalPrice} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}` : ""} />
+        <InfoField label="المبلغ المدفوع" value={data.totalPaid ? `${data.totalPaid} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}` : ""} />
+        {data.totalPrice && data.totalPaid && (
+          <InfoField label="المبلغ المتبقي" value={`${(Number(data.totalPrice.replace(/,/g, "")) - Number(data.totalPaid.replace(/,/g, ""))).toLocaleString()} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}`} />
+        )}
+      </div>
+      </CSection>
+
       {/* ===== LEGAL NOTES ===== */}
       <div
         style={{
@@ -537,6 +546,7 @@ function CIcon({ name }: { name: string }) {
     drawer: <svg {...p}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 12h18" /><path d="M10 8h4" /><path d="M10 16h4" /></svg>,
     cabinet: <svg {...p}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M12 3v18" /><path d="M9 8h-1" /><path d="M16 8h-1" /><path d="M9 16h-1" /><path d="M16 16h-1" /></svg>,
     banknote: <svg {...p}><rect width="20" height="12" x="2" y="6" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01M18 12h.01" /></svg>,
+    calculator: <svg {...p}><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><line x1="8" x2="8.01" y1="10" y2="10" /><line x1="12" x2="12.01" y1="10" y2="10" /><line x1="16" x2="16.01" y1="10" y2="10" /><line x1="8" x2="8.01" y1="14" y2="14" /><line x1="12" x2="12.01" y1="14" y2="14" /><line x1="8" x2="8.01" y1="18" y2="18" /><line x1="12" x2="12.01" y1="18" y2="18" /></svg>,
   };
   return <>{icons[name] || null}</>;
 }

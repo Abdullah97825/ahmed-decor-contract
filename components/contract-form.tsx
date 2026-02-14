@@ -18,6 +18,7 @@ import {
   Columns3,
   PanelTop,
   Banknote,
+  Calculator,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,7 +58,7 @@ export function ContractForm() {
   );
 
   // -- Generic list helpers
-  type ListKey = "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes" | "drawers" | "towerCabinets" | "frontPaymentNotes";
+  type ListKey = "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "electricalNotes" | "manufacturingNotes" | "drawers" | "towerCabinets" | "frontPaymentNotes";
 
   function addRow<T extends { id: string }>(
     key: ListKey,
@@ -149,8 +150,6 @@ export function ContractForm() {
                     placeholder="07XX XXX XXXX"
                     value={data.customer.phone}
                     onChange={(e) => updateCustomer("phone", e.target.value)}
-                    dir="ltr"
-                    className="text-left"
                   />
                 </div>
                 <div className="space-y-2">
@@ -169,8 +168,6 @@ export function ContractForm() {
                     type="date"
                     value={data.customer.date}
                     onChange={(e) => updateCustomer("date", e.target.value)}
-                    dir="ltr"
-                    className="text-left"
                   />
                 </div>
               </div>
@@ -740,20 +737,43 @@ export function ContractForm() {
                     </label>
                   ))}
                 </div>
-                <Textarea
-                  placeholder="ملاحظات إضافية حول الكهربائيات..."
-                  value={data.electricalAppliances.notes}
-                  onChange={(e) =>
-                    setData((prev) => ({
-                      ...prev,
-                      electricalAppliances: {
-                        ...prev.electricalAppliances,
-                        notes: e.target.value,
-                      },
+                {data.electricalNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("electricalNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("electricalNotes", row.id)}
+                      disabled={data.electricalNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("electricalNotes", () => ({
+                      id: generateId(),
+                      note: "",
                     }))
                   }
-                  className="min-h-[2.5rem]"
-                />
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
               </div>
             </SectionCard>
 
@@ -1067,6 +1087,48 @@ export function ContractForm() {
                   <Plus className="w-4 h-4" />
                   إضافة ملاحظة
                 </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== TOTAL PRICE ====== */}
+            <SectionCard
+              title="السعر الإجمالي"
+              icon={<Calculator className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>السعر الكلي</Label>
+                    <Input
+                      placeholder="السعر الإجمالي للعقد"
+                      value={data.totalPrice}
+                      onChange={(e) =>
+                        setData((prev) => ({
+                          ...prev,
+                          totalPrice: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>المبلغ المدفوع</Label>
+                    <Input
+                      placeholder="إجمالي المبلغ المدفوع (شامل العربون)"
+                      value={data.totalPaid}
+                      onChange={(e) =>
+                        setData((prev) => ({
+                          ...prev,
+                          totalPaid: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+                {data.frontPayment.amount && (
+                  <p className="text-xs text-muted-foreground">
+                    العربون المستلم: {data.frontPayment.amount} {data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}
+                  </p>
+                )}
               </div>
             </SectionCard>
 

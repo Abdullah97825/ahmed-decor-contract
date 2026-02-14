@@ -71,7 +71,6 @@ export interface ElectricalAppliances {
   microwave: boolean;
   dishwasher: boolean;
   washingMachine: boolean;
-  notes: string;
 }
 
 export interface DrawerRow {
@@ -119,11 +118,14 @@ export interface ContractData {
   doorInfo: DoorInfo;
   doors: DoorNote[];
   electricalAppliances: ElectricalAppliances;
+  electricalNotes: NoteRow[];
   drawers: DrawerRow[];
   towerCabinets: TowerCabinetRow[];
   manufacturingNotes: ManufacturingNote[];
   frontPayment: FrontPayment;
   frontPaymentNotes: NoteRow[];
+  totalPrice: string;
+  totalPaid: string;
 }
 
 export function generateId(): string {
@@ -151,7 +153,8 @@ export function createEmptyContract(): ContractData {
     engravings: [{ id: generateId(), code: "", notes: "" }],
     doorInfo: { handleTypes: { gola: false, jPull: false, push: false, handle: false } },
     doors: [{ id: generateId(), note: "" }],
-    electricalAppliances: { oven: false, microwave: false, dishwasher: false, washingMachine: false, notes: "" },
+    electricalAppliances: { oven: false, microwave: false, dishwasher: false, washingMachine: false },
+    electricalNotes: [{ id: generateId(), note: "" }],
     drawers: [
       { id: generateId(), drawerCount: "", faceCount: "", notes: "" },
     ],
@@ -161,5 +164,7 @@ export function createEmptyContract(): ContractData {
     manufacturingNotes: [{ id: generateId(), note: "" }],
     frontPayment: { received: false, amount: "", currency: "دينار" },
     frontPaymentNotes: [{ id: generateId(), note: "" }],
+    totalPrice: "",
+    totalPaid: "",
   };
 }
