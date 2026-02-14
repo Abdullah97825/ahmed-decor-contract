@@ -180,6 +180,35 @@ function PrintableSurvey() {
         <BlankNoteLines count={1} />
       </PrintSection>
 
+      {/* Electrical Appliances */}
+      <PrintSection title="كهربائيات" icon="zap">
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px", flexWrap: "wrap" }}>
+          <CheckboxOption label="فرن" />
+          <CheckboxOption label="مايكرويف" />
+          <CheckboxOption label="غسالة صحون" />
+          <CheckboxOption label="غسالة ملابس" />
+        </div>
+        <BlankNoteLines count={1} />
+      </PrintSection>
+
+      {/* Drawers */}
+      <PrintSection title="مجرات" icon="drawer">
+        <BlankTable
+          headers={["#", "عدد المجرات", "عدد الوجوه", "ملاحظات"]}
+          rows={2}
+          colWidths={["8%", "28%", "28%", "36%"]}
+        />
+      </PrintSection>
+
+      {/* Tower Cabinets */}
+      <PrintSection title="كابينات عمودية" icon="cabinet">
+        <BlankTable
+          headers={["#", "نوع الكابينة", "موقعها", "قياسها", "ملاحظات"]}
+          rows={2}
+          colWidths={["6%", "24%", "22%", "22%", "26%"]}
+        />
+      </PrintSection>
+
       {/* General Notes */}
       <PrintSection title="ملاحظات عامة" icon="note">
         <BlankNoteLines count={4} lineHeight="28px" />
@@ -273,6 +302,9 @@ function PrintIcon({ name }: { name: string }) {
     marble: <svg {...common}><rect width="20" height="12" x="2" y="6" rx="2" /></svg>,
     banknote: <svg {...common}><rect width="20" height="12" x="2" y="6" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01" /><path d="M18 12h.01" /></svg>,
     layers: <svg {...common}><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z" /><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12" /><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17" /></svg>,
+    zap: <svg {...common}><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>,
+    drawer: <svg {...common}><rect x="2" y="4" width="20" height="7" rx="1" /><rect x="2" y="13" width="20" height="7" rx="1" /><path d="M10 8h4" /><path d="M10 16.5h4" /></svg>,
+    cabinet: <svg {...common}><rect x="3" y="2" width="18" height="20" rx="1" /><path d="M3 12h18" /><path d="M12 2v20" /><path d="M10 7h1" /><path d="M10 17h1" /><path d="M13 7h1" /><path d="M13 17h1" /></svg>,
   };
   return <>{icons[name] || null}</>;
 }
