@@ -50,10 +50,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 @media print {
   @page { size: A4; margin: 8mm 10mm; }
   body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .no-print { display: none !important; }
-  .print-only { display: block !important; }
+  .no-print, .floating-bar { display: none !important; }
+  .page-wrapper { padding-top: 0 !important; background: white !important; }
+  .page-card { box-shadow: none !important; margin: 0 !important; }
 }
-.print-only { display: none; }
+
+.floating-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; background: var(--charcoal); border-bottom: 3px solid var(--gold); }
+.floating-bar a { font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+.floating-bar a:hover { color: #fff; }
+.float-print-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 20px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 900; border: 2px solid var(--gold); background: var(--gold); color: var(--charcoal); cursor: pointer; letter-spacing: 0.05em; }
+.float-print-btn:hover { background: var(--gold-hover); }
 
 /* Graph Page */
 .graph-page { width: 100%; height: 100vh; position: relative; page-break-after: always; display: flex; flex-direction: column; }
@@ -90,54 +96,25 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 </head>
 <body>
 
-<!-- SCREEN -->
-<div class="screen no-print">
-  <div class="dot-bg"></div>
-  <div class="container">
-    <div style="text-align:center; margin-bottom:40px;">
-      <div id="screen-logo" class="logo" dir="ltr"></div>
-      <div class="banner">ورقة رسم</div>
-    </div>
-    <div class="card">
-      <div class="card__bar"></div>
-      <div class="card__inner">
-        <div class="card__header">
-          <div class="card__icon">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M2 10h20"/><path d="M12 4v16"/></svg>
-          </div>
-          <div class="card__title">عن ورقة الرسم</div>
-        </div>
-        <p class="desc">
-          ورقة مخصصة لرسم المخططات الأولية للمطبخ أثناء الزيارة الميدانية.
-          تضم شبكة مربعات دقيقة مع ترويسة تحمل العلامة التجارية.
-        </p>
-        <p class="desc">
-          يتم طباعة صفحتين — واحدة للتخطيط العام وأخرى للتفاصيل.
-          يمكنك استخدام
-          <a class="link" href="survey-form.html">استمارة الكشف الأولي</a>
-          لتدوين القياسات بجانب الرسم.
-        </p>
-      </div>
-    </div>
-    <div style="text-align:center; padding: 8px 0 32px;">
-      <button class="btn-print" onclick="window.print()">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>
-        طباعة ورقة الرسم
-      </button>
-    </div>
-    <div style="text-align:center; padding-bottom:32px;">
-      <a class="back-link" href="survey-form.html">← العودة لاستمارة الكشف</a>
-      <span style="margin:0 12px; color:#C8C0B4;">|</span>
-      <a class="back-link" href="contract.html">← العودة لعقد التصنيع</a>
-    </div>
+<!-- Floating bar -->
+<div class="floating-bar no-print">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="contract.html">← الرئيسية</a>
+    <a href="survey-form.html">استمارة الكشف</a>
   </div>
+  <button class="float-print-btn" onclick="window.print()">
+    <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+    طباعة
+  </button>
 </div>
 
-<!-- PRINT VIEW -->
-<div class="print-only" dir="rtl" style="font-family:'Cairo',sans-serif;">
+<!-- Pages shown directly -->
+<div class="page-wrapper" style="padding-top:52px; background:#e5e5e5; min-height:100vh" dir="rtl">
+
+  <div class="page-card" style="max-width:210mm; margin:0 auto; background:white; box-shadow:0 2px 20px rgba(0,0,0,0.15);">
 
   <!-- Page 1: Dimensions -->
-  <div class="graph-page">
+  <div class="graph-page" style="font-family:'Cairo',sans-serif;">
     <div class="gp-header">
       <div class="gp-logo" dir="ltr"><span class="c">A</span><span class="c">H</span><span class="c">M</span><span class="g">E</span><span class="c">D</span> <span class="c">D</span><span class="g">E</span><span class="c">C</span><span class="c">O</span><span class="c">R</span></div>
       <div class="gp-title">القياسات</div>
@@ -195,9 +172,13 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
       <div class="gp-footer-brand" dir="ltr">AHMED DECOR</div>
     </div>
   </div>
+  </div><!-- end page-card 1 -->
 
+  <div style="height:24px" class="no-print"></div>
+
+  <div class="page-card" style="max-width:210mm; margin:0 auto; background:white; box-shadow:0 2px 20px rgba(0,0,0,0.15);">
   <!-- Page 2 -->
-  <div class="graph-page">
+  <div class="graph-page" style="font-family:'Cairo',sans-serif;">
     <div class="gp-header">
       <div class="gp-logo" dir="ltr"><span class="c">A</span><span class="c">H</span><span class="c">M</span><span class="g">E</span><span class="c">D</span> <span class="c">D</span><span class="g">E</span><span class="c">C</span><span class="c">O</span><span class="c">R</span></div>
       <div class="gp-title">استمارة كشف أولي — ورقة رسم</div>
@@ -223,22 +204,13 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
       <div class="gp-footer-brand" dir="ltr">AHMED DECOR</div>
     </div>
   </div>
+  </div><!-- end page-card 2 -->
 
-</div>
+  <div style="height:24px" class="no-print"></div>
+</div><!-- end page-wrapper -->
 
 <script>
-function renderLogo(el) {
-  const text = "AHMED DECOR";
-  let chars = '';
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (c === ' ') { chars += '<span class="logo__spacer"></span>'; continue; }
-    const cls = c === 'E' ? 'logo__char--gold' : 'logo__char--charcoal';
-    chars += `<span class="${cls}">${c}</span>`;
-  }
-  el.innerHTML = `<span class="logo__bracket">[</span><span>${chars}</span><span class="logo__bracket">]</span>`;
-}
-renderLogo(document.getElementById('screen-logo'));
+// No initialization needed
 </script>
 </body>
 </html>

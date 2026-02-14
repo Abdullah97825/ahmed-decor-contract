@@ -51,10 +51,16 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 @media print {
   @page { size: A4; margin: 10mm 12mm; }
   body { background: white !important; color: black !important; font-size: 11pt !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .no-print { display: none !important; }
-  .print-only { display: block !important; }
+  .no-print, .floating-bar { display: none !important; }
+  .page-wrapper { padding-top: 0 !important; background: white !important; }
+  .page-card { box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
 }
-.print-only { display: none; }
+
+.floating-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; background: var(--charcoal); border-bottom: 3px solid var(--gold); }
+.floating-bar a { font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+.floating-bar a:hover { color: #fff; }
+.float-print-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 20px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 900; border: 2px solid var(--gold); background: var(--gold); color: var(--charcoal); cursor: pointer; letter-spacing: 0.05em; }
+.float-print-btn:hover { background: var(--gold-hover); }
 
 /* Print section card style */
 .ps { break-inside: avoid; border: 2px solid #3C4146; margin-bottom: 14px; overflow: hidden; }
@@ -91,48 +97,23 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
 </head>
 <body>
 
-<!-- SCREEN -->
-<div class="screen no-print">
-  <div class="dot-bg"></div>
-  <div class="container">
-    <div style="text-align:center; margin-bottom:40px;">
-      <div id="screen-logo" class="logo" dir="ltr"></div>
-      <div class="banner">استمارة كشف أولي</div>
-    </div>
-    <div class="card">
-      <div class="card__bar"></div>
-      <div class="card__inner">
-        <div class="card__header">
-          <div class="card__icon">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
-          </div>
-          <div class="card__title">عن هذه الاستمارة</div>
-        </div>
-        <p class="desc">
-          هذه الاستمارة مخصصة لفريق العمل الميداني لجمع المعلومات الأولية من موقع الزبون.
-          تتضمن حقول فارغة لتعبئتها يدوياً أثناء الزيارة الميدانية، بالإضافة إلى خانات اختيار لنوع المرمر ومادة التصنيع.
-        </p>
-        <p class="desc">
-          اطبع هذه الاستمارة قبل التوجه للموقع. يمكنك أيضاً طباعة
-          <a class="link" href="graph-paper.html">ورقة الرسم</a>
-          لرسم المخططات الأولية.
-        </p>
-      </div>
-    </div>
-    <div style="text-align:center; padding: 8px 0 32px;">
-      <button class="btn-print" onclick="window.print()">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" /><rect x="6" y="14" width="12" height="8" rx="1" /></svg>
-        طباعة الاستمارة
-      </button>
-    </div>
-    <div style="text-align:center; padding-bottom:32px;">
-      <a class="back-link" href="contract.html">← العودة لعقد التصنيع</a>
-    </div>
+<!-- Floating bar -->
+<div class="floating-bar no-print">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="contract.html">← الرئيسية</a>
+    <a href="graph-paper.html">ورقة الرسم</a>
   </div>
+  <button class="float-print-btn" onclick="window.print()">
+    <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+    طباعة
+  </button>
 </div>
 
-<!-- PRINT VIEW -->
-<div id="print-view" class="print-only" dir="rtl" style="font-family:'Cairo',sans-serif; color:#1a1a1a; font-size:11pt; line-height:1.7;">
+<!-- Survey shown directly -->
+<div class="page-wrapper" style="padding-top:52px; background:#e5e5e5; min-height:100vh">
+<div class="page-card" style="max-width:210mm; margin:0 auto; padding:20mm 15mm; background:white; box-shadow:0 2px 20px rgba(0,0,0,0.15);">
+
+<div dir="rtl" style="font-family:'Cairo',sans-serif; color:#1a1a1a; font-size:11pt; line-height:1.7;">
 
   <!-- Header -->
   <div style="text-align:center; padding-bottom:16px; border-bottom:2px solid #F2D000; margin-bottom:20px;">
@@ -352,6 +333,9 @@ body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--
   </div>
 
 </div>
+</div><!-- end page-card -->
+<div style="height:24px" class="no-print"></div>
+</div><!-- end page-wrapper -->
 
 <script>
 function renderLogo(el, withBrackets) {
@@ -369,7 +353,6 @@ function renderLogo(el, withBrackets) {
     el.innerHTML = chars;
   }
 }
-renderLogo(document.getElementById('screen-logo'), true);
 renderLogo(document.getElementById('print-logo'), false);
 </script>
 </body>

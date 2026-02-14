@@ -59,9 +59,36 @@ export interface ManufacturingNote {
   note: string;
 }
 
+export interface ElectricalAppliances {
+  oven: boolean;
+  microwave: boolean;
+  dishwasher: boolean;
+  washingMachine: boolean;
+  notes: string;
+}
+
+export interface DrawerRow {
+  id: string;
+  drawerCount: string;
+  faceCount: string;
+  notes: string;
+}
+
+export interface TowerCabinetRow {
+  id: string;
+  type: string;
+  location: string;
+  size: string;
+  notes: string;
+}
+
+export interface FrontPayment {
+  received: boolean;
+  amount: string;
+}
+
 export interface ContractData {
   customer: CustomerInfo;
-  dimensions: DimensionRow[];
   stove: StoveInfo;
   stoveNotes: NoteRow[];
   sink: SinkInfo;
@@ -73,6 +100,10 @@ export interface ContractData {
   colors: ColorRow[];
   engravings: EngravingRow[];
   doors: DoorNote[];
+  electricalAppliances: ElectricalAppliances;
+  drawers: DrawerRow[];
+  towerCabinets: TowerCabinetRow[];
+  frontPayment: FrontPayment;
   manufacturingNotes: ManufacturingNote[];
 }
 
@@ -89,9 +120,6 @@ export function createEmptyContract(): ContractData {
       address: "",
       date: today,
     },
-    dimensions: [
-      { id: generateId(), label: "", length: "", height: "", notes: "" },
-    ],
     stove: { center: "", size: "" },
     stoveNotes: [{ id: generateId(), note: "" }],
     sink: { center: "", size: "" },
@@ -103,6 +131,14 @@ export function createEmptyContract(): ContractData {
     colors: [{ id: generateId(), code: "", notes: "" }],
     engravings: [{ id: generateId(), code: "", notes: "" }],
     doors: [{ id: generateId(), note: "" }],
+    electricalAppliances: { oven: false, microwave: false, dishwasher: false, washingMachine: false, notes: "" },
+    drawers: [
+      { id: generateId(), drawerCount: "", faceCount: "", notes: "" },
+    ],
+    towerCabinets: [
+      { id: generateId(), type: "", location: "", size: "", notes: "" },
+    ],
+    frontPayment: { received: false, amount: "" },
     manufacturingNotes: [{ id: generateId(), note: "" }],
   };
 }

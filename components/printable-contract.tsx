@@ -20,9 +20,6 @@ export function PrintableContract({ data }: PrintableContractProps) {
     }
   };
 
-  const filledDimensions = data.dimensions.filter(
-    (r) => r.label || r.length || r.height
-  );
   const filledStoveNotes = data.stoveNotes.filter((r) => r.note);
   const filledSinkNotes = data.sinkNotes.filter((r) => r.note);
   const filledMarbleNotes = data.marbleNotes.filter((r) => r.note);
@@ -30,9 +27,16 @@ export function PrintableContract({ data }: PrintableContractProps) {
   const filledColors = data.colors.filter((r) => r.code || r.notes);
   const filledEngravings = data.engravings.filter((r) => r.code || r.notes);
   const filledDoors = data.doors.filter((r) => r.note);
+  const filledDrawers = data.drawers.filter(
+    (r) => r.drawerCount || r.faceCount || r.notes
+  );
+  const filledTowerCabinets = data.towerCabinets.filter(
+    (r) => r.type || r.location || r.size || r.notes
+  );
   const filledManufacturingNotes = data.manufacturingNotes.filter(
     (r) => r.note
   );
+  const hasElectrical = data.electricalAppliances.oven || data.electricalAppliances.microwave || data.electricalAppliances.dishwasher || data.electricalAppliances.washingMachine || data.electricalAppliances.notes;
 
   return (
     <div
@@ -89,43 +93,6 @@ export function PrintableContract({ data }: PrintableContractProps) {
         <InfoField label="العنوان" value={data.customer.address} />
         <InfoField label="تاريخ العقد" value={formatDate(data.customer.date)} />
       </div>
-      </CSection>
-
-      {/* ===== DIMENSIONS ===== */}
-      <CSection title="قياسات المطبخ" icon="ruler">
-      {filledDimensions.length > 0 ? (
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            marginBottom: "20px",
-            fontSize: "10pt",
-          }}
-        >
-          <thead>
-            <tr>
-              <Th>#</Th>
-              <Th>الجدار / القسم</Th>
-              <Th>الطول (سم)</Th>
-              <Th>الارتفاع (سم)</Th>
-              <Th>ملاحظات</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {filledDimensions.map((row, i) => (
-              <tr key={row.id}>
-                <Td align="center">{i + 1}</Td>
-                <Td>{row.label || "—"}</Td>
-                <Td align="center">{row.length || "—"}</Td>
-                <Td align="center">{row.height || "—"}</Td>
-                <Td>{row.notes || "—"}</Td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <EmptyNotice />
-      )}
       </CSection>
 
       {/* ===== STOVE ===== */}
@@ -294,6 +261,109 @@ export function PrintableContract({ data }: PrintableContractProps) {
       )}
       </CSection>
 
+      {/* ===== ELECTRICAL APPLIANCES ===== */}
+      <CSection title="كهربائيات" icon="zap">
+      {hasElectrical ? (
+        <div style={{ marginBottom: "20px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 24px", marginBottom: data.electricalAppliances.notes ? "10px" : "0" }}>
+            {([
+              [data.electricalAppliances.oven, "فرن"],
+              [data.electricalAppliances.microwave, "مايكروويف"],
+              [data.electricalAppliances.dishwasher, "جلاية"],
+              [data.electricalAppliances.washingMachine, "غسالة"],
+            ] as const).map(([checked, label]) => (
+              <div key={label} style={{ display: "flex", gap: "8px", alignItems: "center", padding: "4px 0" }}>
+                <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+                  {checked ? "✓" : ""}
+                </span>
+                <span style={{ fontSize: "10pt" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+          {data.electricalAppliances.notes && (
+            <div style={{ padding: "6px 0", borderTop: "1px solid #E5E7EB", fontSize: "10pt", whiteSpace: "pre-wrap" }}>
+              <span style={{ fontWeight: 700, color: "#6B7280" }}>ملاحظات: </span>
+              {data.electricalAppliances.notes}
+            </div>
+          )}
+        </div>
+      ) : (
+        <EmptyNotice />
+      )}
+      </CSection>
+
+      {/* ===== DRAWERS ===== */}
+      <CSection title="مجرات" icon="drawer">
+      {filledDrawers.length > 0 ? (
+        <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "20px", fontSize: "10pt" }}>
+          <thead>
+            <tr>
+              <Th>#</Th>
+              <Th>عدد المجرات</Th>
+              <Th>عدد الوجوه</Th>
+              <Th>ملاحظات</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filledDrawers.map((row, i) => (
+              <tr key={row.id}>
+                <Td align="center">{i + 1}</Td>
+                <Td align="center">{row.drawerCount || "—"}</Td>
+                <Td align="center">{row.faceCount || "—"}</Td>
+                <Td>{row.notes || "—"}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <EmptyNotice />
+      )}
+      </CSection>
+
+      {/* ===== TOWER CABINETS ===== */}
+      <CSection title="كابينات عمودية" icon="cabinet">
+      {filledTowerCabinets.length > 0 ? (
+        <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "20px", fontSize: "10pt" }}>
+          <thead>
+            <tr>
+              <Th>#</Th>
+              <Th>النوع</Th>
+              <Th>الموقع</Th>
+              <Th>القياس</Th>
+              <Th>ملاحظات</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filledTowerCabinets.map((row, i) => (
+              <tr key={row.id}>
+                <Td align="center">{i + 1}</Td>
+                <Td>{row.type || "—"}</Td>
+                <Td>{row.location || "—"}</Td>
+                <Td align="center">{row.size || "—"}</Td>
+                <Td>{row.notes || "—"}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <EmptyNotice />
+      )}
+      </CSection>
+
+      {/* ===== FRONT PAYMENT ===== */}
+      <CSection title="العربون" icon="banknote">
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center", padding: "6px 0", borderBottom: "1px dotted #D1D5DB" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>الحالة:</span>
+          <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+            {data.frontPayment.received ? "✓" : ""}
+          </span>
+          <span style={{ fontWeight: 500 }}>{data.frontPayment.received ? "تم الاستلام" : "لم يتم الاستلام"}</span>
+        </div>
+        <InfoField label="المبلغ" value={data.frontPayment.amount} />
+      </div>
+      </CSection>
+
       {/* ===== MANUFACTURING NOTES ===== */}
       <CSection title="ملاحظات التصنيع" icon="note">
       {filledManufacturingNotes.length > 0 ? (
@@ -404,6 +474,10 @@ function CIcon({ name }: { name: string }) {
     flower: <svg {...p}><circle cx="12" cy="12" r="3" /><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5" /><path d="M12 7.5V9" /><path d="M7.5 12H9" /><path d="M16.5 12H15" /><path d="M12 16.5V15" /></svg>,
     door: <svg {...p}><path d="M11 20H2" /><path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z" /><path d="M11 4H8a2 2 0 0 0-2 2v14" /><path d="M14 12h.01" /><path d="M22 20h-3" /></svg>,
     note: <svg {...p}><path d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z" /><path d="M15 3v5a1 1 0 0 0 1 1h5" /></svg>,
+    zap: <svg {...p}><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>,
+    drawer: <svg {...p}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 12h18" /><path d="M10 8h4" /><path d="M10 16h4" /></svg>,
+    cabinet: <svg {...p}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M12 3v18" /><path d="M9 8h-1" /><path d="M16 8h-1" /><path d="M9 16h-1" /><path d="M16 16h-1" /></svg>,
+    banknote: <svg {...p}><rect width="20" height="12" x="2" y="6" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01M18 12h.01" /></svg>,
   };
   return <>{icons[name] || null}</>;
 }

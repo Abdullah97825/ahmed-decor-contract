@@ -3,7 +3,6 @@
 import { useState, useCallback } from "react";
 import {
   User,
-  Ruler,
   Palette,
   FlowerIcon as EngravingIcon,
   DoorOpen,
@@ -15,6 +14,10 @@ import {
   Plus,
   Trash2,
   Printer,
+  Zap,
+  Columns3,
+  PanelTop,
+  Banknote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,17 +31,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { SectionCard } from "@/components/section-card";
 import { Logo } from "@/components/logo";
 import { PrintableContract } from "@/components/printable-contract";
 import {
   ContractData,
-  DimensionRow,
   NoteRow,
   ColorRow,
   EngravingRow,
   DoorNote,
   ManufacturingNote,
+  DrawerRow,
+  TowerCabinetRow,
   createEmptyContract,
   generateId,
 } from "@/lib/types";
@@ -58,7 +63,7 @@ export function ContractForm() {
   );
 
   // -- Generic list helpers
-  type ListKey = "dimensions" | "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes";
+  type ListKey = "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes" | "drawers" | "towerCabinets";
 
   function addRow<T extends { id: string }>(
     key: ListKey,
@@ -177,124 +182,12 @@ export function ContractForm() {
               </div>
             </SectionCard>
 
-            {/* ====== KITCHEN DIMENSIONS ====== */}
+            {/* ====== STOVE ====== */}
             <SectionCard
-              title="قياسات المطبخ"
-              icon={<Ruler className="w-5 h-5" />}
+              title="الطباخ"
+              icon={<Flame className="w-5 h-5" />}
             >
               <div className="space-y-3">
-                {/* Column headers */}
-                <div className="hidden sm:grid grid-cols-[1fr_0.7fr_0.7fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
-                  <span>الجدار / القسم</span>
-                  <span>الطول (سم)</span>
-                  <span>الارتفاع (سم)</span>
-                  <span>ملاحظات</span>
-                  <span className="w-9" />
-                </div>
-                <Separator className="hidden sm:block" />
-
-                {data.dimensions.map((row, idx) => (
-                  <div
-                    key={row.id}
-                    className="grid grid-cols-1 sm:grid-cols-[1fr_0.7fr_0.7fr_1fr_auto] gap-2 items-start group"
-                  >
-                    <div className="sm:hidden text-xs font-semibold text-muted-foreground mb-1">
-                      قياس {idx + 1}
-                    </div>
-                    <Input
-                      placeholder="مثال: جدار رئيسي"
-                      value={row.label}
-                      onChange={(e) =>
-                        updateRow<DimensionRow>(
-                          "dimensions",
-                          row.id,
-                          "label",
-                          e.target.value
-                        )
-                      }
-                    />
-                    <Input
-                      placeholder="سم"
-                      type="number"
-                      step="0.1"
-                      min="0"
-                      value={row.length}
-                      onChange={(e) =>
-                        updateRow<DimensionRow>(
-                          "dimensions",
-                          row.id,
-                          "length",
-                          e.target.value
-                        )
-                      }
-                      dir="ltr"
-                      className="text-left"
-                    />
-                    <Input
-                      placeholder="سم"
-                      type="number"
-                      step="0.1"
-                      min="0"
-                      value={row.height}
-                      onChange={(e) =>
-                        updateRow<DimensionRow>(
-                          "dimensions",
-                          row.id,
-                          "height",
-                          e.target.value
-                        )
-                      }
-                      dir="ltr"
-                      className="text-left"
-                    />
-                    <Input
-                      placeholder="ملاحظات (اختياري)"
-                      value={row.notes}
-                      onChange={(e) =>
-                        updateRow<DimensionRow>(
-                          "dimensions",
-                          row.id,
-                          "notes",
-                          e.target.value
-                        )
-                      }
-                    />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
-                      onClick={() => removeRow("dimensions", row.id)}
-                      disabled={data.dimensions.length <= 1}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                ))}
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
-                  onClick={() =>
-                    addRow("dimensions", () => ({
-                      id: generateId(),
-                      label: "",
-                      length: "",
-                      height: "",
-                      notes: "",
-                    }))
-                  }
-                >
-                  <Plus className="w-4 h-4" />
-                  إضافة قياس
-                </Button>
-
-                {/* -- Stove sub-section -- */}
-                <Separator className="my-4" />
-                <div className="flex items-center gap-2 mb-3">
-                  <Flame className="w-4 h-4 text-charcoal" />
-                  <span className="text-sm font-black text-charcoal">الطباخ</span>
-                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                   <Input
                     placeholder="سنتر الطباخ"
@@ -359,13 +252,15 @@ export function ContractForm() {
                   <Plus className="w-4 h-4" />
                   إضافة ملاحظة
                 </Button>
+              </div>
+            </SectionCard>
 
-                {/* -- Sink sub-section -- */}
-                <Separator className="my-4" />
-                <div className="flex items-center gap-2 mb-3">
-                  <Droplets className="w-4 h-4 text-charcoal" />
-                  <span className="text-sm font-black text-charcoal">الحوض</span>
-                </div>
+            {/* ====== SINK ====== */}
+            <SectionCard
+              title="الحوض"
+              icon={<Droplets className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                   <Input
                     placeholder="سنتر الحوض"
@@ -430,13 +325,15 @@ export function ContractForm() {
                   <Plus className="w-4 h-4" />
                   إضافة ملاحظة
                 </Button>
+              </div>
+            </SectionCard>
 
-                {/* -- Marble sub-section -- */}
-                <Separator className="my-4" />
-                <div className="flex items-center gap-2 mb-3">
-                  <RectangleHorizontal className="w-4 h-4 text-charcoal" />
-                  <span className="text-sm font-black text-charcoal">المرمر</span>
-                </div>
+            {/* ====== MARBLE ====== */}
+            <SectionCard
+              title="المرمر"
+              icon={<RectangleHorizontal className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
                 <div className="mb-3">
                   <Input
                     placeholder="لون المرمر"
@@ -507,13 +404,15 @@ export function ContractForm() {
                   <Plus className="w-4 h-4" />
                   إضافة ملاحظة
                 </Button>
+              </div>
+            </SectionCard>
 
-                {/* -- Manufacturing Material sub-section -- */}
-                <Separator className="my-4" />
-                <div className="flex items-center gap-2 mb-3">
-                  <Layers className="w-4 h-4 text-charcoal" />
-                  <span className="text-sm font-black text-charcoal">مادة التصنيع</span>
-                </div>
+            {/* ====== MANUFACTURING MATERIAL ====== */}
+            <SectionCard
+              title="مادة التصنيع"
+              icon={<Layers className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
                 <div className="mb-3">
                   <Select
                     dir="rtl"
@@ -782,6 +681,258 @@ export function ContractForm() {
                   <Plus className="w-4 h-4" />
                   إضافة ملاحظة
                 </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== ELECTRICAL APPLIANCES ====== */}
+            <SectionCard
+              title="كهربائيات"
+              icon={<Zap className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <p className="text-xs text-muted-foreground mb-2">
+                  حدد الأجهزة الكهربائية المطلوب تجهيز أماكن لها
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  {([
+                    ["oven", "فرن"],
+                    ["microwave", "مايكروويف"],
+                    ["dishwasher", "جلاية"],
+                    ["washingMachine", "غسالة"],
+                  ] as const).map(([key, label]) => (
+                    <label key={key} className="flex items-center gap-2 cursor-pointer">
+                      <Checkbox
+                        checked={data.electricalAppliances[key]}
+                        onCheckedChange={(checked) =>
+                          setData((prev) => ({
+                            ...prev,
+                            electricalAppliances: {
+                              ...prev.electricalAppliances,
+                              [key]: !!checked,
+                            },
+                          }))
+                        }
+                      />
+                      <span className="text-sm font-bold text-charcoal">{label}</span>
+                    </label>
+                  ))}
+                </div>
+                <Textarea
+                  placeholder="ملاحظات إضافية حول الكهربائيات..."
+                  value={data.electricalAppliances.notes}
+                  onChange={(e) =>
+                    setData((prev) => ({
+                      ...prev,
+                      electricalAppliances: {
+                        ...prev.electricalAppliances,
+                        notes: e.target.value,
+                      },
+                    }))
+                  }
+                  className="min-h-[2.5rem]"
+                />
+              </div>
+            </SectionCard>
+
+            {/* ====== DRAWERS ====== */}
+            <SectionCard
+              title="مجرات"
+              icon={<Columns3 className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <div className="hidden sm:grid grid-cols-[0.6fr_0.6fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
+                  <span>عدد المجرات</span>
+                  <span>عدد الوجوه</span>
+                  <span>ملاحظات</span>
+                  <span className="w-9" />
+                </div>
+                <Separator className="hidden sm:block" />
+
+                {data.drawers.map((row, idx) => (
+                  <div
+                    key={row.id}
+                    className="grid grid-cols-1 sm:grid-cols-[0.6fr_0.6fr_1fr_auto] gap-2 items-start group"
+                  >
+                    <Input
+                      placeholder="عدد المجرات"
+                      type="number"
+                      min="0"
+                      value={row.drawerCount}
+                      onChange={(e) =>
+                        updateRow<DrawerRow>("drawers", row.id, "drawerCount", e.target.value)
+                      }
+                      dir="ltr"
+                      className="text-left"
+                    />
+                    <Input
+                      placeholder="عدد الوجوه"
+                      type="number"
+                      min="0"
+                      value={row.faceCount}
+                      onChange={(e) =>
+                        updateRow<DrawerRow>("drawers", row.id, "faceCount", e.target.value)
+                      }
+                      dir="ltr"
+                      className="text-left"
+                    />
+                    <Input
+                      placeholder="ملاحظات (اختياري)"
+                      value={row.notes}
+                      onChange={(e) =>
+                        updateRow<DrawerRow>("drawers", row.id, "notes", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
+                      onClick={() => removeRow("drawers", row.id)}
+                      disabled={data.drawers.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("drawers", () => ({
+                      id: generateId(),
+                      drawerCount: "",
+                      faceCount: "",
+                      notes: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة صف
+                </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== TOWER CABINETS ====== */}
+            <SectionCard
+              title="كابينات عمودية"
+              icon={<PanelTop className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <div className="hidden sm:grid grid-cols-[0.8fr_0.8fr_0.5fr_1fr_auto] gap-2 text-xs font-black uppercase text-muted-foreground px-1">
+                  <span>النوع</span>
+                  <span>الموقع</span>
+                  <span>القياس</span>
+                  <span>ملاحظات</span>
+                  <span className="w-9" />
+                </div>
+                <Separator className="hidden sm:block" />
+
+                {data.towerCabinets.map((row, idx) => (
+                  <div
+                    key={row.id}
+                    className="grid grid-cols-1 sm:grid-cols-[0.8fr_0.8fr_0.5fr_1fr_auto] gap-2 items-start group"
+                  >
+                    <Input
+                      placeholder="النوع"
+                      value={row.type}
+                      onChange={(e) =>
+                        updateRow<TowerCabinetRow>("towerCabinets", row.id, "type", e.target.value)
+                      }
+                    />
+                    <Input
+                      placeholder="الموقع"
+                      value={row.location}
+                      onChange={(e) =>
+                        updateRow<TowerCabinetRow>("towerCabinets", row.id, "location", e.target.value)
+                      }
+                    />
+                    <Input
+                      placeholder="القياس"
+                      value={row.size}
+                      onChange={(e) =>
+                        updateRow<TowerCabinetRow>("towerCabinets", row.id, "size", e.target.value)
+                      }
+                      dir="ltr"
+                      className="text-left"
+                    />
+                    <Input
+                      placeholder="ملاحظات (اختياري)"
+                      value={row.notes}
+                      onChange={(e) =>
+                        updateRow<TowerCabinetRow>("towerCabinets", row.id, "notes", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors self-center"
+                      onClick={() => removeRow("towerCabinets", row.id)}
+                      disabled={data.towerCabinets.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("towerCabinets", () => ({
+                      id: generateId(),
+                      type: "",
+                      location: "",
+                      size: "",
+                      notes: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة كابينة
+                </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== FRONT PAYMENT ====== */}
+            <SectionCard
+              title="العربون"
+              icon={<Banknote className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={data.frontPayment.received}
+                    onCheckedChange={(checked) =>
+                      setData((prev) => ({
+                        ...prev,
+                        frontPayment: {
+                          ...prev.frontPayment,
+                          received: !!checked,
+                        },
+                      }))
+                    }
+                  />
+                  <span className="text-sm font-bold text-charcoal">تم استلام العربون</span>
+                </label>
+                <Input
+                  placeholder="المبلغ"
+                  type="number"
+                  min="0"
+                  value={data.frontPayment.amount}
+                  onChange={(e) =>
+                    setData((prev) => ({
+                      ...prev,
+                      frontPayment: {
+                        ...prev.frontPayment,
+                        amount: e.target.value,
+                      },
+                    }))
+                  }
+                  dir="ltr"
+                  className="text-left"
+                />
               </div>
             </SectionCard>
 

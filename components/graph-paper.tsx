@@ -1,84 +1,24 @@
 "use client";
 
-import { Printer, ClipboardList } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo";
+import { Printer } from "lucide-react";
 import Link from "next/link";
 
 export function GraphPaper() {
   return (
     <>
-      {/* ====== SCREEN VIEW ====== */}
-      <div className="no-print min-h-screen bg-cream">
-        <div className="fixed inset-0 pointer-events-none opacity-[0.06]">
-          <svg width="100%" height="100%">
-            <defs>
-              <pattern id="dot-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="#3C4146" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#dot-grid)" />
-          </svg>
-        </div>
-
-        <div className="relative max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <Logo size="lg" className="justify-center mb-4" />
-            <div className="inline-block bg-charcoal text-gold px-8 py-3 border-2 border-charcoal shadow-[3px_3px_0px_#F2D000]">
-              <span className="text-sm font-black uppercase tracking-[0.2em]">ورقة رسم</span>
-            </div>
-          </div>
-
-          <div className="max-w-2xl mx-auto space-y-6">
-            <div className="relative bg-card border-2 border-charcoal shadow-[4px_4px_0px_#3C4146] overflow-hidden">
-              <div className="h-1 bg-gold" />
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-5 pb-3 border-b-2 border-charcoal/10">
-                  <div className="flex items-center justify-center w-9 h-9 border-2 border-charcoal bg-gold/10 text-charcoal">
-                    <ClipboardList className="w-5 h-5" />
-                  </div>
-                  <h2 className="text-base font-black uppercase tracking-wider text-charcoal">عن ورقة الرسم</h2>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  ورقة رسم مخصصة لرسم المخططات الأولية في موقع الزبون.
-                  تحتوي على شبكة مربعات لتسهيل رسم المخططات والقياسات.
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  يُطبع صفحتان من ورقة الرسم. يمكنك أيضاً طباعة{" "}
-                  <Link href="/survey" className="text-charcoal font-bold underline underline-offset-4 decoration-gold decoration-2 hover:text-gold transition-colors">
-                    استمارة الكشف الأولي
-                  </Link>{" "}
-                  لجمع المعلومات.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-4 pt-2 pb-8">
-              <Button
-                size="lg"
-                onClick={() => window.print()}
-                className="bg-gold border-3 border-charcoal text-charcoal font-black text-base uppercase tracking-wider px-12 py-7 shadow-[6px_6px_0px_#3C4146] hover:bg-gold-hover hover:text-charcoal hover:shadow-[2px_2px_0px_#3C4146] hover:translate-x-[4px] hover:translate-y-[4px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all duration-100"
-              >
-                <Printer className="w-5 h-5" />
-                طباعة ورقة الرسم
-              </Button>
-            </div>
-
-            <div className="text-center pb-8">
-              <Link href="/survey" className="text-xs text-muted-foreground hover:text-charcoal transition-colors underline underline-offset-4 ml-4">
-                استمارة الكشف الأولي
-              </Link>
-              <Link href="/" className="text-xs text-muted-foreground hover:text-charcoal transition-colors underline underline-offset-4">
-                ← العودة لعقد التصنيع
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ====== PRINT VIEW ====== */}
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media print {
+          @page { size: A4; margin: 8mm 10mm; }
+          .graph-page-wrapper {
+            padding-top: 0 !important;
+            background: white !important;
+            min-height: auto !important;
+          }
+          .graph-page-card {
+            max-width: none !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+          }
           .graph-page {
             page-break-after: always;
           }
@@ -86,10 +26,33 @@ export function GraphPaper() {
             page-break-after: auto;
           }
         }
-      `}</style>
-      <div className="hidden print-only">
-        <DimensionsPage />
-        <GraphPage pageNum={2} />
+      `}} />
+
+      {/* Floating top bar (hidden on print) */}
+      <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 20px", background: "#3C4146", borderBottom: "3px solid #F2D000" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <Link href="/" style={{ fontSize: "12px", color: "#9CA3AF", textDecoration: "underline", textUnderlineOffset: "4px" }}>← الرئيسية</Link>
+          <Link href="/survey" style={{ fontSize: "12px", color: "#9CA3AF", textDecoration: "underline", textUnderlineOffset: "4px" }}>استمارة الكشف</Link>
+        </div>
+        <button
+          onClick={() => window.print()}
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 20px", fontFamily: "var(--font-cairo), Cairo, sans-serif", fontSize: "13px", fontWeight: 900, border: "2px solid #F2D000", background: "#F2D000", color: "#3C4146", cursor: "pointer", letterSpacing: "0.05em" }}
+        >
+          <Printer style={{ width: 16, height: 16 }} />
+          طباعة
+        </button>
+      </div>
+
+      {/* Pages shown directly */}
+      <div className="graph-page-wrapper" style={{ paddingTop: "52px", background: "#e5e5e5", minHeight: "100vh" }}>
+        <div className="graph-page-card" style={{ maxWidth: "210mm", margin: "0 auto", background: "white", boxShadow: "0 2px 20px rgba(0,0,0,0.15)" }}>
+          <DimensionsPage />
+        </div>
+        <div className="no-print" style={{ height: "24px" }} />
+        <div className="graph-page-card" style={{ maxWidth: "210mm", margin: "0 auto", background: "white", boxShadow: "0 2px 20px rgba(0,0,0,0.15)" }}>
+          <GraphPage pageNum={2} />
+        </div>
+        <div className="no-print" style={{ height: "24px" }} />
       </div>
     </>
   );
