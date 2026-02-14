@@ -128,33 +128,6 @@ function PrintableSurvey() {
         </div>
       </PrintSection>
 
-      {/* Kitchen Dimensions */}
-      <PrintSection title="قياسات المطبخ" icon="ruler">
-        <BlankTable
-          headers={["#", "الجدار / القسم", "الطول (سم)", "الارتفاع (سم)", "ملاحظات"]}
-          rows={4}
-          colWidths={["8%", "28%", "18%", "18%", "28%"]}
-        />
-      </PrintSection>
-
-      {/* Stove */}
-      <PrintSection title="الطباخ" icon="flame">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-          <BlankField label="سنتر الطباخ" />
-          <BlankField label="قياس الطباخ (سم)" />
-        </div>
-        <BlankNoteLines count={2} />
-      </PrintSection>
-
-      {/* Sink */}
-      <PrintSection title="الحوض" icon="droplets">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
-          <BlankField label="سنتر الحوض" />
-          <BlankField label="قياس الحوض (سم)" />
-        </div>
-        <BlankNoteLines count={2} />
-      </PrintSection>
-
       {/* Marble */}
       <PrintSection title="المرمر" icon="marble">
         <BlankField label="لون المرمر" />
@@ -164,7 +137,7 @@ function PrintableSurvey() {
           <CheckboxOption label="كوارتز عادي" />
           <CheckboxOption label="صناعي" />
         </div>
-        <BlankNoteLines count={2} />
+        <BlankNoteLines count={1} />
       </PrintSection>
 
       {/* Material */}
@@ -179,11 +152,11 @@ function PrintableSurvey() {
 
       {/* Colors */}
       <PrintSection title="الألوان" icon="palette">
-        <BlankTable
-          headers={["#", "اللون", "ملاحظات (الاستخدام)"]}
-          rows={2}
-          colWidths={["8%", "42%", "50%"]}
-        />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+          <BlankField label="لون الارضي" />
+          <BlankField label="لون الملحق" />
+        </div>
+        <BlankNoteLines count={1} />
       </PrintSection>
 
       {/* Engravings */}
@@ -197,15 +170,27 @@ function PrintableSurvey() {
 
       {/* Doors */}
       <PrintSection title="الأبواب" icon="door">
-        <p style={{ fontSize: "9pt", color: "#6B7280", marginBottom: "8px" }}>
-          أنواع المقابض والأبواب المطلوبة (push, gola finger pull, j-pull, الخ)
-        </p>
-        <BlankNoteLines count={2} />
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع المقبض:</span>
+          <CheckboxOption label="(Gola) كولا" />
+          <CheckboxOption label="(J-Pull) حفر" />
+          <CheckboxOption label="(Push) كبس" />
+          <CheckboxOption label="(Handle) يدة" />
+        </div>
+        <BlankNoteLines count={1} />
       </PrintSection>
 
       {/* General Notes */}
       <PrintSection title="ملاحظات عامة" icon="note">
         <BlankNoteLines count={4} lineHeight="28px" />
+      </PrintSection>
+
+      {/* Front Payment */}
+      <PrintSection title="العربون" icon="banknote">
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <CheckboxOption label="تم استلام عربون" />
+        </div>
+        <BlankField label="قيمة العربون" />
       </PrintSection>
 
       {/* Footer */}
@@ -279,14 +264,12 @@ function PrintIcon({ name }: { name: string }) {
   const common = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "#3C4146", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   const icons: Record<string, React.ReactNode> = {
     user: <svg {...common}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>,
-    ruler: <svg {...common}><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z" /><path d="m14.5 12.5 2-2" /><path d="m11.5 9.5 2-2" /><path d="m8.5 6.5 2-2" /><path d="m17.5 15.5 2-2" /></svg>,
     palette: <svg {...common}><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="#3C4146" /><circle cx="17.5" cy="10.5" r=".5" fill="#3C4146" /><circle cx="6.5" cy="12.5" r=".5" fill="#3C4146" /><circle cx="8.5" cy="7.5" r=".5" fill="#3C4146" /></svg>,
     flower: <svg {...common}><circle cx="12" cy="12" r="3" /><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5" /><path d="M12 7.5V9" /><path d="M7.5 12H9" /><path d="M16.5 12H15" /><path d="M12 16.5V15" /></svg>,
     door: <svg {...common}><path d="M11 20H2" /><path d="M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.561z" /><path d="M11 4H8a2 2 0 0 0-2 2v14" /><path d="M14 12h.01" /><path d="M22 20h-3" /></svg>,
     note: <svg {...common}><path d="M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z" /><path d="M15 3v5a1 1 0 0 0 1 1h5" /></svg>,
-    flame: <svg {...common}><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" /></svg>,
-    droplets: <svg {...common}><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" /></svg>,
     marble: <svg {...common}><rect width="20" height="12" x="2" y="6" rx="2" /></svg>,
+    banknote: <svg {...common}><rect width="20" height="12" x="2" y="6" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01" /><path d="M18 12h.01" /></svg>,
     layers: <svg {...common}><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z" /><path d="m2 12 8.58 3.91a2 2 0 0 0 1.66 0L21 12" /><path d="m2 17 8.58 3.91a2 2 0 0 0 1.66 0L21 17" /></svg>,
   };
   return <>{icons[name] || null}</>;
