@@ -27,6 +27,7 @@ export function PrintableContract({ data }: PrintableContractProps) {
   const filledColors = data.colors.filter((r) => r.code || r.notes);
   const filledEngravings = data.engravings.filter((r) => r.code || r.notes);
   const filledDoors = data.doors.filter((r) => r.note);
+  const hasHandleTypes = data.doorInfo.handleTypes.gola || data.doorInfo.handleTypes.jPull || data.doorInfo.handleTypes.push || data.doorInfo.handleTypes.handle;
   const filledDrawers = data.drawers.filter(
     (r) => r.drawerCount || r.faceCount || r.notes
   );
@@ -36,7 +37,10 @@ export function PrintableContract({ data }: PrintableContractProps) {
   const filledManufacturingNotes = data.manufacturingNotes.filter(
     (r) => r.note
   );
+  const filledFrontPaymentNotes = data.frontPaymentNotes.filter((r) => r.note);
   const hasElectrical = data.electricalAppliances.oven || data.electricalAppliances.microwave || data.electricalAppliances.dishwasher || data.electricalAppliances.washingMachine || data.electricalAppliances.notes;
+  const hasMarbleTypes = data.marble.types.quartzSpanish || data.marble.types.quartzNormal || data.marble.types.synthetic;
+  const hasMaterialTypes = data.material.types.mdf || data.material.types.plywood;
 
   return (
     <div
@@ -135,14 +139,27 @@ export function PrintableContract({ data }: PrintableContractProps) {
       <CSection title="المرمر" icon="marble">
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "8px 24px",
           marginBottom: filledMarbleNotes.length > 0 ? "10px" : "20px",
         }}
       >
         <InfoField label="لون المرمر" value={data.marble.color} />
-        <InfoField label="نوع المرمر" value={data.marble.type} />
+        {hasMarbleTypes && (
+          <div style={{ display: "flex", gap: "24px", padding: "6px 0", borderBottom: "1px dotted #D1D5DB", flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>نوع المرمر:</span>
+            {([
+              [data.marble.types.quartzSpanish, "كوارتز اسباني"],
+              [data.marble.types.quartzNormal, "كوارتز عادي"],
+              [data.marble.types.synthetic, "صناعي"],
+            ] as const).map(([checked, label]) => (
+              <div key={label} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+                  {checked ? "✓" : ""}
+                </span>
+                <span style={{ fontSize: "10pt" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {filledMarbleNotes.length > 0 && (
         <NotesList notes={filledMarbleNotes} />
@@ -156,7 +173,24 @@ export function PrintableContract({ data }: PrintableContractProps) {
           marginBottom: filledMaterialNotes.length > 0 ? "10px" : "20px",
         }}
       >
-        <InfoField label="مادة التصنيع" value={data.material.type} />
+        {hasMaterialTypes ? (
+          <div style={{ display: "flex", gap: "24px", padding: "6px 0", borderBottom: "1px dotted #D1D5DB" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>مادة التصنيع:</span>
+            {([
+              [data.material.types.mdf, "MDF"],
+              [data.material.types.plywood, "Plywood"],
+            ] as const).map(([checked, label]) => (
+              <div key={label} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+                  {checked ? "✓" : ""}
+                </span>
+                <span style={{ fontSize: "10pt" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <InfoField label="مادة التصنيع" value="" />
+        )}
       </div>
       {filledMaterialNotes.length > 0 && (
         <NotesList notes={filledMaterialNotes} />
@@ -231,34 +265,54 @@ export function PrintableContract({ data }: PrintableContractProps) {
 
       {/* ===== DOORS ===== */}
       <CSection title="الأبواب" icon="door">
-      {filledDoors.length > 0 ? (
-        <div style={{ marginBottom: "20px" }}>
-          {filledDoors.map((row, i) => (
-            <div
-              key={row.id}
-              style={{
-                display: "flex",
-                gap: "8px",
-                padding: "6px 0",
-                borderBottom: "1px solid #E5E7EB",
-              }}
-            >
-              <span
+      <div style={{ marginBottom: filledDoors.length > 0 ? "10px" : "20px" }}>
+        {hasHandleTypes && (
+          <div style={{ display: "flex", gap: "24px", padding: "6px 0", borderBottom: "1px dotted #D1D5DB", marginBottom: "8px", flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>نوع المقبض:</span>
+            {([
+              [data.doorInfo.handleTypes.gola, "(Gola) كولا"],
+              [data.doorInfo.handleTypes.jPull, "(J-Pull) حفر"],
+              [data.doorInfo.handleTypes.push, "(Push) كبس"],
+              [data.doorInfo.handleTypes.handle, "(Handle) يدة"],
+            ] as const).map(([checked, label]) => (
+              <div key={label} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+                  {checked ? "✓" : ""}
+                </span>
+                <span style={{ fontSize: "10pt" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {filledDoors.length > 0 ? (
+          <div>
+            {filledDoors.map((row, i) => (
+              <div
+                key={row.id}
                 style={{
-                  fontWeight: 700,
-                  color: "#6B7280",
-                  minWidth: "24px",
+                  display: "flex",
+                  gap: "8px",
+                  padding: "6px 0",
+                  borderBottom: "1px solid #E5E7EB",
                 }}
               >
-                {i + 1}.
-              </span>
-              <span>{row.note}</span>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <EmptyNotice />
-      )}
+                <span
+                  style={{
+                    fontWeight: 700,
+                    color: "#6B7280",
+                    minWidth: "24px",
+                  }}
+                >
+                  {i + 1}.
+                </span>
+                <span>{row.note}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          !hasHandleTypes && <EmptyNotice />
+        )}
+      </div>
       </CSection>
 
       {/* ===== ELECTRICAL APPLIANCES ===== */}
@@ -269,8 +323,8 @@ export function PrintableContract({ data }: PrintableContractProps) {
             {([
               [data.electricalAppliances.oven, "فرن"],
               [data.electricalAppliances.microwave, "مايكروويف"],
-              [data.electricalAppliances.dishwasher, "جلاية"],
-              [data.electricalAppliances.washingMachine, "غسالة"],
+              [data.electricalAppliances.dishwasher, "غسالة صحون"],
+              [data.electricalAppliances.washingMachine, "غسالة ملابس"],
             ] as const).map(([checked, label]) => (
               <div key={label} style={{ display: "flex", gap: "8px", alignItems: "center", padding: "4px 0" }}>
                 <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
@@ -350,20 +404,6 @@ export function PrintableContract({ data }: PrintableContractProps) {
       )}
       </CSection>
 
-      {/* ===== FRONT PAYMENT ===== */}
-      <CSection title="العربون" icon="banknote">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "20px" }}>
-        <div style={{ display: "flex", gap: "8px", alignItems: "center", padding: "6px 0", borderBottom: "1px dotted #D1D5DB" }}>
-          <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>الحالة:</span>
-          <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
-            {data.frontPayment.received ? "✓" : ""}
-          </span>
-          <span style={{ fontWeight: 500 }}>{data.frontPayment.received ? "تم الاستلام" : "لم يتم الاستلام"}</span>
-        </div>
-        <InfoField label="المبلغ" value={data.frontPayment.amount} />
-      </div>
-      </CSection>
-
       {/* ===== MANUFACTURING NOTES ===== */}
       <CSection title="ملاحظات التصنيع" icon="note">
       {filledManufacturingNotes.length > 0 ? (
@@ -394,6 +434,25 @@ export function PrintableContract({ data }: PrintableContractProps) {
       ) : (
         <EmptyNotice />
       )}
+      </CSection>
+
+      {/* ===== FRONT PAYMENT ===== */}
+      <CSection title="العربون" icon="banknote">
+      <div style={{ marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "24px", padding: "6px 0", borderBottom: "1px dotted #D1D5DB", flexWrap: "wrap", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap" }}>الحالة:</span>
+            <span style={{ width: "14px", height: "14px", border: "2px solid #3C4146", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10pt", fontWeight: 700 }}>
+              {data.frontPayment.received ? "✓" : ""}
+            </span>
+            <span style={{ fontWeight: 500 }}>{data.frontPayment.received ? "تم الاستلام" : "لم يتم الاستلام"}</span>
+          </div>
+        </div>
+        <InfoField label="المبلغ" value={data.frontPayment.amount ? `${data.frontPayment.amount} ${data.frontPayment.currency === "دينار" ? "دينار عراقي" : data.frontPayment.currency === "دولار" ? "دولار" : ""}` : ""} />
+        {filledFrontPaymentNotes.length > 0 && (
+          <NotesList notes={filledFrontPaymentNotes} />
+        )}
+      </div>
       </CSection>
 
       {/* ===== LEGAL NOTES ===== */}

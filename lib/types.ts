@@ -46,12 +46,19 @@ export interface SinkInfo {
 }
 
 export interface MarbleInfo {
-  type: string;
+  types: {
+    quartzSpanish: boolean;
+    quartzNormal: boolean;
+    synthetic: boolean;
+  };
   color: string;
 }
 
 export interface ManufacturingMaterialInfo {
-  type: string;
+  types: {
+    mdf: boolean;
+    plywood: boolean;
+  };
 }
 
 export interface ManufacturingNote {
@@ -82,9 +89,19 @@ export interface TowerCabinetRow {
   notes: string;
 }
 
+export interface DoorInfo {
+  handleTypes: {
+    gola: boolean;
+    jPull: boolean;
+    push: boolean;
+    handle: boolean;
+  };
+}
+
 export interface FrontPayment {
   received: boolean;
   amount: string;
+  currency: string;
 }
 
 export interface ContractData {
@@ -99,12 +116,14 @@ export interface ContractData {
   materialNotes: NoteRow[];
   colors: ColorRow[];
   engravings: EngravingRow[];
+  doorInfo: DoorInfo;
   doors: DoorNote[];
   electricalAppliances: ElectricalAppliances;
   drawers: DrawerRow[];
   towerCabinets: TowerCabinetRow[];
-  frontPayment: FrontPayment;
   manufacturingNotes: ManufacturingNote[];
+  frontPayment: FrontPayment;
+  frontPaymentNotes: NoteRow[];
 }
 
 export function generateId(): string {
@@ -124,12 +143,13 @@ export function createEmptyContract(): ContractData {
     stoveNotes: [{ id: generateId(), note: "" }],
     sink: { center: "", size: "" },
     sinkNotes: [{ id: generateId(), note: "" }],
-    marble: { type: "", color: "" },
+    marble: { types: { quartzSpanish: false, quartzNormal: false, synthetic: false }, color: "" },
     marbleNotes: [{ id: generateId(), note: "" }],
-    material: { type: "" },
+    material: { types: { mdf: false, plywood: false } },
     materialNotes: [{ id: generateId(), note: "" }],
     colors: [{ id: generateId(), code: "", notes: "" }],
     engravings: [{ id: generateId(), code: "", notes: "" }],
+    doorInfo: { handleTypes: { gola: false, jPull: false, push: false, handle: false } },
     doors: [{ id: generateId(), note: "" }],
     electricalAppliances: { oven: false, microwave: false, dishwasher: false, washingMachine: false, notes: "" },
     drawers: [
@@ -138,7 +158,8 @@ export function createEmptyContract(): ContractData {
     towerCabinets: [
       { id: generateId(), type: "", location: "", size: "", notes: "" },
     ],
-    frontPayment: { received: false, amount: "" },
     manufacturingNotes: [{ id: generateId(), note: "" }],
+    frontPayment: { received: false, amount: "", currency: "دينار" },
+    frontPaymentNotes: [{ id: generateId(), note: "" }],
   };
 }

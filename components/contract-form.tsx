@@ -24,13 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// Select removed — marble/material now use checkboxes
 import { Checkbox } from "@/components/ui/checkbox";
 import { SectionCard } from "@/components/section-card";
 import { Logo } from "@/components/logo";
@@ -63,7 +57,7 @@ export function ContractForm() {
   );
 
   // -- Generic list helpers
-  type ListKey = "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes" | "drawers" | "towerCabinets";
+  type ListKey = "stoveNotes" | "sinkNotes" | "marbleNotes" | "materialNotes" | "colors" | "engravings" | "doors" | "manufacturingNotes" | "drawers" | "towerCabinets" | "frontPaymentNotes";
 
   function addRow<T extends { id: string }>(
     key: ListKey,
@@ -211,8 +205,6 @@ export function ContractForm() {
                         stove: { ...prev.stove, size: e.target.value },
                       }))
                     }
-                    dir="ltr"
-                    className="text-left"
                   />
                 </div>
                 {data.stoveNotes.map((row, idx) => (
@@ -284,8 +276,6 @@ export function ContractForm() {
                         sink: { ...prev.sink, size: e.target.value },
                       }))
                     }
-                    dir="ltr"
-                    className="text-left"
                   />
                 </div>
                 {data.sinkNotes.map((row, idx) => (
@@ -347,25 +337,30 @@ export function ContractForm() {
                   />
                 </div>
                 <div className="mb-3">
-                  <Select
-                    dir="rtl"
-                    value={data.marble.type}
-                    onValueChange={(value) =>
-                      setData((prev) => ({
-                        ...prev,
-                        marble: { ...prev.marble, type: value },
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="w-full border-input bg-white text-right">
-                      <SelectValue placeholder="نوع المرمر" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="كوارتز اسباني">كوارتز اسباني</SelectItem>
-                      <SelectItem value="كوارتز عادي">كوارتز عادي</SelectItem>
-                      <SelectItem value="صناعي">صناعي</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <p className="text-xs text-muted-foreground mb-2">نوع المرمر:</p>
+                  <div className="flex flex-wrap gap-4">
+                    {([
+                      ["quartzSpanish", "كوارتز اسباني"],
+                      ["quartzNormal", "كوارتز عادي"],
+                      ["synthetic", "صناعي"],
+                    ] as const).map(([key, label]) => (
+                      <label key={key} className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          checked={data.marble.types[key]}
+                          onCheckedChange={(checked) =>
+                            setData((prev) => ({
+                              ...prev,
+                              marble: {
+                                ...prev.marble,
+                                types: { ...prev.marble.types, [key]: !!checked },
+                              },
+                            }))
+                          }
+                        />
+                        <span className="text-sm font-bold text-charcoal">{label}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
                 {data.marbleNotes.map((row, idx) => (
                   <div key={row.id} className="flex gap-2 items-start group mb-2">
@@ -414,24 +409,29 @@ export function ContractForm() {
             >
               <div className="space-y-3">
                 <div className="mb-3">
-                  <Select
-                    dir="rtl"
-                    value={data.material.type}
-                    onValueChange={(value) =>
-                      setData((prev) => ({
-                        ...prev,
-                        material: { type: value },
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="w-full border-input bg-white text-right">
-                      <SelectValue placeholder="اختر مادة التصنيع" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="MDF">MDF</SelectItem>
-                      <SelectItem value="Plywood">Plywood</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <p className="text-xs text-muted-foreground mb-2">نوع مادة التصنيع:</p>
+                  <div className="flex flex-wrap gap-4">
+                    {([
+                      ["mdf", "MDF"],
+                      ["plywood", "Plywood"],
+                    ] as const).map(([key, label]) => (
+                      <label key={key} className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          checked={data.material.types[key]}
+                          onCheckedChange={(checked) =>
+                            setData((prev) => ({
+                              ...prev,
+                              material: {
+                                ...prev.material,
+                                types: { ...prev.material.types, [key]: !!checked },
+                              },
+                            }))
+                          }
+                        />
+                        <span className="text-sm font-bold text-charcoal">{label}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
                 {data.materialNotes.map((row, idx) => (
                   <div key={row.id} className="flex gap-2 items-start group mb-2">
@@ -629,10 +629,33 @@ export function ContractForm() {
               icon={<DoorOpen className="w-5 h-5" />}
             >
               <div className="space-y-3">
-                <p className="text-xs text-muted-foreground mb-2">
-                  أضف ملاحظات حول أنواع المقابض والأبواب المطلوبة (push, gola
-                  finger pull, j-pull, الخ)
-                </p>
+                <div className="mb-3">
+                  <p className="text-xs text-muted-foreground mb-2">نوع المقبض:</p>
+                  <div className="flex flex-wrap gap-4">
+                    {([
+                      ["gola", "(Gola) كولا"],
+                      ["jPull", "(J-Pull) حفر"],
+                      ["push", "(Push) كبس"],
+                      ["handle", "(Handle) يدة"],
+                    ] as const).map(([key, label]) => (
+                      <label key={key} className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          checked={data.doorInfo.handleTypes[key]}
+                          onCheckedChange={(checked) =>
+                            setData((prev) => ({
+                              ...prev,
+                              doorInfo: {
+                                ...prev.doorInfo,
+                                handleTypes: { ...prev.doorInfo.handleTypes, [key]: !!checked },
+                              },
+                            }))
+                          }
+                        />
+                        <span className="text-sm font-bold text-charcoal">{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
 
                 {data.doors.map((row, idx) => (
                   <div
@@ -697,8 +720,8 @@ export function ContractForm() {
                   {([
                     ["oven", "فرن"],
                     ["microwave", "مايكروويف"],
-                    ["dishwasher", "جلاية"],
-                    ["washingMachine", "غسالة"],
+                    ["dishwasher", "غسالة صحون"],
+                    ["washingMachine", "غسالة ملابس"],
                   ] as const).map(([key, label]) => (
                     <label key={key} className="flex items-center gap-2 cursor-pointer">
                       <Checkbox
@@ -761,8 +784,6 @@ export function ContractForm() {
                       onChange={(e) =>
                         updateRow<DrawerRow>("drawers", row.id, "drawerCount", e.target.value)
                       }
-                      dir="ltr"
-                      className="text-left"
                     />
                     <Input
                       placeholder="عدد الوجوه"
@@ -772,8 +793,6 @@ export function ContractForm() {
                       onChange={(e) =>
                         updateRow<DrawerRow>("drawers", row.id, "faceCount", e.target.value)
                       }
-                      dir="ltr"
-                      className="text-left"
                     />
                     <Input
                       placeholder="ملاحظات (اختياري)"
@@ -853,8 +872,6 @@ export function ContractForm() {
                       onChange={(e) =>
                         updateRow<TowerCabinetRow>("towerCabinets", row.id, "size", e.target.value)
                       }
-                      dir="ltr"
-                      className="text-left"
                     />
                     <Input
                       placeholder="ملاحظات (اختياري)"
@@ -895,47 +912,6 @@ export function ContractForm() {
               </div>
             </SectionCard>
 
-            {/* ====== FRONT PAYMENT ====== */}
-            <SectionCard
-              title="العربون"
-              icon={<Banknote className="w-5 h-5" />}
-            >
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <Checkbox
-                    checked={data.frontPayment.received}
-                    onCheckedChange={(checked) =>
-                      setData((prev) => ({
-                        ...prev,
-                        frontPayment: {
-                          ...prev.frontPayment,
-                          received: !!checked,
-                        },
-                      }))
-                    }
-                  />
-                  <span className="text-sm font-bold text-charcoal">تم استلام العربون</span>
-                </label>
-                <Input
-                  placeholder="المبلغ"
-                  type="number"
-                  min="0"
-                  value={data.frontPayment.amount}
-                  onChange={(e) =>
-                    setData((prev) => ({
-                      ...prev,
-                      frontPayment: {
-                        ...prev.frontPayment,
-                        amount: e.target.value,
-                      },
-                    }))
-                  }
-                  dir="ltr"
-                  className="text-left"
-                />
-              </div>
-            </SectionCard>
-
             {/* ====== MANUFACTURING NOTES ====== */}
             <SectionCard
               title="ملاحظات التصنيع"
@@ -955,7 +931,7 @@ export function ContractForm() {
                       {idx + 1}
                     </span>
                     <Textarea
-                      placeholder="مثال: تركيب إضاءة LED داخلية، فتحة للشفاط بقياس 60 سم، ..."
+                      placeholder="مثال: تركيب إضاءة LED داخلية، فتحة للساحبة بقياس 60 سم، ..."
                       value={row.note}
                       onChange={(e) =>
                         updateRow<ManufacturingNote>(
@@ -985,6 +961,104 @@ export function ContractForm() {
                   className="mt-2 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
                   onClick={() =>
                     addRow("manufacturingNotes", () => ({
+                      id: generateId(),
+                      note: "",
+                    }))
+                  }
+                >
+                  <Plus className="w-4 h-4" />
+                  إضافة ملاحظة
+                </Button>
+              </div>
+            </SectionCard>
+
+            {/* ====== FRONT PAYMENT ====== */}
+            <SectionCard
+              title="العربون"
+              icon={<Banknote className="w-5 h-5" />}
+            >
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={data.frontPayment.received}
+                    onCheckedChange={(checked) =>
+                      setData((prev) => ({
+                        ...prev,
+                        frontPayment: {
+                          ...prev.frontPayment,
+                          received: !!checked,
+                        },
+                      }))
+                    }
+                  />
+                  <span className="text-sm font-bold text-charcoal">تم استلام العربون</span>
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+                  <Input
+                    placeholder="المبلغ"
+                    value={data.frontPayment.amount}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        frontPayment: {
+                          ...prev.frontPayment,
+                          amount: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                  <div className="flex gap-2">
+                    {([
+                      ["دينار", "دينار عراقي"],
+                      ["دولار", "دولار"],
+                    ] as const).map(([value, label]) => (
+                      <label key={value} className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          checked={data.frontPayment.currency === value}
+                          onCheckedChange={(checked) =>
+                            setData((prev) => ({
+                              ...prev,
+                              frontPayment: {
+                                ...prev.frontPayment,
+                                currency: checked ? value : "",
+                              },
+                            }))
+                          }
+                        />
+                        <span className="text-sm font-bold text-charcoal whitespace-nowrap">{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                {data.frontPaymentNotes.map((row, idx) => (
+                  <div key={row.id} className="flex gap-2 items-start group mb-2">
+                    <span className="flex items-center justify-center w-7 h-9 text-xs font-bold text-muted-foreground shrink-0">
+                      {idx + 1}
+                    </span>
+                    <Input
+                      placeholder="ملاحظة..."
+                      value={row.note}
+                      onChange={(e) =>
+                        updateRow<NoteRow>("frontPaymentNotes", row.id, "note", e.target.value)
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
+                      onClick={() => removeRow("frontPaymentNotes", row.id)}
+                      disabled={data.frontPaymentNotes.length <= 1}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 border-2 border-charcoal bg-transparent text-charcoal font-black uppercase tracking-wider text-xs hover:bg-charcoal hover:text-cream shadow-[2px_2px_0px_#F2D000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-100"
+                  onClick={() =>
+                    addRow("frontPaymentNotes", () => ({
                       id: generateId(),
                       note: "",
                     }))
