@@ -147,7 +147,7 @@ function PrintableSurvey() {
           <CheckboxOption label="MDF" />
           <CheckboxOption label="Plywood" />
         </div>
-        <BlankNoteLines count={2} />
+        <BlankNoteLines count={1} />
       </PrintSection>
 
       {/* Colors */}
@@ -187,10 +187,12 @@ function PrintableSurvey() {
 
       {/* Front Payment */}
       <PrintSection title="العربون" icon="banknote">
-        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-          <CheckboxOption label="تم استلام عربون" />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "24px", padding: "8px 0" }}>
+            <CheckboxOption label="تم استلام عربون" />
+          </div>
+          <BlankField label="قيمة العربون" />
         </div>
-        <BlankField label="قيمة العربون" />
       </PrintSection>
 
       {/* Footer */}

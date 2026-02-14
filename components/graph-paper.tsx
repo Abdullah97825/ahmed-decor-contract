@@ -119,7 +119,7 @@ function DimensionsPage() {
       </div>
 
       {/* Dimensions fields area — top third */}
-      <div dir="rtl" style={{ marginBottom: "12px" }}>
+      <div dir="rtl" style={{ marginBottom: "4px" }}>
         {/* Stove & Sink side by side */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "10px" }}>
           {/* Stove column */}
@@ -170,11 +170,11 @@ function DimensionsPage() {
         >
           <defs>
             <pattern id="small-grid-1" width="18" height="18" patternUnits="userSpaceOnUse">
-              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#C8C0B4" strokeWidth="0.5" opacity="0.5" />
+              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#9CA3AF" strokeWidth="0.7" opacity="0.8" />
             </pattern>
             <pattern id="major-grid-1" width="90" height="90" patternUnits="userSpaceOnUse">
               <rect width="90" height="90" fill="url(#small-grid-1)" />
-              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#9CA3AF" strokeWidth="1" opacity="0.6" />
+              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
             </pattern>
           </defs>
           <rect width="720" height="640" fill="url(#major-grid-1)" />
@@ -184,7 +184,7 @@ function DimensionsPage() {
 
       {/* Footer */}
       <div
-        dir="ltr"
+        dir="rtl"
         style={{
           marginTop: "6px",
           borderTop: "1px solid #F2D000",
@@ -194,8 +194,8 @@ function DimensionsPage() {
           alignItems: "center",
         }}
       >
-        <span style={{ fontSize: "7pt", color: "#9CA3AF", letterSpacing: "0.1em", fontWeight: 700 }}>AHMED DECOR</span>
         <span style={{ fontSize: "7pt", color: "#9CA3AF" }}>الاسم: ____________________ التاريخ: ____________</span>
+        <span dir="ltr" style={{ fontSize: "7pt", color: "#9CA3AF", letterSpacing: "0.1em", fontWeight: 700 }}>AHMED DECOR</span>
       </div>
     </div>
   );
@@ -242,12 +242,12 @@ function GraphPage({ pageNum }: { pageNum: number }) {
           <defs>
             {/* Small grid */}
             <pattern id={`small-grid-${pageNum}`} width="18" height="18" patternUnits="userSpaceOnUse">
-              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#C8C0B4" strokeWidth="0.5" opacity="0.5" />
+              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#9CA3AF" strokeWidth="0.7" opacity="0.8" />
             </pattern>
             {/* Major grid every 5 cells */}
             <pattern id={`major-grid-${pageNum}`} width="90" height="90" patternUnits="userSpaceOnUse">
               <rect width="90" height="90" fill={`url(#small-grid-${pageNum})`} />
-              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#9CA3AF" strokeWidth="1" opacity="0.6" />
+              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
             </pattern>
           </defs>
           <rect width="720" height="960" fill={`url(#major-grid-${pageNum})`} />
@@ -258,7 +258,7 @@ function GraphPage({ pageNum }: { pageNum: number }) {
 
       {/* Compact footer */}
       <div
-        dir="ltr"
+        dir="rtl"
         style={{
           marginTop: "6px",
           borderTop: "1px solid #F2D000",
@@ -268,8 +268,8 @@ function GraphPage({ pageNum }: { pageNum: number }) {
           alignItems: "center",
         }}
       >
-        <span style={{ fontSize: "7pt", color: "#9CA3AF", letterSpacing: "0.1em", fontWeight: 700 }}>AHMED DECOR</span>
         <span style={{ fontSize: "7pt", color: "#9CA3AF" }}>الاسم: ____________________ التاريخ: ____________</span>
+        <span dir="ltr" style={{ fontSize: "7pt", color: "#9CA3AF", letterSpacing: "0.1em", fontWeight: 700 }}>AHMED DECOR</span>
       </div>
     </div>
   );
