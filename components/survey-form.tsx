@@ -161,7 +161,10 @@ function PrintableSurvey() {
           <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "10pt" }}>
             <span style={{ fontSize: "14pt", lineHeight: 1 }}>☐</span>
             <span>ثلاجة</span>
-            <span style={{ borderBottom: "1.5px solid #C8C0B4", minWidth: "80px", display: "inline-block", marginRight: "4px" }}>&nbsp;</span>
+            <span style={{ color: "#6B7280", fontSize: "9pt", marginRight: "6px" }}>عرض</span>
+            <span style={{ borderBottom: "1.5px solid #C8C0B4", minWidth: "60px", display: "inline-block" }}>&nbsp;</span>
+            <span style={{ color: "#6B7280", fontSize: "9pt", marginRight: "6px" }}>نزّال</span>
+            <span style={{ borderBottom: "1.5px solid #C8C0B4", minWidth: "60px", display: "inline-block" }}>&nbsp;</span>
             <span style={{ color: "#6B7280", fontSize: "9pt" }}>سم</span>
           </span>
         </div>
