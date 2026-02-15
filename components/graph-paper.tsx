@@ -133,15 +133,15 @@ function DimensionsPage() {
         >
           <defs>
             <pattern id="small-grid-1" width="18" height="18" patternUnits="userSpaceOnUse">
-              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#9CA3AF" strokeWidth="0.7" opacity="0.8" />
+              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#7B8794" strokeWidth="0.7" />
             </pattern>
             <pattern id="major-grid-1" width="90" height="90" patternUnits="userSpaceOnUse">
               <rect width="90" height="90" fill="url(#small-grid-1)" />
-              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
+              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#4B5563" strokeWidth="1.2" />
             </pattern>
           </defs>
           <rect width="720" height="810" fill="url(#major-grid-1)" />
-          <rect width="720" height="810" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
+          <rect width="720" height="810" fill="none" stroke="#4B5563" strokeWidth="1.2" />
         </svg>
       </div>
 
@@ -205,17 +205,16 @@ function GraphPage({ pageNum }: { pageNum: number }) {
           <defs>
             {/* Small grid */}
             <pattern id={`small-grid-${pageNum}`} width="18" height="18" patternUnits="userSpaceOnUse">
-              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#9CA3AF" strokeWidth="0.7" opacity="0.8" />
+              <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#7B8794" strokeWidth="0.7" />
             </pattern>
             {/* Major grid every 5 cells */}
             <pattern id={`major-grid-${pageNum}`} width="90" height="90" patternUnits="userSpaceOnUse">
               <rect width="90" height="90" fill={`url(#small-grid-${pageNum})`} />
-              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#6B7280" strokeWidth="1.2" opacity="0.9" />
+              <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#4B5563" strokeWidth="1.2" />
             </pattern>
           </defs>
           <rect width="720" height="990" fill={`url(#major-grid-${pageNum})`} />
-          {/* Border */}
-          <rect width="720" height="990" fill="none" stroke="#3C4146" strokeWidth="1.5" opacity="0.3" />
+          <rect width="720" height="990" fill="none" stroke="#4B5563" strokeWidth="1.2" />
         </svg>
       </div>
 
