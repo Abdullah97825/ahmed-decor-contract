@@ -143,8 +143,11 @@ function PrintableSurvey() {
           <CheckboxOption label="(Push) كبس" />
           <CheckboxOption label="(Handle) يدة" />
         </div>
-        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع الباب:</span>
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px", flexWrap: "wrap" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>أنواع الابواب:</span>
+          <CheckboxOption label="MDF" />
+          <CheckboxOption label="HDF" />
+          <CheckboxOption label="اكريليك" />
           <CheckboxOption label="المنيوم" />
           <CheckboxOption label="زجاج" />
         </div>
@@ -188,6 +191,21 @@ function PrintableSurvey() {
           rows={2}
           colWidths={["8%", "28%", "28%", "36%"]}
         />
+      </PrintSection>
+
+      {/* Accessories */}
+      <PrintSection title="اكسسوارات" icon="basket">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 24px", padding: "8px 0", marginBottom: "4px" }}>
+          {["سلة منظفات", "سلة صحون", "سلة قمامة", "سوبرماركت"].map((item) => (
+            <div key={item} style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "10pt", padding: "4px 0", borderBottom: "1.5px solid #C8C0B4" }}>
+              <span style={{ fontSize: "14pt", lineHeight: 1 }}>☐</span>
+              <span>{item}</span>
+              <span style={{ flex: 1, borderBottom: "1.5px solid #C8C0B4", minWidth: "40px", display: "inline-block" }}>&nbsp;</span>
+              <span style={{ color: "#6B7280", fontSize: "9pt" }}>سم</span>
+            </div>
+          ))}
+        </div>
+        <BlankNoteLines count={3} />
       </PrintSection>
 
       {/* General Notes */}
@@ -286,6 +304,7 @@ function PrintIcon({ name }: { name: string }) {
     zap: <svg {...common}><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" /></svg>,
     drawer: <svg {...common}><rect x="2" y="4" width="20" height="7" rx="1" /><rect x="2" y="13" width="20" height="7" rx="1" /><path d="M10 8h4" /><path d="M10 16.5h4" /></svg>,
     cabinet: <svg {...common}><rect x="3" y="2" width="18" height="20" rx="1" /><path d="M3 12h18" /><path d="M12 2v20" /><path d="M10 7h1" /><path d="M10 17h1" /><path d="M13 7h1" /><path d="M13 17h1" /></svg>,
+    basket: <svg {...common}><path d="M2 3h20v5H2z" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></svg>,
   };
   return <>{icons[name] || null}</>;
 }
