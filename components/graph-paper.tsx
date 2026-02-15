@@ -163,13 +163,12 @@ function DimensionsPage() {
         </div>
       </div>
 
-      {/* Grid area — fills remaining space */}
-      <div style={{ position: "relative", flex: 1 }}>
+      {/* Grid area */}
+      <div style={{ position: "relative" }}>
         <svg
           width="100%"
-          height="100%"
-          viewBox="-0.6 -0.6 721.2 631.2"
-          preserveAspectRatio="xMinYMin meet"
+          viewBox="-0.6 -0.6 721.2 721.2"
+          preserveAspectRatio="xMidYMid meet"
           style={{ display: "block" }}
         >
           <defs>
@@ -181,9 +180,9 @@ function DimensionsPage() {
               <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#4B5563" strokeWidth="1.2" />
             </pattern>
           </defs>
-          <rect width="720" height="630" fill="url(#major-grid-1)" />
-          <line x1="720" y1="0" x2="720" y2="630" stroke="#4B5563" strokeWidth="1.2" />
-          <line x1="0" y1="630" x2="720" y2="630" stroke="#4B5563" strokeWidth="1.2" />
+          <rect width="720" height="720" fill="url(#major-grid-1)" />
+          <line x1="720" y1="0" x2="720" y2="720" stroke="#4B5563" strokeWidth="1.2" />
+          <line x1="0" y1="720" x2="720" y2="720" stroke="#4B5563" strokeWidth="1.2" />
         </svg>
       </div>
 
