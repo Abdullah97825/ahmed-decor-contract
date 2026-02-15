@@ -68,9 +68,10 @@ function PrintableSurvey() {
         <h1 style={{ fontSize: "18pt", fontWeight: 800, color: "#3C4146", margin: "8px 0 4px", letterSpacing: "0.5px" }}>
           استمارة كشف أولي
         </h1>
-        <p style={{ fontSize: "10pt", color: "#6B7280" }}>
-          التاريخ: ____________________
-        </p>
+        <div style={{ display: "flex", justifyContent: "center", gap: "48px", fontSize: "10pt", color: "#6B7280" }}>
+          <span>الموظف: ____________________</span>
+          <span>التاريخ: ____________________</span>
+        </div>
       </div>
 
       {/* Customer Info */}
@@ -97,10 +98,21 @@ function PrintableSurvey() {
 
       {/* Material */}
       <PrintSection title="مادة التصنيع" icon="layers">
-        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
-          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>المادة:</span>
-          <CheckboxOption label="MDF" />
-          <CheckboxOption label="Plywood" />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "8px" }}>
+          <div>
+            <div style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt", marginBottom: "4px" }}>الارضي:</div>
+            <div style={{ display: "flex", gap: "24px", padding: "8px 0" }}>
+              <CheckboxOption label="MDF" />
+              <CheckboxOption label="Plywood" />
+            </div>
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt", marginBottom: "4px" }}>الملحق:</div>
+            <div style={{ display: "flex", gap: "24px", padding: "8px 0" }}>
+              <CheckboxOption label="MDF" />
+              <CheckboxOption label="Plywood" />
+            </div>
+          </div>
         </div>
         <BlankNoteLines count={1} />
       </PrintSection>
@@ -116,11 +128,10 @@ function PrintableSurvey() {
 
       {/* Engravings */}
       <PrintSection title="النقشات" icon="flower">
-        <BlankTable
-          headers={["#", "النقشة", "ملاحظات"]}
-          rows={2}
-          colWidths={["8%", "42%", "50%"]}
-        />
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <CheckboxOption label="يوجد نقشات" />
+        </div>
+        <BlankNoteLines count={1} />
       </PrintSection>
 
       {/* Doors */}
@@ -132,6 +143,11 @@ function PrintableSurvey() {
           <CheckboxOption label="(Push) كبس" />
           <CheckboxOption label="(Handle) يدة" />
         </div>
+        <div style={{ display: "flex", gap: "24px", padding: "8px 0", marginBottom: "4px" }}>
+          <span style={{ fontWeight: 700, color: "#6B7280", fontSize: "10pt" }}>نوع الباب:</span>
+          <CheckboxOption label="المنيوم" />
+          <CheckboxOption label="زجاج" />
+        </div>
         <BlankNoteLines count={1} />
       </PrintSection>
 
@@ -142,8 +158,24 @@ function PrintableSurvey() {
           <CheckboxOption label="مايكرويف" />
           <CheckboxOption label="غسالة صحون" />
           <CheckboxOption label="غسالة ملابس" />
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "10pt" }}>
+            <span style={{ fontSize: "14pt", lineHeight: 1 }}>☐</span>
+            <span>ثلاجة</span>
+            <span style={{ borderBottom: "1.5px solid #C8C0B4", minWidth: "80px", display: "inline-block", marginRight: "4px" }}>&nbsp;</span>
+            <span style={{ color: "#6B7280", fontSize: "9pt" }}>سم</span>
+          </span>
         </div>
         <BlankNoteLines count={1} />
+      </PrintSection>
+
+      {/* Tower Cabinets */}
+      <PrintSection title="كابينات عمودية" icon="cabinet">
+        <BlankTable
+          headers={["#", "نوع الكابينة", "قياسها", "ملاحظات"]}
+          rows={2}
+          colWidths={["8%", "30%", "26%", "36%"]}
+          colCheckboxes={{ 1: ["خزن", "اجهزة", "ديكور"] }}
+        />
       </PrintSection>
 
       {/* Drawers */}
@@ -152,15 +184,6 @@ function PrintableSurvey() {
           headers={["#", "عدد المجرات", "عدد الوجوه", "ملاحظات"]}
           rows={2}
           colWidths={["8%", "28%", "28%", "36%"]}
-        />
-      </PrintSection>
-
-      {/* Tower Cabinets */}
-      <PrintSection title="كابينات عمودية" icon="cabinet">
-        <BlankTable
-          headers={["#", "نوع الكابينة", "موقعها", "قياسها", "ملاحظات"]}
-          rows={2}
-          colWidths={["6%", "24%", "22%", "22%", "26%"]}
         />
       </PrintSection>
 
@@ -272,7 +295,7 @@ function BlankField({ label }: { label: string }) {
   );
 }
 
-function BlankTable({ headers, rows, colWidths }: { headers: string[]; rows: number; colWidths: string[] }) {
+function BlankTable({ headers, rows, colWidths, colCheckboxes }: { headers: string[]; rows: number; colWidths: string[]; colCheckboxes?: Record<number, string[]> }) {
   return (
     <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "12px", fontSize: "10pt" }}>
       <thead>
@@ -306,13 +329,19 @@ function BlankTable({ headers, rows, colWidths }: { headers: string[]; rows: num
                   padding: "10px 10px",
                   borderBottom: "1.5px solid #C8C0B4",
                   textAlign: j === 0 ? "center" : "right",
-                  color: j === 0 ? "#6B7280" : "transparent",
+                  color: j === 0 ? "#6B7280" : undefined,
                   fontWeight: j === 0 ? 700 : 400,
                   fontSize: j === 0 ? "9pt" : "10pt",
                   height: "32px",
                 }}
               >
-                {j === 0 ? i + 1 : ""}
+                {j === 0 ? i + 1 : colCheckboxes?.[j] ? (
+                  <span style={{ display: "flex", gap: "12px" }}>
+                    {colCheckboxes[j].map((lbl, k) => (
+                      <CheckboxOption key={k} label={lbl} />
+                    ))}
+                  </span>
+                ) : ""}
               </td>
             ))}
           </tr>
