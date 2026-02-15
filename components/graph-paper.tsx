@@ -116,6 +116,47 @@ function DimensionsPage() {
           </div>
         </div>
 
+        {/* Kitchen Height & Annex Height side by side */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "6px" }}>
+          {/* Kitchen Height */}
+          <div style={{ border: "2px solid #3C4146", overflow: "hidden" }}>
+            <div style={{ height: "3px", background: "#F2D000" }} />
+            <div style={{ padding: "10px 14px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", paddingBottom: "6px", borderBottom: "2px solid rgba(60,65,70,0.1)" }}>
+                <div style={{ width: "24px", height: "24px", border: "2px solid #3C4146", background: "rgba(242,208,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3C4146" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="M2 12h20" /><path d="M17 7l-5-5-5 5" /><path d="M17 17l-5 5-5-5" /></svg>
+                </div>
+                <span style={{ fontSize: "10pt", fontWeight: 900, color: "#3C4146" }}>ارتفاع المطبخ</span>
+              </div>
+              <DimField label="ارتفاع المطبخ (سم)" />
+            </div>
+          </div>
+
+          {/* Annex Height */}
+          <div style={{ border: "2px solid #3C4146", overflow: "hidden" }}>
+            <div style={{ height: "3px", background: "#F2D000" }} />
+            <div style={{ padding: "10px 14px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", paddingBottom: "6px", borderBottom: "2px solid rgba(60,65,70,0.1)" }}>
+                <div style={{ width: "24px", height: "24px", border: "2px solid #3C4146", background: "rgba(242,208,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3C4146" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="M2 12h20" /><path d="M17 7l-5-5-5 5" /><path d="M17 17l-5 5-5-5" /></svg>
+                </div>
+                <span style={{ fontSize: "10pt", fontWeight: 900, color: "#3C4146" }}>ارتفاع الملحق</span>
+              </div>
+              <div style={{ display: "flex", gap: "16px", padding: "5px 0", flexWrap: "wrap" }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "9pt" }}>
+                  <span style={{ fontSize: "12pt", lineHeight: 1 }}>☐</span> الى السقف
+                </span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "9pt" }}>
+                  <span style={{ fontSize: "12pt", lineHeight: 1 }}>☐</span> دبل ملحق
+                </span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "9pt" }}>
+                  <span style={{ fontSize: "12pt", lineHeight: 1 }}>☐</span> ستاندارد
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Notes line spanning full width */}
         <div style={{ display: "flex", gap: "8px", padding: "4px 0", borderBottom: "1.5px solid #C8C0B4", minHeight: "24px" }}>
           <span style={{ fontWeight: 700, color: "#6B7280", whiteSpace: "nowrap", fontSize: "9pt" }}>ملاحظات:</span>
@@ -127,7 +168,7 @@ function DimensionsPage() {
         <svg
           width="100%"
           height="100%"
-          viewBox="-0.6 -0.6 721.2 811.2"
+          viewBox="-0.6 -0.6 721.2 631.2"
           preserveAspectRatio="xMinYMin meet"
           style={{ display: "block" }}
         >
@@ -140,9 +181,9 @@ function DimensionsPage() {
               <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#4B5563" strokeWidth="1.2" />
             </pattern>
           </defs>
-          <rect width="720" height="810" fill="url(#major-grid-1)" />
-          <line x1="720" y1="0" x2="720" y2="810" stroke="#4B5563" strokeWidth="1.2" />
-          <line x1="0" y1="810" x2="720" y2="810" stroke="#4B5563" strokeWidth="1.2" />
+          <rect width="720" height="630" fill="url(#major-grid-1)" />
+          <line x1="720" y1="0" x2="720" y2="630" stroke="#4B5563" strokeWidth="1.2" />
+          <line x1="0" y1="630" x2="720" y2="630" stroke="#4B5563" strokeWidth="1.2" />
         </svg>
       </div>
 
